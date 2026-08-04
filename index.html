@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Disney Heroes — Spine Viewer</title>
 <style>
@@ -160,17 +161,17 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=2');
     const atlasText = await atlasRes.text();
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=2');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png';
+    img.src = basePath + 'texture.png?v=2';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
