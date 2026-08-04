@@ -6759,30 +6759,56 @@ var spine;
 			};
 			SkeletonRenderer.prototype.drawTriangle = function (img, x0, y0, u0, v0, x1, y1, u1, v1, x2, y2, u2, v2) {
 				var ctx = this.ctx;
-				u0 *= img.width;
-				v0 *= img.height;
-				u1 *= img.width;
-				v1 *= img.height;
-				u2 *= img.width;
-				v2 *= img.height;
+				// Convert UVs to pixel coordinates
+				u0 *= img.width; v0 *= img.height;
+				u1 *= img.width; v1 *= img.height;
+				u2 *= img.width; v2 *= img.height;
+				// Compute the bounding box of the triangle in texture pixel space
+				var minU = Math.min(u0, u1, u2);
+				var maxU = Math.max(u0, u1, u2);
+				var minV = Math.min(v0, v1, v2);
+				var maxV = Math.max(v0, v1, v2);
+				// Add padding to avoid edge artifacts
+				var pad = 1;
+				minU = Math.max(0, minU - pad);
+				minV = Math.max(0, minV - pad);
+				maxU = Math.min(img.width, maxU + pad);
+				maxV = Math.min(img.height, maxV + pad);
+				var subW = maxU - minU;
+				var subH = maxV - minV;
+				// Save original screen positions for clip path
+				var clipX0 = x0, clipY0 = y0, clipX1 = x1, clipY1 = y1, clipX2 = x2, clipY2 = y2;
+				// Inflate the clip triangle slightly to eliminate seams between adjacent triangles
+				var centX = (x0 + x1 + x2) / 3, centY = (y0 + y1 + y2) / 3;
+				var inflate = 0.5;
+				var dxc, dyc, lenC;
+				dxc = clipX0 - centX; dyc = clipY0 - centY; lenC = Math.sqrt(dxc*dxc + dyc*dyc);
+				if (lenC > 0.001) { clipX0 += dxc/lenC * inflate; clipY0 += dyc/lenC * inflate; }
+				dxc = clipX1 - centX; dyc = clipY1 - centY; lenC = Math.sqrt(dxc*dxc + dyc*dyc);
+				if (lenC > 0.001) { clipX1 += dxc/lenC * inflate; clipY1 += dyc/lenC * inflate; }
+				dxc = clipX2 - centX; dyc = clipY2 - centY; lenC = Math.sqrt(dxc*dxc + dyc*dyc);
+				if (lenC > 0.001) { clipX2 += dxc/lenC * inflate; clipY2 += dyc/lenC * inflate; }
+				// Use inflated vertices for the clip path
 				ctx.beginPath();
-				ctx.moveTo(x0, y0);
-				ctx.lineTo(x1, y1);
-				ctx.lineTo(x2, y2);
+				ctx.moveTo(clipX0, clipY0);
+				ctx.lineTo(clipX1, clipY1);
+				ctx.lineTo(clipX2, clipY2);
 				ctx.closePath();
-				x1 -= x0;
-				y1 -= y0;
-				x2 -= x0;
-				y2 -= y0;
-				u1 -= u0;
-				v1 -= v0;
-				u2 -= u0;
-				v2 -= v0;
+				// Compute transform: maps from sub-region pixel space to screen space
+				// Adjust UVs to be relative to the sub-region origin
+				u0 -= minU; v0 -= minV;
+				u1 -= minU; v1 -= minV;
+				u2 -= minU; v2 -= minV;
+				x1 -= x0; y1 -= y0;
+				x2 -= x0; y2 -= y0;
+				u1 -= u0; v1 -= v0;
+				u2 -= u0; v2 -= v0;
 				var det = 1 / (u1 * v2 - u2 * v1), a = (v2 * x1 - v1 * x2) * det, b = (v2 * y1 - v1 * y2) * det, c = (u1 * x2 - u2 * x1) * det, d = (u1 * y2 - u2 * y1) * det, e = x0 - a * u0 - c * v0, f = y0 - b * u0 - d * v0;
 				ctx.save();
 				ctx.transform(a, b, c, d, e, f);
 				ctx.clip();
-				ctx.drawImage(img, 0, 0);
+				// Draw only the sub-region instead of the entire texture
+				ctx.drawImage(img, minU, minV, subW, subH, 0, 0, subW, subH);
 				ctx.restore();
 			};
 			SkeletonRenderer.prototype.computeRegionVertices = function (slot, region, pma) {

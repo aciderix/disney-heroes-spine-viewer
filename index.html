@@ -60,7 +60,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
   </main>
 </div>
 
-<script src="spine-canvas.js"></script>
+<script src="spine-canvas.js?v=8"></script>
 <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js"></script>
 
 <script>
@@ -162,17 +162,17 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=7');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=8');
     const atlasText = await atlasRes.text();
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=7');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=8');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=7';
+    img.src = basePath + 'texture.png?v=8';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -254,6 +254,9 @@ async function loadCharacter(char, li) {
     // Create renderer
     renderer = new spine.canvas.SkeletonRenderer(ctx);
     renderer.triangleRendering = true;
+    renderer.debugRendering = false;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
     
     // Enable controls
     animSelect.disabled = false;
