@@ -45,6 +45,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
       <div class="loading" id="loading">Select a character to begin</div>
     </div>
     <div class="controls">
+      <select id="skinSelect" disabled><option>Skin</option></select>
       <select id="animSelect" disabled><option>Animations</option></select>
       <button id="playBtn" disabled>⏸ Pause</button>
       <label>Speed</label>
@@ -161,17 +162,17 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=6');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=7');
     const atlasText = await atlasRes.text();
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=6');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=7');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=6';
+    img.src = basePath + 'texture.png?v=7';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -192,6 +193,44 @@ async function loadCharacter(char, li) {
     
     // Create skeleton
     currentSkeleton = new spine.Skeleton(skeletonData);
+    
+    // Auto-select best skin (prefer 'default', but pick the one with most attachments)
+    const skinSelect = document.getElementById("skinSelect");
+    skinSelect.innerHTML = "";
+    const skinNames = skeletonData.skins.map(s => s.name);
+    if (skinNames.length > 0) {
+      skinNames.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        skinSelect.appendChild(opt);
+      });
+      // Pick the skin with the most slots that have attachments
+      let bestSkin = skinNames[0];
+      let bestCount = 0;
+      for (const sn of skinNames) {
+        const skin = skeletonData.findSkin(sn);
+        let count = 0;
+        if (skin) {
+          for (let i = 0; i < skeletonData.slots.length; i++) {
+            if (skin.getAttachment(i, skeletonData.slots[i].attachmentName) != null) count++;
+          }
+        }
+        if (count > bestCount) { bestCount = count; bestSkin = sn; }
+      }
+      currentSkeleton.setSkinByName(bestSkin);
+      currentSkeleton.setSlotsToSetupPose();
+      skinSelect.value = bestSkin;
+      skinSelect.disabled = false;
+    } else {
+      skinSelect.disabled = true;
+    }
+    skinSelect.onchange = () => {
+      if (currentSkeleton && skinSelect.value) {
+        currentSkeleton.setSkinByName(skinSelect.value);
+        currentSkeleton.setSlotsToSetupPose();
+      }
+    };
     
     // Set up animation
     const stateData = new spine.AnimationStateData(skeletonData);
@@ -214,6 +253,7 @@ async function loadCharacter(char, li) {
     
     // Create renderer
     renderer = new spine.canvas.SkeletonRenderer(ctx);
+    renderer.triangleRendering = true;
     
     // Enable controls
     animSelect.disabled = false;
