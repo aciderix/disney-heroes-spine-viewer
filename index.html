@@ -450,17 +450,25 @@ speedSlider.oninput = () => {
 };
 playBtn.onclick = () => {
   playing = !playing;
-  playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
+  playBtn.textContent = playing ? '⏸' : '▶';
 };
 animSelect.onchange = () => {
   if (currentState && animSelect.value) {
     currentState.setAnimation(0, animSelect.value, true);
+    currentState.update(0.1);
+    currentState.apply(currentSkeleton);
+    currentSkeleton.updateWorldTransform();
+    resizeAndFit();
   }
 };
 resetBtn.onclick = () => {
   if (currentSkeleton && currentState) {
     const animName = animSelect.value;
     currentState.setAnimation(0, animName, true);
+    currentState.update(0.1);
+    currentState.apply(currentSkeleton);
+    currentSkeleton.updateWorldTransform();
+    resizeAndFit();
   }
 };
 
@@ -496,7 +504,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=18');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=19');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -509,13 +517,13 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=18');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=19');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=18';
+    img.src = basePath + 'texture.png?v=19';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -587,6 +595,11 @@ async function loadCharacter(char, li) {
       if (currentSkeleton && skinSelect.value) {
         currentSkeleton.setSkinByName(skinSelect.value);
         currentSkeleton.setSlotsToSetupPose();
+        if (currentState) {
+          currentState.apply(currentSkeleton);
+          currentSkeleton.updateWorldTransform();
+        }
+        resizeAndFit();
       }
     };
     
@@ -682,7 +695,7 @@ gifBtn.onclick = () => {
         if (gifFrameCount >= GIF_MAX_FRAMES) {
           gifRecording = false;
           gifBtn.disabled = false;
-          gifBtn.textContent = '📥 GIF';
+          gifBtn.textContent = 'GIF';
           downloadGif();
         }
       }, 'image/png');
@@ -691,6 +704,18 @@ gifBtn.onclick = () => {
   };
   gifLoop();
 };
+
+let _gifWorkerBlobUrl = null;
+async function getGifWorkerBlobUrl() {
+  // Cross-origin worker scripts are blocked by browsers (esp. on mobile Chrome).
+  // Fetch the worker script and create a same-origin blob URL instead.
+  if (_gifWorkerBlobUrl) return _gifWorkerBlobUrl;
+  const res = await fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js');
+  const text = await res.text();
+  const blob = new Blob([text], { type: 'application/javascript' });
+  _gifWorkerBlobUrl = URL.createObjectURL(blob);
+  return _gifWorkerBlobUrl;
+}
 
 async function downloadGif() {
   document.getElementById('gifStatus').textContent = 'Encoding GIF...';
@@ -702,12 +727,14 @@ async function downloadGif() {
       await new Promise((res, rej) => { script.onload = res; script.onerror = rej; document.head.appendChild(script); });
     }
     
+    const workerBlobUrl = await getGifWorkerBlobUrl();
+    
     const gif = new GIF({
       workers: 2,
       quality: 10,
       width: canvas.width,
       height: canvas.height,
-      workerScript: 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js'
+      workerScript: workerBlobUrl
     });
     
     for (const blob of gifFrames) {
@@ -734,7 +761,7 @@ async function downloadGif() {
   } catch (e) {
     document.getElementById('gifStatus').textContent = 'GIF error: ' + e.message;
     gifBtn.disabled = false;
-    gifBtn.textContent = '📥 GIF';
+    gifBtn.textContent = 'GIF';
   }
 }
 
@@ -764,7 +791,10 @@ function renderLoop() {
   }
 }
 
-// Resize canvas to fit container and center skeleton
+// Resize canvas to fit container and center skeleton using its REAL runtime bounds
+const _boundsOffset = [0, 0];
+const _boundsSize = [0, 0];
+const _boundsTemp = [];
 function resizeAndFit() {
   const wrap = canvas.parentElement;
   const w = wrap.clientWidth || window.innerWidth;
@@ -776,32 +806,42 @@ function resizeAndFit() {
   canvas.style.height = h + 'px';
   if (sceneRenderer) {
     sceneRenderer.context.gl.viewport(0, 0, canvas.width, canvas.height);
-    // Center skeleton using its actual bounds (x,y offset + width,height)
-    if (skeletonData) {
-      const skelX = skeletonData.x || 0;
-      const skelY = skeletonData.y || 0;
-      const skelW = skeletonData.width || 500;
-      const skelH = skeletonData.height || 800;
-      // Add padding around the skeleton
-      const pad = 1.15;
-      const targetW = skelW * pad;
-      const targetH = skelH * pad;
-      const targetRatio = targetH / targetW;
-      const sourceRatio = h / w;
-      let vpW, vpH;
-      if (targetRatio < sourceRatio) {
-        vpW = targetW;
-        vpH = targetW * sourceRatio;
-      } else {
-        vpH = targetH;
-        vpW = targetH / sourceRatio;
-      }
-      sceneRenderer.camera.setViewport(vpW, vpH);
-      // Center on the skeleton's actual center including offset
-      sceneRenderer.camera.position.x = skelX + skelW / 2;
-      sceneRenderer.camera.position.y = skelY + skelH / 2;
-      sceneRenderer.camera.update();
+    let skelX = 0, skelY = 0, skelW = 500, skelH = 800;
+    if (currentSkeleton) {
+      // Ensure world transform is up to date before measuring bounds
+      currentSkeleton.updateWorldTransform();
+      try {
+        currentSkeleton.getBounds(_boundsOffset, _boundsSize, _boundsTemp);
+        if (_boundsSize[0] > 0 && _boundsSize[1] > 0 && isFinite(_boundsOffset[0]) && isFinite(_boundsOffset[1])) {
+          skelX = _boundsOffset[0];
+          skelY = _boundsOffset[1];
+          skelW = _boundsSize[0];
+          skelH = _boundsSize[1];
+        }
+      } catch (e) { /* fall back to defaults */ }
+    } else if (skeletonData) {
+      skelW = skeletonData.width || 500;
+      skelH = skeletonData.height || 800;
     }
+    // Add padding around the skeleton
+    const pad = 1.15;
+    const targetW = skelW * pad;
+    const targetH = skelH * pad;
+    const targetRatio = targetH / targetW;
+    const sourceRatio = h / w;
+    let vpW, vpH;
+    if (targetRatio < sourceRatio) {
+      vpW = targetW;
+      vpH = targetW * sourceRatio;
+    } else {
+      vpH = targetH;
+      vpW = targetH / sourceRatio;
+    }
+    sceneRenderer.camera.setViewport(vpW, vpH);
+    // Center on the skeleton's actual runtime-computed center
+    sceneRenderer.camera.position.x = skelX + skelW / 2;
+    sceneRenderer.camera.position.y = skelY + skelH / 2;
+    sceneRenderer.camera.update();
   }
 }
 window.addEventListener('resize', resizeAndFit);
