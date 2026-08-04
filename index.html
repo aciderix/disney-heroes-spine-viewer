@@ -504,7 +504,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=20');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=21');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -517,13 +517,13 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=20');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=21');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=20';
+    img.src = basePath + 'texture.png?v=21';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -657,30 +657,43 @@ async function loadCharacter(char, li) {
   }
 }
 
-// GIF recording - downscaled to prevent mobile crashes
+// GIF recording - adaptive quality based on device memory
 let gifFrames = [];
 let gifRecording = false;
 let gifFrameCount = 0;
-const GIF_FPS = 10;
-const GIF_DURATION = 2; // seconds
-const GIF_MAX_FRAMES = GIF_FPS * GIF_DURATION;
-const GIF_MAX_WIDTH = 320; // downscale to prevent OOM on mobile
 
 gifBtn.onclick = () => {
   if (gifRecording) return;
+  
+  // Adapt GIF quality based on device memory (navigator.deviceMemory)
+  const devMem = navigator.deviceMemory || 4; // GB, defaults to 4 if unknown
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  
+  let gifFps, duration, maxWidth, workers, quality;
+  if (isMobile && devMem < 4) {
+    // Low-end mobile: keep it safe
+    gifFps = 12; duration = 2; maxWidth = 384; workers = 1; quality = 15;
+  } else if (isMobile) {
+    // Mid/high-end mobile
+    gifFps = 15; duration = 3; maxWidth = 480; workers = 1; quality = 10;
+  } else {
+    // Desktop: full quality
+    gifFps = 20; duration = 3; maxWidth = 720; workers = 2; quality = 5;
+  }
+  const maxFrames = gifFps * duration;
+  
   gifRecording = true;
   gifFrames = [];
   gifFrameCount = 0;
   gifBtn.disabled = true;
   gifBtn.textContent = '⏳';
-  document.getElementById('gifStatus').textContent = `Capturing 0/${GIF_MAX_FRAMES}...`;
+  document.getElementById('gifStatus').textContent = `Capturing 0/${maxFrames}...`;
   
   let gifLastTime = performance.now();
-  const gifInterval = 1000 / GIF_FPS;
+  const gifInterval = 1000 / gifFps;
   let gifAccum = 0;
   
-  // Pre-calculate downscaled dimensions
-  const scale = Math.min(1, GIF_MAX_WIDTH / canvas.width);
+  const scale = Math.min(1, maxWidth / canvas.width);
   const gifW = Math.round(canvas.width * scale);
   const gifH = Math.round(canvas.height * scale);
   
@@ -693,20 +706,19 @@ gifBtn.onclick = () => {
     
     if (gifAccum >= gifInterval) {
       gifAccum = 0;
-      // Capture downscaled frame to save memory
       const tmpC = document.createElement('canvas');
       tmpC.width = gifW;
       tmpC.height = gifH;
       tmpC.getContext('2d').drawImage(canvas, 0, 0, gifW, gifH);
       gifFrames.push(tmpC);
       gifFrameCount++;
-      document.getElementById('gifStatus').textContent = `Capturing ${gifFrameCount}/${GIF_MAX_FRAMES}...`;
+      document.getElementById('gifStatus').textContent = `Capturing ${gifFrameCount}/${maxFrames}...`;
       
-      if (gifFrameCount >= GIF_MAX_FRAMES) {
+      if (gifFrameCount >= maxFrames) {
         gifRecording = false;
         gifBtn.disabled = false;
         gifBtn.textContent = 'GIF';
-        downloadGif(gifW, gifH);
+        downloadGif(gifW, gifH, gifFps, workers, quality);
       }
     }
     if (gifRecording) requestAnimationFrame(gifLoop);
@@ -728,9 +740,8 @@ async function getGifWorkerBlobUrl() {
   }
 }
 
-async function downloadGif(gifW, gifH) {
+async function downloadGif(gifW, gifH, gifFps, workers, quality) {
   document.getElementById('gifStatus').textContent = 'Encoding...';
-  // Free frame canvases during encoding to save memory
   try {
     if (typeof GIF === 'undefined') {
       const script = document.createElement('script');
@@ -741,18 +752,17 @@ async function downloadGif(gifW, gifH) {
     const workerBlobUrl = await getGifWorkerBlobUrl();
     
     const gif = new GIF({
-      workers: 1,           // single worker to limit memory
-      quality: 20,          // lower quality = less memory
+      workers: workers,
+      quality: quality,
       width: gifW,
       height: gifH,
       workerScript: workerBlobUrl
     });
     
     for (const frameCanvas of gifFrames) {
-      gif.addFrame(frameCanvas, { delay: 1000 / GIF_FPS, copy: true });
+      gif.addFrame(frameCanvas, { delay: 1000 / gifFps, copy: true });
     }
-    // Free frames immediately
-    gifFrames = [];
+    gifFrames = []; // free memory immediately
     
     gif.on('finished', (blob) => {
       const url = URL.createObjectURL(blob);
