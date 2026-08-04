@@ -94,9 +94,11 @@ def decode_etc1_to_texture(etc1_gz_data):
     return Image.frombytes('RGBA', (w, half_h), rgba.tobytes())
 
 def fix_atlas(atlas_text):
+    # Replace .etc1 page names with texture.png (atlas has empty line 0 + .etc1 page name on line 1)
     lines = atlas_text.split('\n')
-    if lines:
-        lines[0] = 'texture.png'
+    for i, line in enumerate(lines):
+        if line.strip().endswith('.etc1'):
+            lines[i] = 'texture.png'
     return '\n'.join(lines)
 
 def pick_file(paths, preferred='unit-DEFAULT-untrimmed'):

@@ -57,7 +57,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
   </main>
 </div>
 
-<script src="spine-webgl.js?v=10"></script>
+<script src="spine-webgl.js?v=11"></script>
 
 <script>
 // Character manifest
@@ -456,17 +456,19 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=10');
-    const atlasText = await atlasRes.text();
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=11');
+    let atlasText = await atlasRes.text();
+    // Fix atlas: replace .etc1 page names with texture.png (original format has empty line 0 + .etc1 page name)
+    atlasText = atlasText.replace(/^[^\n:]*\.etc1$/gm, 'texture.png');
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=10');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=11');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=10';
+    img.src = basePath + 'texture.png?v=11';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
