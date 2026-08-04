@@ -882,7 +882,7 @@ function preSampleAnimation(animName) {
 
   // Use a temporary skeleton so the live one is not disturbed
   const tempSkel = new spine.Skeleton(skeletonData);
-  const skin = currentSkeleton.getSkin();
+  const skin = currentSkeleton.skin;
   if (skin) tempSkel.setSkin(skin);
   tempSkel.setToSetupPose();
 
