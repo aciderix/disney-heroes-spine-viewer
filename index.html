@@ -68,6 +68,24 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 .mobile-toggle { display: none; position: fixed; top: 8px; left: 8px; z-index: 100; background: #16213e; border: 1px solid #0f3460; color: #e0e0e0; border-radius: 6px; padding: 8px 12px; font-size: 18px; cursor: pointer; }
 .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 49; }
 
+/* Fullscreen mode */
+.app.fullscreen .sidebar { display: none; }
+.app.fullscreen .info-bar { display: none; }
+.app.fullscreen .main { width: 100vw; }
+.app.fullscreen .mobile-toggle { display: none; }
+.fullscreen-toggle {
+  position: fixed; bottom: 64px; right: 12px; z-index: 100;
+  background: #16213e; border: 1px solid #0f3460; color: #e0e0e0;
+  border-radius: 50%; width: 44px; height: 44px;
+  font-size: 18px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  transition: transform 0.2s, background 0.2s;
+}
+.fullscreen-toggle:hover { background: #1a4a7a; }
+.fullscreen-toggle:active { transform: scale(0.9); }
+.fullscreen-toggle.active { background: #e94560; }
+
 @media (max-width: 768px) {
   .mobile-toggle { display: block; }
   .sidebar { position: fixed; left: 0; top: 0; height: 100vh; z-index: 50; transform: translateX(-100%); transition: transform 0.25s ease; width: 75%; max-width: 260px; }
@@ -77,6 +95,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
   .controls-toggle { bottom: 12px; right: 12px; width: 48px; height: 48px; font-size: 22px; }
   .controls-content select, .controls-content button { padding: 7px 10px; font-size: 12px; }
   .controls-content input[type="range"] { width: 70px; }
+  .fullscreen-toggle { bottom: 68px; right: 12px; width: 48px; height: 48px; font-size: 20px; }
 }
 </style>
 </head>
@@ -97,6 +116,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
   </main>
 </div>
 
+<button class="fullscreen-toggle" id="fullscreenToggle" title="Plein écran">⛶</button>
 <button class="controls-toggle" id="controlsToggle">⚙</button>
 <div class="controls-backdrop" id="controlsBackdrop"></div>
 <div class="controls-drawer" id="controlsDrawer">
@@ -1063,6 +1083,59 @@ if (typeof ResizeObserver !== 'undefined') {
   ro.observe(canvas.parentElement);
 }
 resizeAndFit();
+
+// Fullscreen toggle — hides sidebar, uses browser Fullscreen API
+const fullscreenToggle = document.getElementById('fullscreenToggle');
+const appEl = document.querySelector('.app');
+let isFullscreen = false;
+function enterFullscreen() {
+  isFullscreen = true;
+  appEl.classList.add('fullscreen');
+  fullscreenToggle.classList.add('active');
+  fullscreenToggle.textContent = '⛶';
+  // Close sidebar if open on mobile
+  sidebar.classList.remove('open');
+  sidebarBackdrop.classList.remove('open');
+  // Try browser Fullscreen API for true fullscreen
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+  setTimeout(resizeAndFit, 100);
+  setTimeout(resizeAndFit, 320);
+}
+function exitFullscreen() {
+  isFullscreen = false;
+  appEl.classList.remove('fullscreen');
+  fullscreenToggle.classList.remove('active');
+  fullscreenToggle.textContent = '⛶';
+  if (document.fullscreenElement || document.webkitFullscreenElement) {
+    if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  }
+  setTimeout(resizeAndFit, 100);
+  setTimeout(resizeAndFit, 320);
+}
+fullscreenToggle.onclick = () => {
+  if (isFullscreen) exitFullscreen();
+  else enterFullscreen();
+};
+// Also exit fullscreen on Esc (browser handles this, but we need to sync state)
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && isFullscreen) {
+    isFullscreen = false;
+    appEl.classList.remove('fullscreen');
+    fullscreenToggle.classList.remove('active');
+    setTimeout(resizeAndFit, 100);
+  }
+});
+document.addEventListener('webkitfullscreenchange', () => {
+  if (!document.webkitFullscreenElement && isFullscreen) {
+    isFullscreen = false;
+    appEl.classList.remove('fullscreen');
+    fullscreenToggle.classList.remove('active');
+    setTimeout(resizeAndFit, 100);
+  }
+});
 
 // Controls drawer
 const controlsToggle = document.getElementById('controlsToggle');
