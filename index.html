@@ -494,8 +494,9 @@ animSelect.onchange = () => {
     currentState.update(0.1);
     currentState.apply(currentSkeleton);
     currentSkeleton.updateWorldTransform();
-    resetMaxBounds();
+    preSampleAnimation(animSelect.value);
     resizeAndFit();
+    scheduleRefit();
   }
 };
 resetBtn.onclick = () => {
@@ -505,8 +506,9 @@ resetBtn.onclick = () => {
     currentState.update(0.1);
     currentState.apply(currentSkeleton);
     currentSkeleton.updateWorldTransform();
-    resetMaxBounds();
+    preSampleAnimation(animName);
     resizeAndFit();
+    scheduleRefit();
   }
 };
 
@@ -637,7 +639,9 @@ async function loadCharacter(char, li) {
           currentState.apply(currentSkeleton);
           currentSkeleton.updateWorldTransform();
         }
+        preSampleAnimation(animSelect.value);
         resizeAndFit();
+        scheduleRefit();
       }
     };
     
@@ -666,8 +670,8 @@ async function loadCharacter(char, li) {
     currentState.apply(currentSkeleton);
     currentSkeleton.updateWorldTransform();
     
-    // Set up camera to frame the skeleton - resizeAndFit handles all centering
-    resetMaxBounds();
+    // Pre-sample the animation to find max bounds, then fit viewport
+    preSampleAnimation(defaultAnim);
     resizeAndFit();
     scheduleRefit();
     
@@ -868,6 +872,53 @@ function resetMaxBounds() {
   _needsRefit = true;
 }
 
+// Pre-sample an entire animation to find the maximum bounding box.
+// This avoids cropping when the skeleton's pose extends beyond the
+// first-frame bounds used for the initial viewport fit.
+function preSampleAnimation(animName) {
+  if (!skeletonData || !currentSkeleton) return;
+  const anim = skeletonData.findAnimation(animName);
+  if (!anim) return;
+
+  // Use a temporary skeleton so the live one is not disturbed
+  const tempSkel = new spine.Skeleton(skeletonData);
+  const skin = currentSkeleton.getSkin();
+  if (skin) tempSkel.setSkin(skin);
+  tempSkel.setToSetupPose();
+
+  const tempStateData = new spine.AnimationStateData(skeletonData);
+  tempStateData.defaultMix = 0;  // no crossfade during sampling
+  const tempState = new spine.AnimationState(tempStateData);
+  tempState.setAnimation(0, animName, true);
+
+  const step = 1 / 30;  // sample at 30 fps
+  const duration = Math.max(anim.duration, 0.1);
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  const off = [0, 0], sz = [0, 0], tmp = [];
+
+  for (let t = 0; t < duration; t += step) {
+    tempState.update(step);
+    tempState.apply(tempSkel);
+    tempSkel.updateWorldTransform();
+    try {
+      tempSkel.getBounds(off, sz, tmp);
+      if (sz[0] > 0 && sz[1] > 0 && isFinite(off[0]) && isFinite(off[1])) {
+        minX = Math.min(minX, off[0]);
+        minY = Math.min(minY, off[1]);
+        maxX = Math.max(maxX, off[0] + sz[0]);
+        maxY = Math.max(maxY, off[1] + sz[1]);
+      }
+    } catch (e) { /* skip frame */ }
+  }
+
+  if (minX < Infinity && minY < Infinity && maxX > -Infinity && maxY > -Infinity) {
+    _maxBounds = { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
+  } else {
+    _maxBounds = null;
+  }
+  _needsRefit = true;
+}
+
 function updateMaxBounds() {
   if (!currentSkeleton) return;
   try {
@@ -888,7 +939,7 @@ function updateMaxBounds() {
       const newW = maxX - minX;
       const newH = maxY - minY;
       // Only flag for refit if bounds grew by more than 3%
-      if (newW > _maxBounds.w * 1.03 || newH > _maxBounds.h * 1.03) {
+      if (newW > _maxBounds.w * 1.005 || newH > _maxBounds.h * 1.005) {
         _needsRefit = true;
       }
       _maxBounds.x = minX;
