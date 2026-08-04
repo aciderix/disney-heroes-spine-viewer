@@ -18,8 +18,8 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 .char-thumb { width: 32px; height: 32px; border-radius: 6px; background: #0f3460; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; }
 .main { flex: 1; display: flex; flex-direction: column; }
 .viewer-wrap { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a2e; }
-#canvas { max-width: 100%; max-height: 100%; background: transparent; }
-.loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #555; font-size: 14px; }
+#canvas { width: 100%; height: 100%; display: block; background: transparent; }
+.loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #555; font-size: 14px; z-index: 10; }
 .controls { background: #16213e; padding: 12px 20px; border-top: 1px solid #0f3460; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .controls select, .controls button, .controls input { background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
 .controls button:hover { background: #1a4a7a; }
@@ -41,7 +41,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
   <main class="main">
     <div class="info-bar" id="infoBar">Select a character</div>
     <div class="viewer-wrap">
-      <canvas id="canvas" width="800" height="600"></canvas>
+      <canvas id="canvas"></canvas>
       <div class="loading" id="loading">Select a character to begin</div>
     </div>
     <div class="controls">
@@ -51,17 +51,13 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
       <label>Speed</label>
       <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1">
       <span id="speedVal" style="font-size:12px;width:30px">1.0×</span>
-      <label>Scale</label>
-      <input type="range" id="scaleSlider" min="0.1" max="3" step="0.1" value="1">
-      <span id="scaleVal" style="font-size:12px;width:30px">1.0×</span>
-      <button id="gifBtn" disabled>🎬 Export GIF</button>
+      <button id="resetBtn" disabled>🔄 Reset Pose</button>
       <span class="gif-status" id="gifStatus"></span>
     </div>
   </main>
 </div>
 
-<script src="spine-canvas.js?v=8"></script>
-<script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js"></script>
+<script src="spine-webgl.js?v=9"></script>
 
 <script>
 // Character manifest
@@ -85,14 +81,11 @@ const CHARACTERS = [
 
 // State
 let currentSkeleton = null, currentState = null, skeletonData = null;
-let currentAtlas = null, renderer = null, lastTime = 0;
-let playing = true, speedMul = 1.0, userScale = 1.0;
-let canvas, ctx, animFrame = null;
+let currentAtlas = null, sceneRenderer = null, lastTime = 0;
+let playing = true, speedMul = 1.0;
+let canvas, gl, animFrame = null;
 let currentChar = null;
-
-// GIF recording state
-let recording = false, gifFrames = [], gifStartTime = 0;
-const GIF_FPS = 15, GIF_DURATION = 3, GIF_W = 480, GIF_H = 360;
+let currentGLTexture = null;
 
 // Build character list
 const charList = document.getElementById('charList');
@@ -106,24 +99,18 @@ CHARACTERS.forEach(c => {
 
 // Controls
 const animSelect = document.getElementById('animSelect');
+const skinSelect = document.getElementById('skinSelect');
 const playBtn = document.getElementById('playBtn');
 const speedSlider = document.getElementById('speedSlider');
-const scaleSlider = document.getElementById('scaleSlider');
-const gifBtn = document.getElementById('gifBtn');
-const gifStatus = document.getElementById('gifStatus');
+const resetBtn = document.getElementById('resetBtn');
 const infoBar = document.getElementById('infoBar');
 const loadingEl = document.getElementById('loading');
 
 canvas = document.getElementById('canvas');
-ctx = canvas.getContext('2d');
 
 speedSlider.oninput = () => {
   speedMul = parseFloat(speedSlider.value);
   document.getElementById('speedVal').textContent = speedMul.toFixed(1) + '×';
-};
-scaleSlider.oninput = () => {
-  userScale = parseFloat(scaleSlider.value);
-  document.getElementById('scaleVal').textContent = userScale.toFixed(1) + '×';
 };
 playBtn.onclick = () => {
   playing = !playing;
@@ -134,14 +121,21 @@ animSelect.onchange = () => {
     currentState.setAnimation(0, animSelect.value, true);
   }
 };
-
-gifBtn.onclick = () => {
-  if (recording) return;
-  startGifRecording();
+resetBtn.onclick = () => {
+  if (currentSkeleton && currentState) {
+    const animName = animSelect.value;
+    currentState.setAnimation(0, animName, true);
+  }
 };
 
+// Initialize WebGL renderer
+function initRenderer() {
+  const glConfig = { alpha: true, premultipliedAlpha: false };
+  sceneRenderer = new spine.webgl.SceneRenderer(canvas, canvas.getContext('webgl', glConfig) || canvas.getContext('experimental-webgl', glConfig));
+}
+initRenderer();
+
 async function loadCharacter(char, li) {
-  // Update active state
   document.querySelectorAll('.char-item').forEach(el => el.classList.remove('active'));
   li.classList.add('active');
   
@@ -149,10 +143,10 @@ async function loadCharacter(char, li) {
   loadingEl.textContent = `Loading ${char.display}...`;
   infoBar.textContent = `Loading ${char.display}...`;
   animSelect.disabled = true;
+  skinSelect.disabled = true;
   playBtn.disabled = true;
-  gifBtn.disabled = true;
+  resetBtn.disabled = true;
   
-  // Stop current animation
   if (animFrame) cancelAnimationFrame(animFrame);
   currentSkeleton = null;
   currentState = null;
@@ -162,26 +156,29 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=8');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=9');
     const atlasText = await atlasRes.text();
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=8');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=9');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=8';
+    img.src = basePath + 'texture.png?v=9';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
     });
     
-    // Create texture atlas with custom loader
-    const texture = new spine.canvas.CanvasTexture(img);
+    // Create WebGL texture
+    if (currentGLTexture) currentGLTexture.dispose();
+    currentGLTexture = new spine.webgl.GLTexture(sceneRenderer.context, img, false);
+    
+    // Create texture atlas
     currentAtlas = new spine.TextureAtlas(atlasText, function(path) {
-      return texture;
+      return currentGLTexture;
     });
     
     // Create attachment loader
@@ -195,19 +192,16 @@ async function loadCharacter(char, li) {
     currentSkeleton = new spine.Skeleton(skeletonData);
     
     // Auto-select best skin (prefer 'default', but pick the one with most attachments)
-    const skinSelect = document.getElementById("skinSelect");
-    skinSelect.innerHTML = "";
+    skinSelect.innerHTML = '';
     const skinNames = skeletonData.skins.map(s => s.name);
     if (skinNames.length > 0) {
       skinNames.forEach(name => {
-        const opt = document.createElement("option");
+        const opt = document.createElement('option');
         opt.value = name;
         opt.textContent = name;
         skinSelect.appendChild(opt);
       });
-      // Pick the skin with the most slots that have attachments
-      let bestSkin = skinNames[0];
-      let bestCount = 0;
+      let bestSkin = skinNames[0], bestCount = 0;
       for (const sn of skinNames) {
         const skin = skeletonData.findSkin(sn);
         let count = 0;
@@ -251,20 +245,29 @@ async function loadCharacter(char, li) {
     currentState.setAnimation(0, defaultAnim, true);
     animSelect.value = defaultAnim;
     
-    // Create renderer
-    renderer = new spine.canvas.SkeletonRenderer(ctx);
-    renderer.triangleRendering = true;
-    renderer.debugRendering = false;
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
+    // Apply first frame
+    currentState.update(0.1);
+    currentState.apply(currentSkeleton);
+    currentSkeleton.updateWorldTransform();
+    
+    // Set up camera to frame the skeleton
+    const skelW = skeletonData.width || 500;
+    const skelH = skeletonData.height || 800;
+    sceneRenderer.camera.position.x = skelW / 2;
+    sceneRenderer.camera.position.y = skelH / 2;
+    // Set viewport to skeleton dimensions, then fit to canvas aspect ratio
+    sceneRenderer.camera.setViewport(skelW * 1.1, skelH * 1.1);
+    sceneRenderer.camera.update();
+    // Now fit the viewport to the canvas aspect ratio
+    resizeAndFit();
     
     // Enable controls
     animSelect.disabled = false;
     playBtn.disabled = false;
-    gifBtn.disabled = false;
+    resetBtn.disabled = false;
     loadingEl.style.display = 'none';
     
-    infoBar.textContent = `${char.display} — ${skeletonData.bones.length} bones, ${skeletonData.slots.length} slots, ${animNames.length} animations`;
+    infoBar.textContent = `${char.display} — ${skeletonData.bones.length} bones, ${skeletonData.slots.length} slots, ${animNames.length} animations — WebGL`;
     
     // Start render loop
     lastTime = performance.now();
@@ -283,7 +286,7 @@ function renderLoop() {
   const now = performance.now();
   let delta = (now - lastTime) / 1000;
   lastTime = now;
-  if (delta > 0.1) delta = 0.1; // cap delta
+  if (delta > 0.1) delta = 0.1;
   
   if (playing && currentState && currentSkeleton) {
     currentState.update(delta * speedMul);
@@ -291,104 +294,54 @@ function renderLoop() {
     currentSkeleton.updateWorldTransform();
   }
   
-  // Clear and draw
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Clear canvas
+  const gl = sceneRenderer.context.gl;
+  gl.clearColor(0.102, 0.102, 0.180, 0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
   
   if (currentSkeleton) {
-    ctx.save();
-    
-    // Center the skeleton
-    const skel = skeletonData;
-    const w = (skel.width || 500) * userScale;
-    const h = (skel.height || 800) * userScale;
-    
-    // Calculate scale to fit canvas
-    const sx = canvas.width / w * 0.8;
-    const sy = canvas.height / h * 0.9;
-    const fitScale = Math.min(sx, sy) * userScale;
-    
-    // Center horizontally, align bottom
-    ctx.translate(canvas.width / 2, canvas.height * 0.92);
-    ctx.scale(fitScale, -fitScale); // flip Y
-    
-    renderer.draw(currentSkeleton);
-    
-    ctx.restore();
+    sceneRenderer.begin();
+    sceneRenderer.drawSkeleton(currentSkeleton, false);
+    sceneRenderer.end();
   }
-  
-  // Capture GIF frame
-  if (recording) {
-    const elapsed = (now - gifStartTime) / 1000;
-    if (elapsed >= GIF_DURATION) {
-      finishGifRecording();
-    } else if (Math.floor(elapsed * GIF_FPS) > gifFrames.length - 1) {
-      // Capture a frame
-      const tmpCanvas = document.createElement('canvas');
-      tmpCanvas.width = GIF_W;
-      tmpCanvas.height = GIF_H;
-      const tmpCtx = tmpCanvas.getContext('2d');
-      tmpCtx.fillStyle = '#1a1a2e';
-      tmpCtx.fillRect(0, 0, GIF_W, GIF_H);
-      tmpCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, GIF_W, GIF_H);
-      gifFrames.push(tmpCanvas);
-      const progress = elapsed / GIF_DURATION;
-      gifStatus.textContent = `Recording... ${Math.floor(progress * 100)}%`;
+}
+
+// Resize canvas to fit window and adjust camera
+function resizeAndFit() {
+  const wrap = canvas.parentElement;
+  const w = wrap.clientWidth;
+  const h = wrap.clientHeight;
+  if (canvas.width != w || canvas.height != h) {
+    canvas.width = w;
+    canvas.height = h;
+  }
+  if (sceneRenderer) {
+    sceneRenderer.context.gl.viewport(0, 0, canvas.width, canvas.height);
+    // Adjust camera viewport to maintain skeleton aspect ratio
+    if (skeletonData) {
+      const skelW = skeletonData.width || 500;
+      const skelH = skeletonData.height || 800;
+      const targetW = skelW * 1.1;
+      const targetH = skelH * 1.1;
+      const targetRatio = targetH / targetW;
+      const sourceRatio = h / w;
+      let scale, vpW, vpH;
+      if (targetRatio < sourceRatio) {
+        scale = targetW / w;
+        vpW = targetW;
+        vpH = h * scale;
+      } else {
+        scale = targetH / h;
+        vpW = w * scale;
+        vpH = targetH;
+      }
+      sceneRenderer.camera.setViewport(vpW, vpH);
+      sceneRenderer.camera.update();
     }
   }
 }
-
-function startGifRecording() {
-  recording = true;
-  gifFrames = [];
-  gifStartTime = performance.now();
-  gifBtn.disabled = true;
-  gifStatus.textContent = 'Recording... 0%';
-}
-
-function finishGifRecording() {
-  recording = false;
-  gifStatus.textContent = 'Encoding GIF...';
-  
-  const gif = new GIF({
-    workers: 1,
-    quality: 10,
-    width: GIF_W,
-    height: GIF_H,
-    workerScript: 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js',
-    transparent: 0x1a1a2e,
-    background: '#1a1a2e'
-  });
-  
-  gifFrames.forEach(frame => {
-    gif.addFrame(frame, { delay: 1000 / GIF_FPS });
-  });
-  
-  gif.on('progress', p => {
-    gifStatus.textContent = `Encoding... ${Math.floor(p * 100)}%`;
-  });
-  
-  gif.on('finished', blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${currentChar.name}_${animSelect.value}.gif`;
-    a.click();
-    gifStatus.textContent = '✓ GIF downloaded';
-    gifBtn.disabled = false;
-    setTimeout(() => { gifStatus.textContent = ''; }, 3000);
-  });
-  
-  gif.render();
-}
-
-// Resize canvas to fit
-function resizeCanvas() {
-  const wrap = canvas.parentElement;
-  canvas.width = wrap.clientWidth;
-  canvas.height = wrap.clientHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+window.addEventListener('resize', resizeAndFit);
+resizeAndFit();
 </script>
 </body>
 </html>
