@@ -16,25 +16,40 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 .char-item:hover { background: #0f3460; }
 .char-item.active { background: #e94560; color: #fff; }
 .char-thumb { width: 32px; height: 32px; border-radius: 6px; background: #0f3460; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.main { flex: 1; display: flex; flex-direction: column; }
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .viewer-wrap { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a2e; }
 #canvas { width: 100%; height: 100%; display: block; background: transparent; }
 .loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #555; font-size: 14px; z-index: 10; }
-.controls { background: #16213e; padding: 12px 20px; border-top: 1px solid #0f3460; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-.controls select, .controls button, .controls input { background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
+.controls { background: #16213e; padding: 8px 12px; border-top: 1px solid #0f3460; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.controls select, .controls button, .controls input { background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
 .controls button:hover { background: #1a4a7a; }
 .controls button:disabled { opacity: 0.4; cursor: default; }
-.controls label { font-size: 12px; color: #8899aa; }
-.controls input[type="range"] { width: 80px; }
+.controls label { font-size: 11px; color: #8899aa; }
+.controls input[type="range"] { width: 70px; }
 .anim-name { font-weight: 600; color: #e94560; }
-.info-bar { background: #0d1b2a; padding: 6px 20px; font-size: 11px; color: #6a7a8a; display: flex; gap: 20px; }
+.info-bar { background: #0d1b2a; padding: 6px 12px; font-size: 11px; color: #6a7a8a; display: flex; gap: 20px; }
 .gif-status { color: #e94560; font-size: 12px; }
 .hidden { display: none; }
+.mobile-toggle { display: none; position: fixed; top: 8px; left: 8px; z-index: 100; background: #16213e; border: 1px solid #0f3460; color: #e0e0e0; border-radius: 6px; padding: 8px 12px; font-size: 18px; cursor: pointer; }
+.sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 49; }
+
+@media (max-width: 768px) {
+  .mobile-toggle { display: block; }
+  .sidebar { position: fixed; left: 0; top: 0; height: 100vh; z-index: 50; transform: translateX(-100%); transition: transform 0.25s ease; width: 75%; max-width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-backdrop.open { display: block; }
+  .controls { padding: 6px 8px; gap: 6px; }
+  .controls select, .controls button { padding: 5px 8px; font-size: 11px; }
+  .controls input[type="range"] { width: 50px; }
+  .info-bar { font-size: 10px; padding: 4px 8px; }
+}
 </style>
 </head>
 <body>
+<button class="mobile-toggle" id="mobileToggle">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 <div class="app">
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <h1>🎭 Disney Heroes</h1>
     <ul class="char-list" id="charList"></ul>
   </aside>
@@ -52,6 +67,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
       <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1">
       <span id="speedVal" style="font-size:12px;width:30px">1.0×</span>
       <button id="resetBtn" disabled>🔄 Reset Pose</button>
+      <button id="gifBtn" disabled>📥 GIF</button>
       <span class="gif-status" id="gifStatus"></span>
     </div>
   </main>
@@ -408,6 +424,22 @@ const loadingEl = document.getElementById('loading');
 
 canvas = document.getElementById('canvas');
 
+// Mobile sidebar toggle
+const mobileToggle = document.getElementById('mobileToggle');
+const sidebarEl = document.getElementById('sidebar');
+const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+mobileToggle.onclick = () => {
+  sidebarEl.classList.toggle('open');
+  sidebarBackdrop.classList.toggle('open');
+};
+sidebarBackdrop.onclick = () => {
+  sidebarEl.classList.remove('open');
+  sidebarBackdrop.classList.remove('open');
+};
+
+// GIF button
+const gifBtn = document.getElementById('gifBtn');
+
 speedSlider.oninput = () => {
   speedMul = parseFloat(speedSlider.value);
   document.getElementById('speedVal').textContent = speedMul.toFixed(1) + '×';
@@ -438,6 +470,9 @@ initRenderer();
 async function loadCharacter(char, li) {
   document.querySelectorAll('.char-item').forEach(el => el.classList.remove('active'));
   li.classList.add('active');
+  // Close sidebar on mobile after selecting
+  sidebarEl.classList.remove('open');
+  sidebarBackdrop.classList.remove('open');
   
   loadingEl.style.display = 'block';
   loadingEl.textContent = `Loading ${char.display}...`;
@@ -446,6 +481,7 @@ async function loadCharacter(char, li) {
   skinSelect.disabled = true;
   playBtn.disabled = true;
   resetBtn.disabled = true;
+  gifBtn.disabled = true;
   
   if (animFrame) cancelAnimationFrame(animFrame);
   currentSkeleton = null;
@@ -456,7 +492,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=14');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=15');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -469,21 +505,36 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=14');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=15');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=14';
+    img.src = basePath + 'texture.png?v=15';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
     });
     
-    // Create WebGL texture
+    // Premultiply alpha to fix seam artifacts at mesh boundaries
+    const pmaCanvas = document.createElement('canvas');
+    pmaCanvas.width = img.width;
+    pmaCanvas.height = img.height;
+    const pmaCtx = pmaCanvas.getContext('2d');
+    pmaCtx.drawImage(img, 0, 0);
+    const pmaData = pmaCtx.getImageData(0, 0, img.width, img.height);
+    const px = pmaData.data;
+    for (let i = 0; i < px.length; i += 4) {
+      px[i] = Math.round(px[i] * px[i+3] / 255);
+      px[i+1] = Math.round(px[i+1] * px[i+3] / 255);
+      px[i+2] = Math.round(px[i+2] * px[i+3] / 255);
+    }
+    pmaCtx.putImageData(pmaData, 0, 0);
+    
+    // Create WebGL texture from premultiplied canvas
     if (currentGLTexture) currentGLTexture.dispose();
-    currentGLTexture = new spine.webgl.GLTexture(sceneRenderer.context, img, false);
+    currentGLTexture = new spine.webgl.GLTexture(sceneRenderer.context, pmaCanvas, false);
     
     // Create texture atlas
     currentAtlas = new spine.TextureAtlas(atlasText, function(path) {
@@ -537,6 +588,7 @@ async function loadCharacter(char, li) {
     
     // Set up animation
     const stateData = new spine.AnimationStateData(skeletonData);
+    stateData.defaultMix = 0.15;
     currentState = new spine.AnimationState(stateData);
     
     // Populate animation dropdown
@@ -574,6 +626,7 @@ async function loadCharacter(char, li) {
     animSelect.disabled = false;
     playBtn.disabled = false;
     resetBtn.disabled = false;
+    gifBtn.disabled = false;
     loadingEl.style.display = 'none';
     
     infoBar.textContent = `${char.display} — ${skeletonData.bones.length} bones, ${skeletonData.slots.length} slots, ${animNames.length} animations — WebGL`;
@@ -586,6 +639,103 @@ async function loadCharacter(char, li) {
     loadingEl.textContent = `Error: ${err.message}`;
     infoBar.textContent = `Error loading ${char.display}: ${err.message}`;
     console.error(err);
+  }
+}
+
+// GIF recording using canvas capture
+let gifFrames = [];
+let gifRecording = false;
+let gifFrameCount = 0;
+const GIF_FPS = 15;
+const GIF_DURATION = 3; // seconds
+const GIF_MAX_FRAMES = GIF_FPS * GIF_DURATION;
+
+gifBtn.onclick = () => {
+  if (gifRecording) return;
+  gifRecording = true;
+  gifFrames = [];
+  gifFrameCount = 0;
+  gifBtn.disabled = true;
+  gifBtn.textContent = '⏳ Capturing...';
+  document.getElementById('gifStatus').textContent = `Recording 0/${GIF_MAX_FRAMES} frames`;
+  
+  let gifLastTime = performance.now();
+  const gifInterval = 1000 / GIF_FPS;
+  let gifAccum = 0;
+  
+  const gifLoop = () => {
+    if (!gifRecording) return;
+    const now = performance.now();
+    const dt = now - gifLastTime;
+    gifLastTime = now;
+    gifAccum += dt;
+    
+    if (gifAccum >= gifInterval) {
+      gifAccum = 0;
+      // Capture canvas frame
+      canvas.toBlob((blob) => {
+        if (blob) {
+          gifFrames.push(blob);
+        }
+        gifFrameCount++;
+        document.getElementById('gifStatus').textContent = `Recording ${gifFrameCount}/${GIF_MAX_FRAMES} frames`;
+        
+        if (gifFrameCount >= GIF_MAX_FRAMES) {
+          gifRecording = false;
+          gifBtn.disabled = false;
+          gifBtn.textContent = '📥 GIF';
+          downloadGif();
+        }
+      }, 'image/png');
+    }
+    if (gifRecording) requestAnimationFrame(gifLoop);
+  };
+  gifLoop();
+};
+
+async function downloadGif() {
+  document.getElementById('gifStatus').textContent = 'Encoding GIF...';
+  try {
+    // Use gif.js library loaded dynamically
+    if (typeof GIF === 'undefined') {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js';
+      await new Promise((res, rej) => { script.onload = res; script.onerror = rej; document.head.appendChild(script); });
+    }
+    
+    const gif = new GIF({
+      workers: 2,
+      quality: 10,
+      width: canvas.width,
+      height: canvas.height,
+      workerScript: 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js'
+    });
+    
+    for (const blob of gifFrames) {
+      const img = await createImageBitmap(blob);
+      const tmpCanvas = document.createElement('canvas');
+      tmpCanvas.width = canvas.width;
+      tmpCanvas.height = canvas.height;
+      tmpCanvas.getContext('2d').drawImage(img, 0, 0);
+      gif.addFrame(tmpCanvas, { delay: 1000 / GIF_FPS });
+    }
+    
+    gif.on('finished', (blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
+      a.click();
+      URL.revokeObjectURL(url);
+      document.getElementById('gifStatus').textContent = 'GIF downloaded!';
+      setTimeout(() => { document.getElementById('gifStatus').textContent = ''; }, 3000);
+    });
+    
+    gif.render();
+  } catch (e) {
+    document.getElementById('gifStatus').textContent = 'GIF error: ' + e.message;
+    gifBtn.disabled = false;
+    gifBtn.textContent = '📥 GIF';
   }
 }
 
@@ -605,12 +755,12 @@ function renderLoop() {
   
   // Clear canvas
   const gl = sceneRenderer.context.gl;
-  gl.clearColor(0.102, 0.102, 0.180, 0);
+  gl.clearColor(0.102, 0.102, 0.180, 1);
   gl.clear(gl.COLOR_BUFFER_BIT);
   
   if (currentSkeleton) {
     sceneRenderer.begin();
-    sceneRenderer.drawSkeleton(currentSkeleton, false);
+    sceneRenderer.drawSkeleton(currentSkeleton, true);
     sceneRenderer.end();
   }
 }
