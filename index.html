@@ -909,27 +909,38 @@ function getSkeletonBounds() {
 
 function resizeAndFit() {
   const wrap = canvas.parentElement;
+
+  // Reset canvas size first so it doesn't block the parent's flex recalc
+  // (important on mobile orientation changes)
+  canvas.style.width = '0px';
+  canvas.style.height = '0px';
+
   const w = wrap.clientWidth || window.innerWidth;
   const h = wrap.clientHeight || window.innerHeight;
   if (w <= 0 || h <= 0) return;
-  canvas.width = w;
-  canvas.height = h;
+
+  // High-DPI / Retina support — canvas uses physical pixels
+  const dpr = Math.min(window.devicePixelRatio || 1, 3); // cap at 3x for perf
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
   canvas.style.width = w + 'px';
   canvas.style.height = h + 'px';
+
   if (sceneRenderer) {
     sceneRenderer.context.gl.viewport(0, 0, canvas.width, canvas.height);
 
     const b = getSkeletonBounds();
     let skelX = b.x, skelY = b.y, skelW = b.w, skelH = b.h;
 
-    // Padding around skeleton
-    const pad = 1.15;
-    const targetW = Math.max(skelW * pad, 1);
-    const targetH = Math.max(skelH * pad, 1);
+    // Dynamic padding: wider in portrait to leave room for arm/weapon animations
+    const isPortrait = h > w;
+    const padX = isPortrait ? 1.6 : 1.15;
+    const padY = 1.15;
+
+    const targetW = Math.max(skelW * padX, 1);
+    const targetH = Math.max(skelH * padY, 1);
 
     // Standard 'contain': scale so skeleton fits entirely within canvas
-    // scale = min(canvas_w / targetW, canvas_h / targetH)
-    // viewport = canvas / scale (world units visible)
     const scale = Math.min(w / targetW, h / targetH);
     const vpW = w / scale;
     const vpH = h / scale;
