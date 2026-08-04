@@ -4851,7 +4851,7 @@ var spine;
 								throw new Error("Slot not found: " + offsetMap.slot);
 							while (originalIndex != slotIndex)
 								unchanged[unchangedIndex++] = originalIndex++;
-							drawOrder[originalIndex + offsetMap.offset] = originalIndex++;
+							drawOrder[originalIndex + (offsetMap.offset | 0)] = originalIndex++;
 						}
 						while (originalIndex < slotCount)
 							unchanged[unchangedIndex++] = originalIndex++;
