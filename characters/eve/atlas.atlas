@@ -1,0 +1,160 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm-b
+  rotate: false
+  xy: 1451, 296
+  size: 75, 209
+  orig: 75, 209
+  offset: 0, 0
+  index: -1
+arm-f
+  rotate: false
+  xy: 870, 281
+  size: 182, 224
+  orig: 182, 224
+  offset: 0, 0
+  index: -1
+attack_arm-f
+  rotate: false
+  xy: 1056, 393
+  size: 290, 112
+  orig: 290, 112
+  offset: 0, 0
+  index: -1
+attack_gun
+  rotate: false
+  xy: 1056, 337
+  size: 148, 52
+  orig: 148, 52
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 294, 144
+  size: 284, 361
+  orig: 284, 361
+  offset: 0, 0
+  index: -1
+body-b
+  rotate: false
+  xy: 294, 46
+  size: 281, 94
+  orig: 281, 94
+  offset: 0, 0
+  index: -1
+body_shadow
+  rotate: false
+  xy: 1350, 250
+  size: 97, 255
+  orig: 97, 255
+  offset: 0, 0
+  index: -1
+entrance_body
+  rotate: false
+  xy: 2, 24
+  size: 288, 481
+  orig: 288, 481
+  offset: 0, 0
+  index: -1
+eye-b
+  rotate: false
+  xy: 1266, 345
+  size: 20, 44
+  orig: 20, 44
+  offset: 0, 0
+  index: -1
+eye-b2
+  rotate: false
+  xy: 1739, 455
+  size: 21, 50
+  orig: 21, 50
+  offset: 0, 0
+  index: -1
+eye-f
+  rotate: false
+  xy: 1208, 341
+  size: 54, 48
+  orig: 54, 48
+  offset: 0, 0
+  index: -1
+eye-f2
+  rotate: false
+  xy: 1626, 450
+  size: 56, 55
+  orig: 56, 55
+  offset: 0, 0
+  index: -1
+eye_glow-b
+  rotate: false
+  xy: 1530, 338
+  size: 56, 76
+  orig: 56, 76
+  offset: 0, 0
+  index: -1
+eye_glow-b2
+  rotate: false
+  xy: 1590, 348
+  size: 43, 66
+  orig: 43, 66
+  offset: 0, 0
+  index: -1
+eye_glow-f
+  rotate: false
+  xy: 696, 170
+  size: 91, 92
+  orig: 91, 92
+  offset: 0, 0
+  index: -1
+eye_glow-f2
+  rotate: false
+  xy: 1530, 418
+  size: 92, 87
+  orig: 92, 87
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 582, 266
+  size: 284, 239
+  orig: 284, 239
+  offset: 0, 0
+  index: -1
+light-1
+  rotate: false
+  xy: 2, 2
+  size: 19, 18
+  orig: 19, 18
+  offset: 0, 0
+  index: -1
+skill1_gun
+  rotate: false
+  xy: 1056, 307
+  size: 93, 26
+  orig: 93, 26
+  offset: 0, 0
+  index: -1
+skill1_scope
+  rotate: false
+  xy: 791, 179
+  size: 73, 83
+  orig: 73, 83
+  offset: 0, 0
+  index: -1
+skill2_light_blue
+  rotate: false
+  xy: 1686, 455
+  size: 49, 50
+  orig: 49, 50
+  offset: 0, 0
+  index: -1
+skill2_light_green
+  rotate: false
+  xy: 582, 151
+  size: 110, 111
+  orig: 110, 111
+  offset: 0, 0
+  index: -1

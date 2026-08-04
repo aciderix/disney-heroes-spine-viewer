@@ -1,0 +1,384 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+car
+  rotate: false
+  xy: 353, 220
+  size: 632, 290
+  orig: 632, 290
+  offset: 0, 0
+  index: -1
+car_detail1-b
+  rotate: false
+  xy: 1900, 341
+  size: 146, 109
+  orig: 146, 109
+  offset: 0, 0
+  index: -1
+car_detail2-b
+  rotate: false
+  xy: 1606, 399
+  size: 108, 111
+  orig: 108, 111
+  offset: 0, 0
+  index: -1
+car_fin-b
+  rotate: false
+  xy: 1491, 268
+  size: 154, 18
+  orig: 154, 18
+  offset: 0, 0
+  index: -1
+car_fin-f
+  rotate: false
+  xy: 1334, 223
+  size: 173, 40
+  orig: 173, 40
+  offset: 0, 0
+  index: -1
+exhaust
+  rotate: false
+  xy: 1860, 89
+  size: 108, 31
+  orig: 108, 31
+  offset: 0, 0
+  index: -1
+eyeball-b
+  rotate: false
+  xy: 1860, 124
+  size: 173, 99
+  orig: 173, 99
+  offset: 0, 0
+  index: -1
+eyelid_lower
+  rotate: false
+  xy: 989, 221
+  size: 160, 36
+  orig: 160, 36
+  offset: 0, 0
+  index: -1
+eyelid_upper
+  rotate: false
+  xy: 608, 7
+  size: 172, 61
+  orig: 172, 61
+  offset: 0, 0
+  index: -1
+high_light1
+  rotate: false
+  xy: 1291, 11
+  size: 137, 75
+  orig: 137, 75
+  offset: 0, 0
+  index: -1
+high_light2
+  rotate: false
+  xy: 2, 13
+  size: 211, 86
+  orig: 211, 86
+  offset: 0, 0
+  index: -1
+high_light3
+  rotate: false
+  xy: 1679, 28
+  size: 177, 67
+  orig: 177, 67
+  offset: 0, 0
+  index: -1
+high_light4
+  rotate: false
+  xy: 1166, 90
+  size: 343, 127
+  orig: 343, 127
+  offset: 0, 0
+  index: -1
+mouth-b
+  rotate: false
+  xy: 1550, 15
+  size: 125, 73
+  orig: 125, 73
+  offset: 0, 0
+  index: -1
+mouth-f
+  rotate: false
+  xy: 1606, 291
+  size: 143, 104
+  orig: 143, 104
+  offset: 0, 0
+  index: -1
+mouth_angry
+  rotate: false
+  xy: 1753, 291
+  size: 143, 104
+  orig: 143, 104
+  offset: 0, 0
+  index: -1
+mouth_closed
+  rotate: false
+  xy: 1511, 221
+  size: 100, 43
+  orig: 100, 43
+  offset: 0, 0
+  index: -1
+mouth_sad
+  rotate: false
+  xy: 1900, 233
+  size: 143, 104
+  orig: 143, 104
+  offset: 0, 0
+  index: -1
+pupil-b
+  rotate: false
+  xy: 1009, 2
+  size: 57, 77
+  orig: 57, 77
+  offset: 0, 0
+  index: -1
+pupil-f
+  rotate: false
+  xy: 1497, 12
+  size: 49, 74
+  orig: 49, 74
+  offset: 0, 0
+  index: -1
+roof_car1
+  rotate: false
+  xy: 1721, 454
+  size: 308, 56
+  orig: 308, 56
+  offset: 0, 0
+  index: -1
+roof_car2
+  rotate: false
+  xy: 1809, 260
+  size: 87, 27
+  orig: 87, 27
+  offset: 0, 0
+  index: -1
+skill1_eyeball-b
+  rotate: false
+  xy: 353, 104
+  size: 52, 112
+  orig: 52, 112
+  offset: 0, 0
+  index: -1
+skill1_eyeball-f
+  rotate: false
+  xy: 1638, 99
+  size: 79, 123
+  orig: 79, 123
+  offset: 0, 0
+  index: -1
+skill1_eyelid-b
+  rotate: false
+  xy: 784, 9
+  size: 36, 59
+  orig: 36, 59
+  offset: 0, 0
+  index: -1
+skill1_eyelid-f
+  rotate: false
+  xy: 1432, 12
+  size: 61, 74
+  orig: 61, 74
+  offset: 0, 0
+  index: -1
+skill1_hubcap
+  rotate: false
+  xy: 861, 11
+  size: 77, 57
+  orig: 77, 57
+  offset: 0, 0
+  index: -1
+skill1_mini_wheel-b
+  rotate: false
+  xy: 942, 2
+  size: 63, 77
+  orig: 63, 77
+  offset: 0, 0
+  index: -1
+skill1_mini_wheel-f
+  rotate: false
+  xy: 1228, 10
+  size: 59, 76
+  orig: 59, 76
+  offset: 0, 0
+  index: -1
+skill1_mini_wheel_light-b
+  rotate: false
+  xy: 1615, 226
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: -1
+skill1_mini_wheel_light-f
+  rotate: false
+  xy: 824, 9
+  size: 33, 59
+  orig: 33, 59
+  offset: 0, 0
+  index: -1
+skill1_mouth
+  rotate: false
+  xy: 1649, 235
+  size: 98, 52
+  orig: 98, 52
+  offset: 0, 0
+  index: -1
+skill1_pupil-b
+  rotate: false
+  xy: 1772, 400
+  size: 37, 50
+  orig: 37, 50
+  offset: 0, 0
+  index: -1
+skill1_pupil-f
+  rotate: false
+  xy: 1751, 235
+  size: 43, 52
+  orig: 43, 52
+  offset: 0, 0
+  index: -1
+skill1_tractor
+  rotate: false
+  xy: 2, 103
+  size: 347, 407
+  orig: 347, 407
+  offset: 0, 0
+  index: -1
+skill1_wheel_back
+  rotate: false
+  xy: 1240, 267
+  size: 247, 243
+  orig: 247, 243
+  offset: 0, 0
+  index: -1
+skill1_wheel_center
+  rotate: false
+  xy: 1145, 6
+  size: 79, 78
+  orig: 79, 78
+  offset: 0, 0
+  index: -1
+skill1_wheel_front
+  rotate: false
+  xy: 989, 261
+  size: 247, 249
+  orig: 247, 249
+  offset: 0, 0
+  index: -1
+skill1_wheel_light-f
+  rotate: false
+  xy: 1491, 290
+  size: 111, 220
+  orig: 111, 220
+  offset: 0, 0
+  index: -1
+skill1_wheel_middle
+  rotate: false
+  xy: 409, 21
+  size: 195, 195
+  orig: 195, 195
+  offset: 0, 0
+  index: -1
+skill1_wheel_mini_center
+  rotate: false
+  xy: 1718, 399
+  size: 50, 51
+  orig: 50, 51
+  offset: 0, 0
+  index: -1
+spoiler
+  rotate: false
+  xy: 217, 16
+  size: 188, 83
+  orig: 188, 83
+  offset: 0, 0
+  index: -1
+spoiler_light
+  rotate: false
+  xy: 1813, 403
+  size: 76, 47
+  orig: 76, 47
+  offset: 0, 0
+  index: -1
+teeth_lower
+  rotate: false
+  xy: 1153, 221
+  size: 59, 36
+  orig: 59, 36
+  offset: 0, 0
+  index: -1
+teeth_upper
+  rotate: false
+  xy: 1216, 223
+  size: 114, 34
+  orig: 114, 34
+  offset: 0, 0
+  index: -1
+tonge
+  rotate: false
+  xy: 1809, 227
+  size: 86, 29
+  orig: 86, 29
+  offset: 0, 0
+  index: -1
+wheel-b
+  rotate: false
+  xy: 906, 83
+  size: 124, 133
+  orig: 124, 133
+  offset: 0, 0
+  index: -1
+wheel_1-f
+  rotate: false
+  xy: 608, 72
+  size: 145, 144
+  orig: 145, 144
+  offset: 0, 0
+  index: -1
+wheel_2-f
+  rotate: false
+  xy: 757, 72
+  size: 145, 144
+  orig: 145, 144
+  offset: 0, 0
+  index: -1
+wheel_detail-f
+  rotate: false
+  xy: 1513, 92
+  size: 121, 125
+  orig: 121, 125
+  offset: 0, 0
+  index: -1
+wheel_detail_blur-f
+  rotate: false
+  xy: 1034, 88
+  size: 128, 129
+  orig: 128, 129
+  offset: 0, 0
+  index: -1
+wheel_light-b
+  rotate: false
+  xy: 1809, 122
+  size: 42, 101
+  orig: 42, 101
+  offset: 0, 0
+  index: -1
+wheel_light-f
+  rotate: false
+  xy: 1721, 109
+  size: 84, 122
+  orig: 84, 122
+  offset: 0, 0
+  index: -1
+window_light
+  rotate: false
+  xy: 1070, 5
+  size: 71, 79
+  orig: 71, 79
+  offset: 0, 0
+  index: -1

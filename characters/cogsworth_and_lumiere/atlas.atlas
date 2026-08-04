@@ -1,0 +1,804 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bottle
+  rotate: false
+  xy: 215, 391
+  size: 358, 119
+  orig: 358, 119
+  offset: 0, 0
+  index: -1
+bottle_close_cap
+  rotate: false
+  xy: 1202, 390
+  size: 84, 54
+  orig: 84, 54
+  offset: 0, 0
+  index: -1
+bottle_open_cap
+  rotate: false
+  xy: 1607, 433
+  size: 84, 77
+  orig: 84, 77
+  offset: 0, 0
+  index: -1
+cogsworth_attack_fingers-b
+  rotate: false
+  xy: 1145, 313
+  size: 29, 41
+  orig: 29, 41
+  offset: 0, 0
+  index: -1
+cogsworth_attack_hand-b
+  rotate: false
+  xy: 1211, 320
+  size: 36, 41
+  orig: 36, 41
+  offset: 0, 0
+  index: -1
+cogsworth_attack_thumb-b
+  rotate: false
+  xy: 1878, 388
+  size: 26, 19
+  orig: 26, 19
+  offset: 0, 0
+  index: -1
+cogsworth_bell
+  rotate: false
+  xy: 1290, 385
+  size: 41, 59
+  orig: 41, 59
+  offset: 0, 0
+  index: -1
+cogsworth_body
+  rotate: false
+  xy: 2, 59
+  size: 173, 169
+  orig: 173, 169
+  offset: 0, 0
+  index: -1
+cogsworth_body_inner
+  rotate: false
+  xy: 925, 403
+  size: 104, 107
+  orig: 104, 107
+  offset: 0, 0
+  index: -1
+cogsworth_body_shadow
+  rotate: false
+  xy: 1556, 416
+  size: 47, 30
+  orig: 47, 30
+  offset: 0, 0
+  index: -1
+cogsworth_clock_handle-b
+  rotate: false
+  xy: 989, 326
+  size: 25, 35
+  orig: 25, 35
+  offset: 0, 0
+  index: -1
+cogsworth_clock_handle-f
+  rotate: false
+  xy: 1656, 379
+  size: 31, 50
+  orig: 31, 50
+  offset: 0, 0
+  index: -1
+cogsworth_entrance_hand-b
+  rotate: false
+  xy: 1992, 423
+  size: 53, 50
+  orig: 53, 50
+  offset: 0, 0
+  index: -1
+cogsworth_entrance_lower_arm-b
+  rotate: false
+  xy: 854, 392
+  size: 65, 38
+  orig: 65, 38
+  offset: 0, 0
+  index: -1
+cogsworth_entrance_upper_arm-b
+  rotate: false
+  xy: 539, 226
+  size: 50, 69
+  orig: 50, 69
+  offset: 0, 0
+  index: -1
+cogsworth_eyeball-b
+  rotate: false
+  xy: 1171, 364
+  size: 27, 29
+  orig: 27, 29
+  offset: 0, 0
+  index: -1
+cogsworth_eyeball-f
+  rotate: false
+  xy: 1384, 353
+  size: 25, 28
+  orig: 25, 28
+  offset: 0, 0
+  index: -1
+cogsworth_eyebrow-b
+  rotate: false
+  xy: 651, 306
+  size: 13, 20
+  orig: 13, 20
+  offset: 0, 0
+  index: -1
+cogsworth_eyebrow-f
+  rotate: false
+  xy: 1016, 311
+  size: 30, 11
+  orig: 30, 11
+  offset: 0, 0
+  index: -1
+cogsworth_face
+  rotate: false
+  xy: 379, 226
+  size: 156, 161
+  orig: 156, 161
+  offset: 0, 0
+  index: -1
+cogsworth_hand-b
+  rotate: false
+  xy: 1992, 477
+  size: 54, 33
+  orig: 54, 33
+  offset: 0, 0
+  index: -1
+cogsworth_hand-f
+  rotate: false
+  xy: 1918, 393
+  size: 52, 35
+  orig: 52, 35
+  offset: 0, 0
+  index: -1
+cogsworth_hit_lower_lip
+  rotate: false
+  xy: 929, 309
+  size: 44, 13
+  orig: 44, 13
+  offset: 0, 0
+  index: -1
+cogsworth_hit_lower_lip-b
+  rotate: false
+  xy: 1018, 326
+  size: 44, 29
+  orig: 44, 29
+  offset: 0, 0
+  index: -1
+cogsworth_hit_lower_lip-b1
+  rotate: false
+  xy: 329, 2
+  size: 14, 12
+  orig: 14, 12
+  offset: 0, 0
+  index: -1
+cogsworth_hit_teeth
+  rotate: false
+  xy: 1338, 355
+  size: 42, 26
+  orig: 42, 26
+  offset: 0, 0
+  index: -1
+cogsworth_hit_upper_lip
+  rotate: false
+  xy: 1459, 393
+  size: 47, 55
+  orig: 47, 55
+  offset: 0, 0
+  index: -1
+cogsworth_inner_mouth
+  rotate: false
+  xy: 1330, 323
+  size: 40, 28
+  orig: 40, 28
+  offset: 0, 0
+  index: -1
+cogsworth_leg-b
+  rotate: false
+  xy: 759, 345
+  size: 81, 47
+  orig: 81, 47
+  offset: 0, 0
+  index: -1
+cogsworth_leg-b1
+  rotate: false
+  xy: 2, 4
+  size: 96, 51
+  orig: 96, 51
+  offset: 0, 0
+  index: -1
+cogsworth_leg-f
+  rotate: false
+  xy: 1111, 448
+  size: 115, 62
+  orig: 115, 62
+  offset: 0, 0
+  index: -1
+cogsworth_leg-f1
+  rotate: false
+  xy: 1323, 456
+  size: 95, 54
+  orig: 95, 54
+  offset: 0, 0
+  index: -1
+cogsworth_lower_arm-b
+  rotate: false
+  xy: 1103, 358
+  size: 64, 35
+  orig: 64, 35
+  offset: 0, 0
+  index: -1
+cogsworth_lower_arm-f
+  rotate: false
+  xy: 593, 238
+  size: 55, 59
+  orig: 55, 59
+  offset: 0, 0
+  index: -1
+cogsworth_lower_body
+  rotate: false
+  xy: 577, 426
+  size: 180, 84
+  orig: 180, 84
+  offset: 0, 0
+  index: -1
+cogsworth_lower_eyelid-b
+  rotate: false
+  xy: 102, 2
+  size: 21, 9
+  orig: 21, 9
+  offset: 0, 0
+  index: -1
+cogsworth_lower_eyelid-b1
+  rotate: false
+  xy: 668, 306
+  size: 19, 17
+  orig: 19, 17
+  offset: 0, 0
+  index: -1
+cogsworth_lower_eyelid-f
+  rotate: false
+  xy: 615, 173
+  size: 21, 17
+  orig: 21, 17
+  offset: 0, 0
+  index: -1
+cogsworth_lower_lip
+  rotate: false
+  xy: 492, 2
+  size: 41, 44
+  orig: 41, 44
+  offset: 0, 0
+  index: -1
+cogsworth_nose
+  rotate: false
+  xy: 640, 168
+  size: 23, 24
+  orig: 23, 24
+  offset: 0, 0
+  index: -1
+cogsworth_pupil-b
+  rotate: false
+  xy: 1398, 385
+  size: 10, 11
+  orig: 10, 11
+  offset: 0, 0
+  index: -1
+cogsworth_pupil-f
+  rotate: false
+  xy: 691, 309
+  size: 11, 14
+  orig: 11, 14
+  offset: 0, 0
+  index: -1
+cogsworth_skill2_face
+  rotate: false
+  xy: 215, 215
+  size: 160, 172
+  orig: 160, 172
+  offset: 0, 0
+  index: -1
+cogsworth_tongue
+  rotate: false
+  xy: 1845, 389
+  size: 29, 18
+  orig: 29, 18
+  offset: 0, 0
+  index: -1
+cogsworth_upper_arm-b
+  rotate: false
+  xy: 519, 160
+  size: 66, 62
+  orig: 66, 62
+  offset: 0, 0
+  index: -1
+cogsworth_upper_arm-f
+  rotate: false
+  xy: 519, 97
+  size: 64, 59
+  orig: 64, 59
+  offset: 0, 0
+  index: -1
+cogsworth_upper_arm-f1
+  rotate: false
+  xy: 102, 15
+  size: 70, 40
+  orig: 70, 40
+  offset: 0, 0
+  index: -1
+cogsworth_upper_eyelid-b
+  rotate: false
+  xy: 1439, 379
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1
+cogsworth_upper_eyelid-b1
+  rotate: false
+  xy: 587, 110
+  size: 23, 22
+  orig: 23, 22
+  offset: 0, 0
+  index: -1
+cogsworth_upper_eyelid-f
+  rotate: false
+  xy: 302, 2
+  size: 23, 12
+  orig: 23, 12
+  offset: 0, 0
+  index: -1
+cogsworth_upper_lip
+  rotate: false
+  xy: 1607, 383
+  size: 45, 46
+  orig: 45, 46
+  offset: 0, 0
+  index: -1
+cogsworth_victory_finger-b
+  rotate: false
+  xy: 1066, 313
+  size: 32, 42
+  orig: 32, 42
+  offset: 0, 0
+  index: -1
+cogsworth_victory_finger_patch-b
+  rotate: false
+  xy: 179, 215
+  size: 13, 13
+  orig: 13, 13
+  offset: 0, 0
+  index: -1
+cogsworth_victory_hand-b
+  rotate: false
+  xy: 1403, 400
+  size: 52, 48
+  orig: 52, 48
+  offset: 0, 0
+  index: -1
+cogsworth_victory_lower_arm-b
+  rotate: false
+  xy: 1510, 390
+  size: 42, 56
+  orig: 42, 56
+  offset: 0, 0
+  index: -1
+cogsworth_victory_upper_arm-b
+  rotate: false
+  xy: 539, 299
+  size: 45, 88
+  orig: 45, 88
+  offset: 0, 0
+  index: -1
+cork
+  rotate: false
+  xy: 537, 3
+  size: 50, 43
+  orig: 50, 43
+  offset: 0, 0
+  index: -1
+lumiere_eyeball-b
+  rotate: false
+  xy: 1178, 308
+  size: 29, 52
+  orig: 29, 52
+  offset: 0, 0
+  index: -1
+lumiere_eyeball-f
+  rotate: false
+  xy: 1251, 317
+  size: 29, 41
+  orig: 29, 41
+  offset: 0, 0
+  index: -1
+lumiere_eyebrow-b
+  rotate: false
+  xy: 638, 141
+  size: 19, 23
+  orig: 19, 23
+  offset: 0, 0
+  index: -1
+lumiere_eyebrow-f
+  rotate: false
+  xy: 589, 175
+  size: 22, 47
+  orig: 22, 47
+  offset: 0, 0
+  index: -1
+lumiere_face
+  rotate: false
+  xy: 179, 56
+  size: 126, 155
+  orig: 126, 155
+  offset: 0, 0
+  index: -1
+lumiere_flame-b
+  rotate: false
+  xy: 1774, 421
+  size: 68, 89
+  orig: 68, 89
+  offset: 0, 0
+  index: -1
+lumiere_flame-f
+  rotate: false
+  xy: 1846, 411
+  size: 68, 99
+  orig: 68, 99
+  offset: 0, 0
+  index: -1
+lumiere_flame_top
+  rotate: false
+  xy: 1033, 401
+  size: 74, 109
+  orig: 74, 109
+  offset: 0, 0
+  index: -1
+lumiere_hand-b
+  rotate: false
+  xy: 1918, 432
+  size: 70, 78
+  orig: 70, 78
+  offset: 0, 0
+  index: -1
+lumiere_hand-f
+  rotate: false
+  xy: 1695, 422
+  size: 75, 88
+  orig: 75, 88
+  offset: 0, 0
+  index: -1
+lumiere_hit_face
+  rotate: false
+  xy: 844, 342
+  size: 81, 46
+  orig: 81, 46
+  offset: 0, 0
+  index: -1
+lumiere_hit_inner_mouth
+  rotate: false
+  xy: 439, 2
+  size: 49, 44
+  orig: 49, 44
+  offset: 0, 0
+  index: -1
+lumiere_hit_lower_lip
+  rotate: false
+  xy: 1111, 397
+  size: 87, 47
+  orig: 87, 47
+  offset: 0, 0
+  index: -1
+lumiere_hit_lower_lip-b
+  rotate: false
+  xy: 615, 194
+  size: 20, 40
+  orig: 20, 40
+  offset: 0, 0
+  index: -1
+lumiere_hit_mouth_patch
+  rotate: false
+  xy: 1774, 389
+  size: 37, 28
+  orig: 37, 28
+  offset: 0, 0
+  index: -1
+lumiere_hit_neck
+  rotate: false
+  xy: 588, 330
+  size: 77, 57
+  orig: 77, 57
+  offset: 0, 0
+  index: -1
+lumiere_hit_tongue
+  rotate: false
+  xy: 759, 321
+  size: 44, 20
+  orig: 44, 20
+  offset: 0, 0
+  index: -1
+lumiere_hit_upper_lip
+  rotate: false
+  xy: 1556, 382
+  size: 47, 30
+  orig: 47, 30
+  offset: 0, 0
+  index: -1
+lumiere_hit_upper_teeth
+  rotate: false
+  xy: 844, 316
+  size: 41, 22
+  orig: 41, 22
+  offset: 0, 0
+  index: -1
+lumiere_inner_mouth
+  rotate: false
+  xy: 1335, 411
+  size: 64, 41
+  orig: 64, 41
+  offset: 0, 0
+  index: -1
+lumiere_lower_arm-b
+  rotate: false
+  xy: 1102, 313
+  size: 39, 41
+  orig: 39, 41
+  offset: 0, 0
+  index: -1
+lumiere_lower_arm-b1
+  rotate: false
+  xy: 1254, 362
+  size: 32, 24
+  orig: 32, 24
+  offset: 0, 0
+  index: -1
+lumiere_lower_arm-f
+  rotate: false
+  xy: 1691, 389
+  size: 51, 29
+  orig: 51, 29
+  offset: 0, 0
+  index: -1
+lumiere_lower_arm-f1
+  rotate: false
+  xy: 807, 318
+  size: 33, 23
+  orig: 33, 23
+  offset: 0, 0
+  index: -1
+lumiere_lower_body
+  rotate: false
+  xy: 761, 434
+  size: 160, 76
+  orig: 160, 76
+  offset: 0, 0
+  index: -1
+lumiere_lower_eyelid-b
+  rotate: false
+  xy: 615, 140
+  size: 19, 29
+  orig: 19, 29
+  offset: 0, 0
+  index: -1
+lumiere_lower_eyelid-f
+  rotate: false
+  xy: 1374, 326
+  size: 26, 23
+  orig: 26, 23
+  offset: 0, 0
+  index: -1
+lumiere_lower_lip
+  rotate: false
+  xy: 1422, 452
+  size: 91, 58
+  orig: 91, 58
+  offset: 0, 0
+  index: -1
+lumiere_lower_lip-b
+  rotate: false
+  xy: 639, 196
+  size: 20, 38
+  orig: 20, 38
+  offset: 0, 0
+  index: -1
+lumiere_lower_teeth
+  rotate: false
+  xy: 1290, 361
+  size: 44, 20
+  orig: 44, 20
+  offset: 0, 0
+  index: -1
+lumiere_mouth_patch
+  rotate: false
+  xy: 977, 308
+  size: 35, 14
+  orig: 35, 14
+  offset: 0, 0
+  index: -1
+lumiere_neck
+  rotate: false
+  xy: 669, 365
+  size: 82, 57
+  orig: 82, 57
+  offset: 0, 0
+  index: -1
+lumiere_neck_shadow
+  rotate: false
+  xy: 1021, 359
+  size: 78, 38
+  orig: 78, 38
+  offset: 0, 0
+  index: -1
+lumiere_pupil-b
+  rotate: false
+  xy: 1439, 358
+  size: 9, 17
+  orig: 9, 17
+  offset: 0, 0
+  index: -1
+lumiere_pupil-f
+  rotate: false
+  xy: 1974, 410
+  size: 9, 18
+  orig: 9, 18
+  offset: 0, 0
+  index: -1
+lumiere_shoulder-b
+  rotate: false
+  xy: 1746, 383
+  size: 24, 35
+  orig: 24, 35
+  offset: 0, 0
+  index: -1
+lumiere_shoulder-f
+  rotate: false
+  xy: 1413, 358
+  size: 22, 38
+  orig: 22, 38
+  offset: 0, 0
+  index: -1
+lumiere_skill2_face
+  rotate: false
+  xy: 309, 18
+  size: 126, 193
+  orig: 126, 193
+  offset: 0, 0
+  index: -1
+lumiere_skill2_holder
+  rotate: false
+  xy: 1230, 448
+  size: 89, 62
+  orig: 89, 62
+  offset: 0, 0
+  index: -1
+lumiere_skill2_holder-b
+  rotate: false
+  xy: 669, 327
+  size: 86, 34
+  orig: 86, 34
+  offset: 0, 0
+  index: -1
+lumiere_skill3_candle-b
+  rotate: false
+  xy: 176, 2
+  size: 60, 50
+  orig: 60, 50
+  offset: 0, 0
+  index: -1
+lumiere_skill3_face
+  rotate: false
+  xy: 1517, 450
+  size: 86, 60
+  orig: 86, 60
+  offset: 0, 0
+  index: -1
+lumiere_skill3_hand-b
+  rotate: false
+  xy: 519, 50
+  size: 65, 43
+  orig: 65, 43
+  offset: 0, 0
+  index: -1
+lumiere_skill3_hand-b1
+  rotate: false
+  xy: 761, 396
+  size: 89, 34
+  orig: 89, 34
+  offset: 0, 0
+  index: -1
+lumiere_skill3_hand-b2
+  rotate: false
+  xy: 577, 391
+  size: 88, 31
+  orig: 88, 31
+  offset: 0, 0
+  index: -1
+lumiere_skill3_lower_lip
+  rotate: false
+  xy: 929, 365
+  size: 88, 34
+  orig: 88, 34
+  offset: 0, 0
+  index: -1
+lumiere_skill3_lower_lip-b
+  rotate: false
+  xy: 889, 309
+  size: 36, 29
+  orig: 36, 29
+  offset: 0, 0
+  index: -1
+lumiere_skill3_nose
+  rotate: false
+  xy: 1284, 329
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+lumiere_skill3_upper_lip
+  rotate: false
+  xy: 929, 326
+  size: 56, 35
+  orig: 56, 35
+  offset: 0, 0
+  index: -1
+lumiere_upper_arm-b
+  rotate: false
+  xy: 1335, 385
+  size: 59, 22
+  orig: 59, 22
+  offset: 0, 0
+  index: -1
+lumiere_upper_arm-f
+  rotate: false
+  xy: 240, 2
+  size: 58, 50
+  orig: 58, 50
+  offset: 0, 0
+  index: -1
+lumiere_upper_body
+  rotate: false
+  xy: 439, 50
+  size: 76, 172
+  orig: 76, 172
+  offset: 0, 0
+  index: -1
+lumiere_upper_eyelid-b
+  rotate: false
+  xy: 589, 136
+  size: 22, 35
+  orig: 22, 35
+  offset: 0, 0
+  index: -1
+lumiere_upper_eyelid-f
+  rotate: false
+  xy: 1815, 386
+  size: 26, 31
+  orig: 26, 31
+  offset: 0, 0
+  index: -1
+lumiere_upper_lip
+  rotate: false
+  xy: 588, 301
+  size: 59, 25
+  orig: 59, 25
+  offset: 0, 0
+  index: -1
+lumiere_upper_teeth
+  rotate: false
+  xy: 1202, 365
+  size: 48, 21
+  orig: 48, 21
+  offset: 0, 0
+  index: -1
+plate
+  rotate: false
+  xy: 2, 232
+  size: 209, 278
+  orig: 209, 278
+  offset: 0, 0
+  index: -1

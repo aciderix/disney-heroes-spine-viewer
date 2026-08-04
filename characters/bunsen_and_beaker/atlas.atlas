@@ -1,0 +1,895 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+attack_hand-b
+  rotate: false
+  xy: 941, 267
+  size: 28, 40
+  orig: 28, 40
+  offset: 0, 0
+  index: -1
+attack_index_finger-b
+  rotate: false
+  xy: 535, 182
+  size: 20, 31
+  orig: 20, 31
+  offset: 0, 0
+  index: -1
+attack_mid_finger-b
+  rotate: false
+  xy: 513, 122
+  size: 23, 29
+  orig: 23, 29
+  offset: 0, 0
+  index: -1
+attack_pinky_finger-b
+  rotate: false
+  xy: 2011, 431
+  size: 20, 17
+  orig: 20, 17
+  offset: 0, 0
+  index: -1
+attack_thumb-b
+  rotate: false
+  xy: 540, 121
+  size: 20, 30
+  orig: 20, 30
+  offset: 0, 0
+  index: -1
+beaker_body
+  rotate: false
+  xy: 317, 263
+  size: 144, 247
+  orig: 144, 247
+  offset: 0, 0
+  index: -1
+beaker_coat_lapel-b
+  rotate: false
+  xy: 1808, 427
+  size: 32, 83
+  orig: 32, 83
+  offset: 0, 0
+  index: -1
+beaker_coat_lapel-f
+  rotate: false
+  xy: 1716, 424
+  size: 49, 86
+  orig: 49, 86
+  offset: 0, 0
+  index: -1
+beaker_coat_lapel-f1
+  rotate: false
+  xy: 473, 65
+  size: 13, 14
+  orig: 13, 14
+  offset: 0, 0
+  index: -1
+beaker_collar-b
+  rotate: false
+  xy: 442, 27
+  size: 17, 36
+  orig: 17, 36
+  offset: 0, 0
+  index: -1
+beaker_collar-f
+  rotate: false
+  xy: 213, 2
+  size: 35, 47
+  orig: 35, 47
+  offset: 0, 0
+  index: -1
+beaker_collar_patch-b
+  rotate: false
+  xy: 2035, 419
+  size: 11, 12
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+beaker_collar_patch-f1
+  rotate: false
+  xy: 2035, 435
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+beaker_earmuffs-b
+  rotate: false
+  xy: 1880, 431
+  size: 28, 79
+  orig: 28, 79
+  offset: 0, 0
+  index: -1
+beaker_earmuffs-f
+  rotate: false
+  xy: 1312, 424
+  size: 59, 86
+  orig: 59, 86
+  offset: 0, 0
+  index: -1
+beaker_eyeball-b
+  rotate: false
+  xy: 1035, 296
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: -1
+beaker_eyeball-f
+  rotate: false
+  xy: 454, 83
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+beaker_eyelid-b
+  rotate: false
+  xy: 512, 155
+  size: 24, 20
+  orig: 24, 20
+  offset: 0, 0
+  index: -1
+beaker_eyelid-f
+  rotate: false
+  xy: 1550, 426
+  size: 29, 23
+  orig: 29, 23
+  offset: 0, 0
+  index: -1
+beaker_face
+  rotate: false
+  xy: 1253, 413
+  size: 55, 97
+  orig: 55, 97
+  offset: 0, 0
+  index: -1
+beaker_foot-b
+  rotate: false
+  xy: 289, 3
+  size: 24, 20
+  orig: 24, 20
+  offset: 0, 0
+  index: -1
+beaker_foot-f
+  rotate: false
+  xy: 1001, 277
+  size: 22, 17
+  orig: 22, 17
+  offset: 0, 0
+  index: -1
+beaker_hair-b
+  rotate: false
+  xy: 1004, 298
+  size: 27, 25
+  orig: 27, 25
+  offset: 0, 0
+  index: -1
+beaker_hair-f
+  rotate: false
+  xy: 1514, 453
+  size: 74, 57
+  orig: 74, 57
+  offset: 0, 0
+  index: -1
+beaker_hand-b
+  rotate: false
+  xy: 413, 16
+  size: 25, 47
+  orig: 25, 47
+  offset: 0, 0
+  index: -1
+beaker_hand-f
+  rotate: false
+  xy: 252, 2
+  size: 33, 47
+  orig: 33, 47
+  offset: 0, 0
+  index: -1
+beaker_index_finger-b
+  rotate: false
+  xy: 1514, 430
+  size: 32, 19
+  orig: 32, 19
+  offset: 0, 0
+  index: -1
+beaker_index_finger-f
+  rotate: false
+  xy: 451, 151
+  size: 28, 24
+  orig: 28, 24
+  offset: 0, 0
+  index: -1
+beaker_inner_mouth
+  rotate: false
+  xy: 1004, 327
+  size: 34, 32
+  orig: 34, 32
+  offset: 0, 0
+  index: -1
+beaker_lower_arm-b
+  rotate: false
+  xy: 408, 97
+  size: 42, 50
+  orig: 42, 50
+  offset: 0, 0
+  index: -1
+beaker_lower_arm-b1
+  rotate: false
+  xy: 775, 258
+  size: 19, 48
+  orig: 19, 48
+  offset: 0, 0
+  index: -1
+beaker_lower_arm-f
+  rotate: false
+  xy: 1592, 455
+  size: 65, 55
+  orig: 65, 55
+  offset: 0, 0
+  index: -1
+beaker_lower_arm-f1
+  rotate: false
+  xy: 653, 247
+  size: 28, 54
+  orig: 28, 54
+  offset: 0, 0
+  index: -1
+beaker_lower_arm_patch-b
+  rotate: false
+  xy: 2032, 404
+  size: 14, 11
+  orig: 14, 11
+  offset: 0, 0
+  index: -1
+beaker_lower_leg-b
+  rotate: false
+  xy: 164, 2
+  size: 45, 47
+  orig: 45, 47
+  offset: 0, 0
+  index: -1
+beaker_lower_leg-f
+  rotate: false
+  xy: 1997, 470
+  size: 49, 40
+  orig: 49, 40
+  offset: 0, 0
+  index: -1
+beaker_lower_lip
+  rotate: false
+  xy: 602, 162
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+beaker_mid_finger-b
+  rotate: false
+  xy: 483, 155
+  size: 25, 20
+  orig: 25, 20
+  offset: 0, 0
+  index: -1
+beaker_mid_finger-f
+  rotate: false
+  xy: 1375, 415
+  size: 26, 17
+  orig: 26, 17
+  offset: 0, 0
+  index: -1
+beaker_nose
+  rotate: false
+  xy: 644, 160
+  size: 37, 35
+  orig: 37, 35
+  offset: 0, 0
+  index: -1
+beaker_nose_shadow
+  rotate: false
+  xy: 1434, 412
+  size: 13, 20
+  orig: 13, 20
+  offset: 0, 0
+  index: -1
+beaker_pinky_finger-b
+  rotate: false
+  xy: 973, 277
+  size: 24, 17
+  orig: 24, 17
+  offset: 0, 0
+  index: -1
+beaker_pinky_finger-f
+  rotate: false
+  xy: 1405, 414
+  size: 25, 18
+  orig: 25, 18
+  offset: 0, 0
+  index: -1
+beaker_pupil-b
+  rotate: false
+  xy: 2039, 457
+  size: 7, 9
+  orig: 7, 9
+  offset: 0, 0
+  index: -1
+beaker_pupil-f
+  rotate: false
+  xy: 1077, 349
+  size: 8, 10
+  orig: 8, 10
+  offset: 0, 0
+  index: -1
+beaker_shirt-b
+  rotate: false
+  xy: 229, 53
+  size: 60, 85
+  orig: 60, 85
+  offset: 0, 0
+  index: -1
+beaker_shirt_cuff-b
+  rotate: false
+  xy: 136, 11
+  size: 24, 35
+  orig: 24, 35
+  offset: 0, 0
+  index: -1
+beaker_shirt_cuff-b1
+  rotate: false
+  xy: 1991, 418
+  size: 16, 35
+  orig: 16, 35
+  offset: 0, 0
+  index: -1
+beaker_shirt_cuff-f
+  rotate: false
+  xy: 654, 199
+  size: 28, 44
+  orig: 28, 44
+  offset: 0, 0
+  index: -1
+beaker_shirt_cuff-f1
+  rotate: false
+  xy: 979, 313
+  size: 21, 38
+  orig: 21, 38
+  offset: 0, 0
+  index: -1
+beaker_shoe-b
+  rotate: false
+  xy: 465, 179
+  size: 66, 34
+  orig: 66, 34
+  offset: 0, 0
+  index: -1
+beaker_shoe-f
+  rotate: false
+  xy: 729, 263
+  size: 42, 43
+  orig: 42, 43
+  offset: 0, 0
+  index: -1
+beaker_skill1_hand-f
+  rotate: false
+  xy: 608, 202
+  size: 42, 37
+  orig: 42, 37
+  offset: 0, 0
+  index: -1
+beaker_skill1_index_finger-f
+  rotate: false
+  xy: 1064, 295
+  size: 17, 27
+  orig: 17, 27
+  offset: 0, 0
+  index: -1
+beaker_skill1_mid_finger-f
+  rotate: false
+  xy: 513, 87
+  size: 21, 31
+  orig: 21, 31
+  offset: 0, 0
+  index: -1
+beaker_skill1_pinky_finger-f
+  rotate: false
+  xy: 485, 120
+  size: 24, 31
+  orig: 24, 31
+  offset: 0, 0
+  index: -1
+beaker_skill1_thumb-f
+  rotate: false
+  xy: 454, 115
+  size: 27, 32
+  orig: 27, 32
+  offset: 0, 0
+  index: -1
+beaker_tie
+  rotate: false
+  xy: 1912, 432
+  size: 28, 78
+  orig: 28, 78
+  offset: 0, 0
+  index: -1
+beaker_upper_arm-b
+  rotate: false
+  xy: 92, 50
+  size: 68, 88
+  orig: 68, 88
+  offset: 0, 0
+  index: -1
+beaker_upper_arm-f
+  rotate: false
+  xy: 317, 151
+  size: 64, 108
+  orig: 64, 108
+  offset: 0, 0
+  index: -1
+beaker_upper_arm_patch-f
+  rotate: false
+  xy: 564, 123
+  size: 19, 29
+  orig: 19, 29
+  offset: 0, 0
+  index: -1
+bunsen_coat-b
+  rotate: false
+  xy: 1844, 431
+  size: 32, 79
+  orig: 32, 79
+  offset: 0, 0
+  index: -1
+bunsen_coat-f
+  rotate: false
+  xy: 559, 305
+  size: 110, 205
+  orig: 110, 205
+  offset: 0, 0
+  index: -1
+bunsen_coat_lapel-b
+  rotate: false
+  xy: 381, 67
+  size: 23, 80
+  orig: 23, 80
+  offset: 0, 0
+  index: -1
+bunsen_coat_lapel-f
+  rotate: false
+  xy: 164, 53
+  size: 61, 85
+  orig: 61, 85
+  offset: 0, 0
+  index: -1
+bunsen_collar-b
+  rotate: false
+  xy: 486, 86
+  size: 23, 30
+  orig: 23, 30
+  offset: 0, 0
+  index: -1
+bunsen_collar-f
+  rotate: false
+  xy: 686, 215
+  size: 38, 41
+  orig: 38, 41
+  offset: 0, 0
+  index: -1
+bunsen_collar_patch-f
+  rotate: false
+  xy: 589, 164
+  size: 8, 6
+  orig: 8, 6
+  offset: 0, 0
+  index: -1
+bunsen_ear-f
+  rotate: false
+  xy: 1085, 304
+  size: 22, 26
+  orig: 22, 26
+  offset: 0, 0
+  index: -1
+bunsen_face
+  rotate: false
+  xy: 2, 47
+  size: 86, 91
+  orig: 86, 91
+  offset: 0, 0
+  index: -1
+bunsen_fingers-b
+  rotate: false
+  xy: 798, 261
+  size: 33, 46
+  orig: 33, 46
+  offset: 0, 0
+  index: -1
+bunsen_fingers-b1
+  rotate: false
+  xy: 1997, 457
+  size: 10, 9
+  orig: 10, 9
+  offset: 0, 0
+  index: -1
+bunsen_foot-b
+  rotate: false
+  xy: 385, 151
+  size: 62, 25
+  orig: 62, 25
+  offset: 0, 0
+  index: -1
+bunsen_foot-f
+  rotate: false
+  xy: 559, 174
+  size: 39, 29
+  orig: 39, 29
+  offset: 0, 0
+  index: -1
+bunsen_glasses-b
+  rotate: false
+  xy: 1492, 424
+  size: 18, 11
+  orig: 18, 11
+  offset: 0, 0
+  index: -1
+bunsen_glasses-f
+  rotate: false
+  xy: 2, 4
+  size: 84, 39
+  orig: 84, 39
+  offset: 0, 0
+  index: -1
+bunsen_glasses_shadow
+  rotate: false
+  xy: 902, 311
+  size: 73, 40
+  orig: 73, 40
+  offset: 0, 0
+  index: -1
+bunsen_hand-b
+  rotate: false
+  xy: 1042, 326
+  size: 31, 33
+  orig: 31, 33
+  offset: 0, 0
+  index: -1
+bunsen_hand-f
+  rotate: false
+  xy: 92, 2
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: -1
+bunsen_index_finger-f
+  rotate: false
+  xy: 686, 189
+  size: 35, 22
+  orig: 35, 22
+  offset: 0, 0
+  index: -1
+bunsen_inner_mouth
+  rotate: false
+  xy: 2011, 452
+  size: 24, 14
+  orig: 24, 14
+  offset: 0, 0
+  index: -1
+bunsen_jacket_vest
+  rotate: false
+  xy: 1375, 436
+  size: 70, 74
+  orig: 70, 74
+  offset: 0, 0
+  index: -1
+bunsen_lower_arm-b
+  rotate: false
+  xy: 1944, 457
+  size: 49, 53
+  orig: 49, 53
+  offset: 0, 0
+  index: -1
+bunsen_lower_arm-b1
+  rotate: false
+  xy: 909, 263
+  size: 28, 44
+  orig: 28, 44
+  offset: 0, 0
+  index: -1
+bunsen_lower_arm-f
+  rotate: false
+  xy: 385, 180
+  size: 76, 79
+  orig: 76, 79
+  offset: 0, 0
+  index: -1
+bunsen_lower_arm_patch-f
+  rotate: false
+  xy: 454, 67
+  size: 15, 12
+  orig: 15, 12
+  offset: 0, 0
+  index: -1
+bunsen_lower_leg-b
+  rotate: false
+  xy: 559, 207
+  size: 45, 32
+  orig: 45, 32
+  offset: 0, 0
+  index: -1
+bunsen_lower_leg-f
+  rotate: false
+  xy: 1944, 417
+  size: 43, 36
+  orig: 43, 36
+  offset: 0, 0
+  index: -1
+bunsen_lower_lip
+  rotate: false
+  xy: 559, 156
+  size: 26, 14
+  orig: 26, 14
+  offset: 0, 0
+  index: -1
+bunsen_mid_Finger-f
+  rotate: false
+  xy: 540, 155
+  size: 15, 23
+  orig: 15, 23
+  offset: 0, 0
+  index: -1
+bunsen_mouth_patch
+  rotate: false
+  xy: 1077, 336
+  size: 8, 9
+  orig: 8, 9
+  offset: 0, 0
+  index: -1
+bunsen_nose
+  rotate: false
+  xy: 538, 88
+  size: 24, 29
+  orig: 24, 29
+  offset: 0, 0
+  index: -1
+bunsen_nose_shadow
+  rotate: false
+  xy: 1471, 420
+  size: 17, 15
+  orig: 17, 15
+  offset: 0, 0
+  index: -1
+bunsen_pinky_finger-f
+  rotate: false
+  xy: 439, 67
+  size: 11, 26
+  orig: 11, 26
+  offset: 0, 0
+  index: -1
+bunsen_pocket
+  rotate: false
+  xy: 566, 86
+  size: 19, 33
+  orig: 19, 33
+  offset: 0, 0
+  index: -1
+bunsen_shirt
+  rotate: false
+  xy: 1186, 340
+  size: 62, 65
+  orig: 62, 65
+  offset: 0, 0
+  index: -1
+bunsen_shirt_cuff-b
+  rotate: false
+  xy: 874, 266
+  size: 31, 41
+  orig: 31, 41
+  offset: 0, 0
+  index: -1
+bunsen_shirt_cuff-f
+  rotate: false
+  xy: 835, 269
+  size: 35, 38
+  orig: 35, 38
+  offset: 0, 0
+  index: -1
+bunsen_skill1_hand-f
+  rotate: false
+  xy: 685, 260
+  size: 40, 46
+  orig: 40, 46
+  offset: 0, 0
+  index: -1
+bunsen_skill1_index_finger-f
+  rotate: false
+  xy: 685, 162
+  size: 32, 23
+  orig: 32, 23
+  offset: 0, 0
+  index: -1
+bunsen_thumb-b
+  rotate: false
+  xy: 1451, 415
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: -1
+bunsen_thumb-f
+  rotate: false
+  xy: 1111, 302
+  size: 19, 25
+  orig: 19, 25
+  offset: 0, 0
+  index: -1
+bunsen_tie
+  rotate: false
+  xy: 381, 4
+  size: 28, 59
+  orig: 28, 59
+  offset: 0, 0
+  index: -1
+bunsen_upper_arm-b
+  rotate: false
+  xy: 1661, 430
+  size: 51, 80
+  orig: 51, 80
+  offset: 0, 0
+  index: -1
+bunsen_upper_arm-f
+  rotate: false
+  xy: 1769, 426
+  size: 35, 84
+  orig: 35, 84
+  offset: 0, 0
+  index: -1
+bunsen_upper_lip
+  rotate: false
+  xy: 979, 298
+  size: 21, 11
+  orig: 21, 11
+  offset: 0, 0
+  index: -1
+cloth
+  rotate: false
+  xy: 902, 355
+  size: 90, 155
+  orig: 90, 155
+  offset: 0, 0
+  index: -1
+hat
+  rotate: false
+  xy: 559, 243
+  size: 90, 58
+  orig: 90, 58
+  offset: 0, 0
+  index: -1
+machine-b
+  rotate: false
+  xy: 465, 217
+  size: 90, 293
+  orig: 90, 293
+  offset: 0, 0
+  index: -1
+machine-b1
+  rotate: false
+  xy: 673, 310
+  size: 114, 200
+  orig: 114, 200
+  offset: 0, 0
+  index: -1
+machine-f
+  rotate: false
+  xy: 2, 142
+  size: 311, 368
+  orig: 311, 368
+  offset: 0, 0
+  index: -1
+machine_patch-b
+  rotate: false
+  xy: 1449, 439
+  size: 61, 71
+  orig: 61, 71
+  offset: 0, 0
+  index: -1
+nose_warmer
+  rotate: false
+  xy: 408, 67
+  size: 27, 26
+  orig: 27, 26
+  offset: 0, 0
+  index: -1
+remote
+  rotate: false
+  xy: 1186, 409
+  size: 63, 101
+  orig: 63, 101
+  offset: 0, 0
+  index: -1
+remote_green_switch
+  rotate: false
+  xy: 413, 4
+  size: 11, 8
+  orig: 11, 8
+  offset: 0, 0
+  index: -1
+remote_pointer
+  rotate: false
+  xy: 2011, 413
+  size: 17, 14
+  orig: 17, 14
+  offset: 0, 0
+  index: -1
+remote_red_switch
+  rotate: false
+  xy: 442, 16
+  size: 11, 7
+  orig: 11, 7
+  offset: 0, 0
+  index: -1
+stripe1
+  rotate: false
+  xy: 293, 27
+  size: 17, 111
+  orig: 17, 111
+  offset: 0, 0
+  index: -1
+stripe2
+  rotate: false
+  xy: 333, 5
+  size: 22, 142
+  orig: 22, 142
+  offset: 0, 0
+  index: -1
+stripe3
+  rotate: false
+  xy: 1138, 339
+  size: 21, 171
+  orig: 21, 171
+  offset: 0, 0
+  index: -1
+stripe4
+  rotate: false
+  xy: 1117, 331
+  size: 17, 179
+  orig: 17, 179
+  offset: 0, 0
+  index: -1
+stripe5
+  rotate: false
+  xy: 1089, 334
+  size: 24, 176
+  orig: 24, 176
+  offset: 0, 0
+  index: -1
+stripe6
+  rotate: false
+  xy: 1163, 338
+  size: 19, 172
+  orig: 19, 172
+  offset: 0, 0
+  index: -1
+stripe7
+  rotate: false
+  xy: 359, 4
+  size: 18, 143
+  orig: 18, 143
+  offset: 0, 0
+  index: -1
+stripe8
+  rotate: false
+  xy: 314, 28
+  size: 15, 110
+  orig: 15, 110
+  offset: 0, 0
+  index: -1
+wire
+  rotate: false
+  xy: 791, 311
+  size: 107, 199
+  orig: 107, 199
+  offset: 0, 0
+  index: -1
+wire1
+  rotate: false
+  xy: 996, 363
+  size: 89, 147
+  orig: 89, 147
+  offset: 0, 0
+  index: -1

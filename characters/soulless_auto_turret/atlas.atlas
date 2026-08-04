@@ -1,0 +1,181 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ellipse-b
+  rotate: false
+  xy: 2, 2
+  size: 104, 91
+  orig: 104, 91
+  offset: 0, 0
+  index: -1
+Ellipse-f
+  rotate: false
+  xy: 284, 162
+  size: 104, 91
+  orig: 104, 91
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 2, 97
+  size: 170, 156
+  orig: 170, 156
+  offset: 0, 0
+  index: -1
+camera_light
+  rotate: false
+  xy: 738, 207
+  size: 28, 46
+  orig: 28, 46
+  offset: 0, 0
+  index: -1
+camera_light_glow
+  rotate: false
+  xy: 110, 25
+  size: 55, 68
+  orig: 55, 68
+  offset: 0, 0
+  index: -1
+hip
+  rotate: false
+  xy: 176, 150
+  size: 104, 103
+  orig: 104, 103
+  offset: 0, 0
+  index: -1
+laser_beam-b
+  rotate: false
+  xy: 392, 184
+  size: 125, 13
+  orig: 125, 13
+  offset: 0, 0
+  index: -1
+laser_beam-f
+  rotate: false
+  xy: 536, 240
+  size: 125, 13
+  orig: 125, 13
+  offset: 0, 0
+  index: -1
+laser_glow-b
+  rotate: false
+  xy: 436, 58
+  size: 36, 59
+  orig: 36, 59
+  offset: 0, 0
+  index: -1
+laser_glow-f
+  rotate: false
+  xy: 478, 121
+  size: 36, 59
+  orig: 36, 59
+  offset: 0, 0
+  index: -1
+laser_mazzle-b
+  rotate: false
+  xy: 642, 181
+  size: 28, 55
+  orig: 28, 55
+  offset: 0, 0
+  index: -1
+laser_mazzle-f
+  rotate: false
+  xy: 674, 198
+  size: 28, 55
+  orig: 28, 55
+  offset: 0, 0
+  index: -1
+light_rim_glow
+  rotate: false
+  xy: 706, 202
+  size: 28, 51
+  orig: 28, 51
+  offset: 0, 0
+  index: -1
+lower_leg_b
+  rotate: false
+  xy: 373, 44
+  size: 59, 114
+  orig: 59, 114
+  offset: 0, 0
+  index: -1
+lower_leg_f
+  rotate: false
+  xy: 176, 11
+  size: 63, 135
+  orig: 63, 135
+  offset: 0, 0
+  index: -1
+lower_leg_left_b
+  rotate: false
+  xy: 308, 42
+  size: 61, 116
+  orig: 61, 116
+  offset: 0, 0
+  index: -1
+lower_leg_right_b
+  rotate: false
+  xy: 243, 18
+  size: 61, 128
+  orig: 61, 128
+  offset: 0, 0
+  index: -1
+mid_leg_b
+  rotate: false
+  xy: 770, 208
+  size: 21, 45
+  orig: 21, 45
+  offset: 0, 0
+  index: -1
+mid_leg_f
+  rotate: false
+  xy: 436, 121
+  size: 38, 59
+  orig: 38, 59
+  offset: 0, 0
+  index: -1
+mid_leg_left_b
+  rotate: false
+  xy: 392, 201
+  size: 140, 52
+  orig: 140, 52
+  offset: 0, 0
+  index: -1
+mid_leg_right_b
+  rotate: false
+  xy: 536, 183
+  size: 56, 53
+  orig: 56, 53
+  offset: 0, 0
+  index: -1
+upper_leg_b
+  rotate: false
+  xy: 476, 64
+  size: 35, 53
+  orig: 35, 53
+  offset: 0, 0
+  index: -1
+upper_leg_f
+  rotate: false
+  xy: 795, 205
+  size: 20, 48
+  orig: 20, 48
+  offset: 0, 0
+  index: -1
+upper_leg_left_b
+  rotate: false
+  xy: 819, 219
+  size: 30, 34
+  orig: 30, 34
+  offset: 0, 0
+  index: -1
+upper_leg_right_b
+  rotate: false
+  xy: 596, 183
+  size: 42, 53
+  orig: 42, 53
+  offset: 0, 0
+  index: -1

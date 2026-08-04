@@ -1,0 +1,489 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bucket-b
+  rotate: false
+  xy: 1520, 372
+  size: 128, 51
+  orig: 128, 51
+  offset: 0, 0
+  index: -1
+bucket-f
+  rotate: false
+  xy: 735, 53
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bucket_handle-b
+  rotate: false
+  xy: 1652, 359
+  size: 75, 64
+  orig: 75, 64
+  offset: 0, 0
+  index: -1
+bucket_handle-f
+  rotate: false
+  xy: 1166, 153
+  size: 36, 104
+  orig: 36, 104
+  offset: 0, 0
+  index: -1
+bucket_shadow
+  rotate: false
+  xy: 1227, 385
+  size: 146, 38
+  orig: 146, 38
+  offset: 0, 0
+  index: -1
+gerald_body
+  rotate: false
+  xy: 2, 14
+  size: 428, 265
+  orig: 428, 265
+  offset: 0, 0
+  index: -1
+gerald_eyeball-b
+  rotate: false
+  xy: 1342, 343
+  size: 27, 38
+  orig: 27, 38
+  offset: 0, 0
+  index: -1
+gerald_eyeball-f
+  rotate: false
+  xy: 1907, 340
+  size: 49, 46
+  orig: 49, 46
+  offset: 0, 0
+  index: -1
+gerald_eyelid-b
+  rotate: false
+  xy: 1342, 314
+  size: 26, 25
+  orig: 26, 25
+  offset: 0, 0
+  index: -1
+gerald_face
+  rotate: false
+  xy: 434, 25
+  size: 152, 254
+  orig: 152, 254
+  offset: 0, 0
+  index: -1
+gerald_inner_mouth
+  rotate: false
+  xy: 1731, 341
+  size: 103, 45
+  orig: 103, 45
+  offset: 0, 0
+  index: -1
+gerald_lower_arm-b
+  rotate: false
+  xy: 1202, 261
+  size: 124, 33
+  orig: 124, 33
+  offset: 0, 0
+  index: -1
+gerald_lower_arm-f
+  rotate: false
+  xy: 701, 371
+  size: 169, 50
+  orig: 169, 50
+  offset: 0, 0
+  index: -1
+gerald_lower_jaw
+  rotate: false
+  xy: 872, 19
+  size: 104, 50
+  orig: 104, 50
+  offset: 0, 0
+  index: -1
+gerald_mouth_patch
+  rotate: false
+  xy: 845, 348
+  size: 25, 19
+  orig: 25, 19
+  offset: 0, 0
+  index: -1
+gerald_nose_patch
+  rotate: false
+  xy: 1206, 225
+  size: 26, 32
+  orig: 26, 32
+  offset: 0, 0
+  index: -1
+gerald_pupil-b
+  rotate: false
+  xy: 845, 306
+  size: 12, 16
+  orig: 12, 16
+  offset: 0, 0
+  index: -1
+gerald_pupil-f
+  rotate: false
+  xy: 1140, 92
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+gerald_shadow
+  rotate: false
+  xy: 2, 283
+  size: 649, 73
+  orig: 649, 73
+  offset: 0, 0
+  index: -1
+gerald_tail
+  rotate: false
+  xy: 1377, 355
+  size: 139, 68
+  orig: 139, 68
+  offset: 0, 0
+  index: -1
+gerald_unibrow
+  rotate: false
+  xy: 734, 2
+  size: 134, 47
+  orig: 134, 47
+  offset: 0, 0
+  index: -1
+gerald_upper_arm-b
+  rotate: false
+  xy: 1070, 113
+  size: 92, 150
+  orig: 92, 150
+  offset: 0, 0
+  index: -1
+gerald_upper_arm-f
+  rotate: false
+  xy: 867, 73
+  size: 106, 168
+  orig: 106, 168
+  offset: 0, 0
+  index: -1
+gerald_upper_jaw
+  rotate: false
+  xy: 590, 7
+  size: 140, 53
+  orig: 140, 53
+  offset: 0, 0
+  index: -1
+marlin_body
+  rotate: false
+  xy: 980, 15
+  size: 71, 61
+  orig: 71, 61
+  offset: 0, 0
+  index: -1
+marlin_eyeball-b
+  rotate: false
+  xy: 2030, 488
+  size: 14, 22
+  orig: 14, 22
+  offset: 0, 0
+  index: -1
+marlin_eyeball-f
+  rotate: false
+  xy: 1202, 397
+  size: 20, 24
+  orig: 20, 24
+  offset: 0, 0
+  index: -1
+marlin_eyebrow-b
+  rotate: false
+  xy: 1275, 241
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: -1
+marlin_eyebrow-f
+  rotate: false
+  xy: 845, 326
+  size: 24, 18
+  orig: 24, 18
+  offset: 0, 0
+  index: -1
+marlin_eyelid-b
+  rotate: false
+  xy: 906, 2
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+marlin_eyelid-f
+  rotate: false
+  xy: 1999, 370
+  size: 18, 16
+  orig: 18, 16
+  offset: 0, 0
+  index: -1
+marlin_inner_mouth
+  rotate: false
+  xy: 482, 7
+  size: 28, 14
+  orig: 28, 14
+  offset: 0, 0
+  index: -1
+marlin_lower_fin-b1
+  rotate: false
+  xy: 2030, 472
+  size: 8, 12
+  orig: 8, 12
+  offset: 0, 0
+  index: -1
+marlin_lower_fin-f1
+  rotate: false
+  xy: 514, 7
+  size: 10, 14
+  orig: 10, 14
+  offset: 0, 0
+  index: -1
+marlin_lower_lip
+  rotate: false
+  xy: 1520, 357
+  size: 30, 11
+  orig: 30, 11
+  offset: 0, 0
+  index: -1
+marlin_lower_teeth
+  rotate: false
+  xy: 2, 2
+  size: 21, 8
+  orig: 21, 8
+  offset: 0, 0
+  index: -1
+marlin_nose_patch
+  rotate: false
+  xy: 1206, 200
+  size: 14, 21
+  orig: 14, 21
+  offset: 0, 0
+  index: -1
+marlin_pupil-b
+  rotate: false
+  xy: 1206, 184
+  size: 8, 12
+  orig: 8, 12
+  offset: 0, 0
+  index: -1
+marlin_pupil-f
+  rotate: false
+  xy: 1330, 280
+  size: 8, 14
+  orig: 8, 14
+  offset: 0, 0
+  index: -1
+marlin_shadow
+  rotate: false
+  xy: 1070, 92
+  size: 66, 17
+  orig: 66, 17
+  offset: 0, 0
+  index: -1
+marlin_tail
+  rotate: false
+  xy: 1166, 118
+  size: 28, 31
+  orig: 28, 31
+  offset: 0, 0
+  index: -1
+marlin_upper_lip
+  rotate: false
+  xy: 872, 4
+  size: 30, 11
+  orig: 30, 11
+  offset: 0, 0
+  index: -1
+marlin_upper_teeth
+  rotate: false
+  xy: 27, 2
+  size: 20, 8
+  orig: 20, 8
+  offset: 0, 0
+  index: -1
+merlin_lower_fin-b
+  rotate: false
+  xy: 1236, 237
+  size: 35, 20
+  orig: 35, 20
+  offset: 0, 0
+  index: -1
+merlin_lower_fin-f
+  rotate: false
+  xy: 1960, 365
+  size: 35, 21
+  orig: 35, 21
+  offset: 0, 0
+  index: -1
+nemo_body
+  rotate: false
+  xy: 1838, 337
+  size: 65, 49
+  orig: 65, 49
+  offset: 0, 0
+  index: -1
+nemo_eyeball-b
+  rotate: false
+  xy: 1055, 62
+  size: 11, 14
+  orig: 11, 14
+  offset: 0, 0
+  index: -1
+nemo_eyeball-f
+  rotate: false
+  xy: 461, 2
+  size: 17, 19
+  orig: 17, 19
+  offset: 0, 0
+  index: -1
+nemo_inner_mouth
+  rotate: false
+  xy: 1070, 78
+  size: 15, 10
+  orig: 15, 10
+  offset: 0, 0
+  index: -1
+nemo_lower_fin-b
+  rotate: false
+  xy: 434, 2
+  size: 23, 19
+  orig: 23, 19
+  offset: 0, 0
+  index: -1
+nemo_lower_fin-f
+  rotate: false
+  xy: 1960, 347
+  size: 27, 14
+  orig: 27, 14
+  offset: 0, 0
+  index: -1
+nemo_lower_lip
+  rotate: false
+  xy: 1342, 301
+  size: 15, 9
+  orig: 15, 9
+  offset: 0, 0
+  index: -1
+nemo_lower_teeth
+  rotate: false
+  xy: 701, 361
+  size: 12, 6
+  orig: 12, 6
+  offset: 0, 0
+  index: -1
+nemo_nose_patch
+  rotate: false
+  xy: 1055, 246
+  size: 11, 17
+  orig: 11, 17
+  offset: 0, 0
+  index: -1
+nemo_pupil-b
+  rotate: false
+  xy: 1554, 357
+  size: 7, 11
+  orig: 7, 11
+  offset: 0, 0
+  index: -1
+nemo_pupil-f
+  rotate: false
+  xy: 921, 3
+  size: 11, 12
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+nemo_upper_lip
+  rotate: false
+  xy: 51, 2
+  size: 15, 8
+  orig: 15, 8
+  offset: 0, 0
+  index: -1
+nemo_upper_teeth
+  rotate: false
+  xy: 1236, 227
+  size: 12, 6
+  orig: 12, 6
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 2, 360
+  size: 695, 150
+  orig: 695, 150
+  offset: 0, 0
+  index: -1
+seagull_body
+  rotate: false
+  xy: 1731, 390
+  size: 295, 120
+  orig: 295, 120
+  offset: 0, 0
+  index: -1
+seagull_wing-b
+  rotate: false
+  xy: 977, 80
+  size: 89, 161
+  orig: 89, 161
+  offset: 0, 0
+  index: -1
+seagull_wing-b1
+  rotate: false
+  xy: 735, 185
+  size: 106, 182
+  orig: 106, 182
+  offset: 0, 0
+  index: -1
+seagull_wing-f
+  rotate: false
+  xy: 874, 245
+  size: 177, 176
+  orig: 177, 176
+  offset: 0, 0
+  index: -1
+seagull_wing-f1
+  rotate: false
+  xy: 590, 64
+  size: 141, 215
+  orig: 141, 215
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 1227, 427
+  size: 500, 83
+  orig: 500, 83
+  offset: 0, 0
+  index: -1
+water1
+  rotate: false
+  xy: 701, 425
+  size: 522, 85
+  orig: 522, 85
+  offset: 0, 0
+  index: -1
+water_splash
+  rotate: false
+  xy: 1202, 298
+  size: 136, 83
+  orig: 136, 83
+  offset: 0, 0
+  index: -1
+water_splash1
+  rotate: false
+  xy: 1055, 267
+  size: 143, 154
+  orig: 143, 154
+  offset: 0, 0
+  index: -1
+water_splash2
+  rotate: false
+  xy: 655, 288
+  size: 59, 68
+  orig: 59, 68
+  offset: 0, 0
+  index: -1

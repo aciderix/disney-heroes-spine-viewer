@@ -1,0 +1,272 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+attack_lower_jaw_patch
+  rotate: false
+  xy: 813, 925
+  size: 52, 26
+  orig: 52, 26
+  offset: 0, 0
+  index: -1
+attack_tail
+  rotate: false
+  xy: 410, 513
+  size: 194, 438
+  orig: 194, 438
+  offset: 0, 0
+  index: -1
+blue_eyelball_patch-b
+  rotate: false
+  xy: 2011, 993
+  size: 24, 27
+  orig: 24, 27
+  offset: 0, 0
+  index: -1
+blue_eyelball_patch-f
+  rotate: false
+  xy: 1976, 997
+  size: 31, 23
+  orig: 31, 23
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 2, 401
+  size: 200, 619
+  orig: 200, 619
+  offset: 0, 0
+  index: -1
+body1
+  rotate: false
+  xy: 608, 515
+  size: 89, 436
+  orig: 89, 436
+  offset: 0, 0
+  index: -1
+body_short
+  rotate: false
+  xy: 206, 503
+  size: 200, 448
+  orig: 200, 448
+  offset: 0, 0
+  index: -1
+death_eyeball-b
+  rotate: false
+  xy: 1976, 939
+  size: 24, 27
+  orig: 24, 27
+  offset: 0, 0
+  index: -1
+death_eyeball-f
+  rotate: false
+  xy: 280, 416
+  size: 31, 23
+  orig: 31, 23
+  offset: 0, 0
+  index: -1
+eyeball-b
+  rotate: false
+  xy: 1976, 908
+  size: 24, 27
+  orig: 24, 27
+  offset: 0, 0
+  index: -1
+eyeball-f
+  rotate: false
+  xy: 1372, 811
+  size: 31, 23
+  orig: 31, 23
+  offset: 0, 0
+  index: -1
+green_eyelball_patch-b
+  rotate: false
+  xy: 869, 924
+  size: 24, 27
+  orig: 24, 27
+  offset: 0, 0
+  index: -1
+green_eyelball_patch-f
+  rotate: false
+  xy: 1976, 970
+  size: 31, 23
+  orig: 31, 23
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 1191, 766
+  size: 81, 68
+  orig: 81, 68
+  offset: 0, 0
+  index: -1
+lower_jaw-b
+  rotate: false
+  xy: 1276, 788
+  size: 92, 46
+  orig: 92, 46
+  offset: 0, 0
+  index: -1
+lower_jaw-f
+  rotate: false
+  xy: 317, 466
+  size: 92, 33
+  orig: 92, 33
+  offset: 0, 0
+  index: -1
+mouth_patch
+  rotate: false
+  xy: 1407, 824
+  size: 11, 10
+  orig: 11, 10
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 1903, 889
+  size: 69, 131
+  orig: 69, 131
+  offset: 0, 0
+  index: -1
+pupil-b
+  rotate: false
+  xy: 2039, 999
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: -1
+pupil-f
+  rotate: false
+  xy: 2039, 1011
+  size: 7, 9
+  orig: 7, 9
+  offset: 0, 0
+  index: -1
+skill1_body
+  rotate: false
+  xy: 1746, 757
+  size: 197, 108
+  orig: 197, 108
+  offset: 0, 0
+  index: -1
+skill1_body1
+  rotate: false
+  xy: 1191, 838
+  size: 227, 79
+  orig: 227, 79
+  offset: 0, 0
+  index: -1
+skill1_body2
+  rotate: false
+  xy: 2, 261
+  size: 344, 136
+  orig: 344, 136
+  offset: 0, 0
+  index: -1
+skill1_body3
+  rotate: false
+  xy: 1422, 789
+  size: 320, 76
+  orig: 320, 76
+  offset: 0, 0
+  index: -1
+skill1_body4
+  rotate: false
+  xy: 813, 753
+  size: 374, 164
+  orig: 374, 164
+  offset: 0, 0
+  index: -1
+skill1_body5
+  rotate: false
+  xy: 813, 603
+  size: 392, 146
+  orig: 392, 146
+  offset: 0, 0
+  index: -1
+skill1_body6
+  rotate: false
+  xy: 2, 125
+  size: 348, 132
+  orig: 348, 132
+  offset: 0, 0
+  index: -1
+skill1_body7
+  rotate: false
+  xy: 1427, 869
+  size: 472, 151
+  orig: 472, 151
+  offset: 0, 0
+  index: -1
+skill1_body8
+  rotate: false
+  xy: 813, 480
+  size: 392, 119
+  orig: 392, 119
+  offset: 0, 0
+  index: -1
+skill1_body9
+  rotate: false
+  xy: 2, 35
+  size: 416, 86
+  orig: 416, 86
+  offset: 0, 0
+  index: -1
+skill1_neck
+  rotate: false
+  xy: 701, 523
+  size: 61, 428
+  orig: 61, 428
+  offset: 0, 0
+  index: -1
+skill1_neck1
+  rotate: false
+  xy: 766, 499
+  size: 43, 452
+  orig: 43, 452
+  offset: 0, 0
+  index: -1
+skill1_tail
+  rotate: false
+  xy: 903, 921
+  size: 520, 99
+  orig: 520, 99
+  offset: 0, 0
+  index: -1
+skill3_body
+  rotate: false
+  xy: 206, 955
+  size: 693, 65
+  orig: 693, 65
+  offset: 0, 0
+  index: -1
+tongue
+  rotate: false
+  xy: 206, 401
+  size: 70, 38
+  orig: 70, 38
+  offset: 0, 0
+  index: -1
+upper_eyelid-b
+  rotate: false
+  xy: 39, 2
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: -1
+upper_eyelid-f
+  rotate: false
+  xy: 2, 9
+  size: 33, 22
+  orig: 33, 22
+  offset: 0, 0
+  index: -1
+upper_jaw
+  rotate: false
+  xy: 206, 443
+  size: 107, 56
+  orig: 107, 56
+  offset: 0, 0
+  index: -1

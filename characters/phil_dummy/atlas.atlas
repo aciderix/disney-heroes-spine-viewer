@@ -1,0 +1,41 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dummy_body-b
+  rotate: false
+  xy: 233, 254
+  size: 229, 246
+  orig: 229, 246
+  offset: 0, 0
+  index: -1
+dummy_body-f
+  rotate: false
+  xy: 2, 238
+  size: 227, 262
+  orig: 227, 262
+  offset: 0, 0
+  index: -1
+dummy_head
+  rotate: false
+  xy: 2, 19
+  size: 242, 215
+  orig: 242, 215
+  offset: 0, 0
+  index: -1
+dummy_leg
+  rotate: false
+  xy: 248, 2
+  size: 101, 248
+  orig: 101, 248
+  offset: 0, 0
+  index: -1
+grass
+  rotate: false
+  xy: 353, 216
+  size: 76, 34
+  orig: 76, 34
+  offset: 0, 0
+  index: -1

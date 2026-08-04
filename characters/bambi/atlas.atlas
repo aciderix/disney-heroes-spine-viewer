@@ -1,0 +1,265 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 26
+  size: 212, 133
+  orig: 212, 133
+  offset: 0, 0
+  index: -1
+cheek
+  rotate: false
+  xy: 679, 80
+  size: 50, 22
+  orig: 50, 22
+  offset: 0, 0
+  index: -1
+ear-b
+  rotate: false
+  xy: 916, 43
+  size: 63, 105
+  orig: 63, 105
+  offset: 0, 0
+  index: -1
+ear-f
+  rotate: false
+  xy: 916, 234
+  size: 91, 92
+  orig: 91, 92
+  offset: 0, 0
+  index: -1
+eye-b
+  rotate: false
+  xy: 371, 86
+  size: 23, 48
+  orig: 23, 48
+  offset: 0, 0
+  index: -1
+eye_detail
+  rotate: false
+  xy: 916, 152
+  size: 91, 78
+  orig: 91, 78
+  offset: 0, 0
+  index: -1
+eyeball
+  rotate: false
+  xy: 748, 93
+  size: 50, 43
+  orig: 50, 43
+  offset: 0, 0
+  index: -1
+eyebrown_angry
+  rotate: false
+  xy: 544, 98
+  size: 68, 38
+  orig: 68, 38
+  offset: 0, 0
+  index: -1
+eyelashes
+  rotate: false
+  xy: 990, 448
+  size: 29, 28
+  orig: 29, 28
+  offset: 0, 0
+  index: -1
+eyelashes_closed
+  rotate: false
+  xy: 806, 168
+  size: 36, 25
+  orig: 36, 25
+  offset: 0, 0
+  index: -1
+eyelid
+  rotate: false
+  xy: 999, 421
+  size: 23, 23
+  orig: 23, 23
+  offset: 0, 0
+  index: -1
+eyelid-b
+  rotate: false
+  xy: 983, 134
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+eyelid_closed_lower
+  rotate: false
+  xy: 990, 480
+  size: 32, 30
+  orig: 32, 30
+  offset: 0, 0
+  index: -1
+eyelid_closed_upper
+  rotate: false
+  xy: 526, 20
+  size: 47, 42
+  orig: 47, 42
+  offset: 0, 0
+  index: -1
+eyes_angry
+  rotate: false
+  xy: 679, 106
+  size: 65, 30
+  orig: 65, 30
+  offset: 0, 0
+  index: -1
+flowers1
+  rotate: false
+  xy: 567, 140
+  size: 235, 90
+  orig: 235, 90
+  offset: 0, 0
+  index: -1
+flowers2
+  rotate: false
+  xy: 218, 29
+  size: 202, 53
+  orig: 202, 53
+  offset: 0, 0
+  index: -1
+flowers3
+  rotate: false
+  xy: 424, 22
+  size: 98, 43
+  orig: 98, 43
+  offset: 0, 0
+  index: -1
+flowers4
+  rotate: false
+  xy: 616, 89
+  size: 59, 47
+  orig: 59, 47
+  offset: 0, 0
+  index: -1
+flowers5
+  rotate: false
+  xy: 567, 390
+  size: 266, 120
+  orig: 266, 120
+  offset: 0, 0
+  index: -1
+ground
+  rotate: false
+  xy: 837, 437
+  size: 149, 73
+  orig: 149, 73
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 567, 234
+  size: 179, 152
+  orig: 179, 152
+  offset: 0, 0
+  index: -1
+leaf
+  rotate: false
+  xy: 802, 74
+  size: 40, 62
+  orig: 40, 62
+  offset: 0, 0
+  index: -1
+leg_back-b
+  rotate: false
+  xy: 401, 229
+  size: 162, 281
+  orig: 162, 281
+  offset: 0, 0
+  index: -1
+leg_back-f
+  rotate: false
+  xy: 2, 163
+  size: 242, 347
+  orig: 242, 347
+  offset: 0, 0
+  index: -1
+leg_back_death1
+  rotate: false
+  xy: 401, 173
+  size: 158, 52
+  orig: 158, 52
+  offset: 0, 0
+  index: -1
+leg_back_death2
+  rotate: false
+  xy: 248, 86
+  size: 119, 102
+  orig: 119, 102
+  offset: 0, 0
+  index: -1
+leg_back_death3
+  rotate: false
+  xy: 424, 69
+  size: 116, 100
+  orig: 116, 100
+  offset: 0, 0
+  index: -1
+leg_front-b
+  rotate: false
+  xy: 248, 192
+  size: 149, 318
+  orig: 149, 318
+  offset: 0, 0
+  index: -1
+leg_front-f
+  rotate: false
+  xy: 847, 61
+  size: 65, 372
+  orig: 65, 372
+  offset: 0, 0
+  index: -1
+mouth_closed
+  rotate: false
+  xy: 544, 66
+  size: 51, 28
+  orig: 51, 28
+  offset: 0, 0
+  index: -1
+mouth_lower
+  rotate: false
+  xy: 371, 138
+  size: 49, 31
+  orig: 49, 31
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 750, 234
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+nose
+  rotate: false
+  xy: 806, 143
+  size: 30, 21
+  orig: 30, 21
+  offset: 0, 0
+  index: -1
+nose_angry
+  rotate: false
+  xy: 2, 2
+  size: 22, 20
+  orig: 22, 20
+  offset: 0, 0
+  index: -1
+pupil
+  rotate: false
+  xy: 806, 197
+  size: 33, 33
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
+tail
+  rotate: false
+  xy: 916, 330
+  size: 79, 103
+  orig: 79, 103
+  offset: 0, 0
+  index: -1

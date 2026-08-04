@@ -1,0 +1,461 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+patchy_attack_fingers-f
+  rotate: false
+  xy: 906, 76
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+patchy_attack_hand-f
+  rotate: false
+  xy: 1498, 175
+  size: 56, 79
+  orig: 56, 79
+  offset: 0, 0
+  index: -1
+patchy_attack_thumb-f
+  rotate: false
+  xy: 270, 20
+  size: 50, 47
+  orig: 50, 47
+  offset: 0, 0
+  index: -1
+sideburns_belt
+  rotate: false
+  xy: 193, 71
+  size: 152, 183
+  orig: 152, 183
+  offset: 0, 0
+  index: -1
+sideburns_belt1
+  rotate: false
+  xy: 979, 90
+  size: 10, 20
+  orig: 10, 20
+  offset: 0, 0
+  index: -1
+sideburns_body
+  rotate: false
+  xy: 2, 30
+  size: 187, 224
+  orig: 187, 224
+  offset: 0, 0
+  index: -1
+sideburns_clothe-b
+  rotate: false
+  xy: 1912, 204
+  size: 58, 50
+  orig: 58, 50
+  offset: 0, 0
+  index: -1
+sideburns_clothe-f
+  rotate: false
+  xy: 673, 192
+  size: 108, 62
+  orig: 108, 62
+  offset: 0, 0
+  index: -1
+sideburns_collar-b
+  rotate: false
+  xy: 1374, 136
+  size: 50, 118
+  orig: 50, 118
+  offset: 0, 0
+  index: -1
+sideburns_collar-b1
+  rotate: false
+  xy: 193, 41
+  size: 73, 26
+  orig: 73, 26
+  offset: 0, 0
+  index: -1
+sideburns_collar-f
+  rotate: false
+  xy: 1308, 136
+  size: 62, 118
+  orig: 62, 118
+  offset: 0, 0
+  index: -1
+sideburns_death_hand-b
+  rotate: false
+  xy: 1625, 180
+  size: 51, 74
+  orig: 51, 74
+  offset: 0, 0
+  index: -1
+sideburns_death_hand-f
+  rotate: false
+  xy: 1846, 206
+  size: 62, 48
+  orig: 62, 48
+  offset: 0, 0
+  index: -1
+sideburns_death_index_finger-f
+  rotate: false
+  xy: 942, 69
+  size: 33, 41
+  orig: 33, 41
+  offset: 0, 0
+  index: -1
+sideburns_death_mid_finger-f
+  rotate: false
+  xy: 1109, 134
+  size: 23, 40
+  orig: 23, 40
+  offset: 0, 0
+  index: -1
+sideburns_death_pinky-f
+  rotate: false
+  xy: 324, 17
+  size: 22, 30
+  orig: 22, 30
+  offset: 0, 0
+  index: -1
+sideburns_death_ring_finger-f
+  rotate: false
+  xy: 379, 12
+  size: 22, 38
+  orig: 22, 38
+  offset: 0, 0
+  index: -1
+sideburns_death_thumb-b
+  rotate: false
+  xy: 1038, 113
+  size: 32, 51
+  orig: 32, 51
+  offset: 0, 0
+  index: -1
+sideburns_death_thumb-f
+  rotate: false
+  xy: 999, 108
+  size: 35, 56
+  orig: 35, 56
+  offset: 0, 0
+  index: -1
+sideburns_ear-f
+  rotate: false
+  xy: 1487, 136
+  size: 18, 28
+  orig: 18, 28
+  offset: 0, 0
+  index: -1
+sideburns_entrance_fingers-f
+  rotate: false
+  xy: 1428, 131
+  size: 55, 33
+  orig: 55, 33
+  offset: 0, 0
+  index: -1
+sideburns_entrance_hand-f
+  rotate: false
+  xy: 947, 114
+  size: 48, 50
+  orig: 48, 50
+  offset: 0, 0
+  index: -1
+sideburns_entrance_lower_arm-f
+  rotate: false
+  xy: 794, 143
+  size: 76, 111
+  orig: 76, 111
+  offset: 0, 0
+  index: -1
+sideburns_entrance_thumb-f
+  rotate: false
+  xy: 1074, 133
+  size: 31, 41
+  orig: 31, 41
+  offset: 0, 0
+  index: -1
+sideburns_eyeball-b
+  rotate: false
+  xy: 501, 28
+  size: 14, 13
+  orig: 14, 13
+  offset: 0, 0
+  index: -1
+sideburns_eyeball-f
+  rotate: false
+  xy: 324, 51
+  size: 21, 16
+  orig: 21, 16
+  offset: 0, 0
+  index: -1
+sideburns_eyebrow-b
+  rotate: false
+  xy: 482, 26
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+sideburns_eyebrow-f
+  rotate: false
+  xy: 906, 60
+  size: 25, 12
+  orig: 25, 12
+  offset: 0, 0
+  index: -1
+sideburns_face
+  rotate: false
+  xy: 1236, 152
+  size: 68, 102
+  orig: 68, 102
+  offset: 0, 0
+  index: -1
+sideburns_hand-b
+  rotate: false
+  xy: 1733, 194
+  size: 53, 60
+  orig: 53, 60
+  offset: 0, 0
+  index: -1
+sideburns_hand-f
+  rotate: false
+  xy: 1790, 195
+  size: 52, 59
+  orig: 52, 59
+  offset: 0, 0
+  index: -1
+sideburns_index_finger-f
+  rotate: false
+  xy: 2, 5
+  size: 27, 21
+  orig: 27, 21
+  offset: 0, 0
+  index: -1
+sideburns_index_finger-f1
+  rotate: false
+  xy: 435, 24
+  size: 16, 26
+  orig: 16, 26
+  offset: 0, 0
+  index: -1
+sideburns_inner_mouth
+  rotate: false
+  xy: 1074, 113
+  size: 25, 16
+  orig: 25, 16
+  offset: 0, 0
+  index: -1
+sideburns_lower_arm-b
+  rotate: false
+  xy: 947, 168
+  size: 91, 86
+  orig: 91, 86
+  offset: 0, 0
+  index: -1
+sideburns_lower_arm-f
+  rotate: false
+  xy: 874, 144
+  size: 69, 110
+  orig: 69, 110
+  offset: 0, 0
+  index: -1
+sideburns_lower_eyelid-b
+  rotate: false
+  xy: 979, 74
+  size: 11, 12
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+sideburns_lower_eyelid-f
+  rotate: false
+  xy: 750, 48
+  size: 19, 11
+  orig: 19, 11
+  offset: 0, 0
+  index: -1
+sideburns_lower_leg-b
+  rotate: false
+  xy: 455, 45
+  size: 78, 128
+  orig: 78, 128
+  offset: 0, 0
+  index: -1
+sideburns_lower_leg-f
+  rotate: false
+  xy: 537, 58
+  size: 95, 130
+  orig: 95, 130
+  offset: 0, 0
+  index: -1
+sideburns_lower_lip
+  rotate: false
+  xy: 719, 47
+  size: 27, 12
+  orig: 27, 12
+  offset: 0, 0
+  index: -1
+sideburns_lower_teeth
+  rotate: false
+  xy: 66, 16
+  size: 22, 10
+  orig: 22, 10
+  offset: 0, 0
+  index: -1
+sideburns_neck
+  rotate: false
+  xy: 794, 54
+  size: 72, 85
+  orig: 72, 85
+  offset: 0, 0
+  index: -1
+sideburns_nose
+  rotate: false
+  xy: 405, 24
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+sideburns_nose_shadow
+  rotate: false
+  xy: 455, 30
+  size: 23, 11
+  orig: 23, 11
+  offset: 0, 0
+  index: -1
+sideburns_pelvis
+  rotate: false
+  xy: 531, 192
+  size: 138, 62
+  orig: 138, 62
+  offset: 0, 0
+  index: -1
+sideburns_pupil-b
+  rotate: false
+  xy: 1733, 183
+  size: 6, 7
+  orig: 6, 7
+  offset: 0, 0
+  index: -1
+sideburns_pupil-f
+  rotate: false
+  xy: 2038, 246
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+sideburns_shoe-b
+  rotate: false
+  xy: 1144, 184
+  size: 88, 70
+  orig: 88, 70
+  offset: 0, 0
+  index: -1
+sideburns_shoe-f
+  rotate: false
+  xy: 1558, 183
+  size: 63, 71
+  orig: 63, 71
+  offset: 0, 0
+  index: -1
+sideburns_sword_blade
+  rotate: false
+  xy: 349, 177
+  size: 178, 77
+  orig: 178, 77
+  offset: 0, 0
+  index: -1
+sideburns_sword_gaurd
+  rotate: false
+  xy: 870, 60
+  size: 32, 79
+  orig: 32, 79
+  offset: 0, 0
+  index: -1
+sideburns_sword_handle
+  rotate: false
+  xy: 1974, 213
+  size: 60, 41
+  orig: 60, 41
+  offset: 0, 0
+  index: -1
+sideburns_thumb-f
+  rotate: false
+  xy: 350, 12
+  size: 25, 38
+  orig: 25, 38
+  offset: 0, 0
+  index: -1
+sideburns_tongue
+  rotate: false
+  xy: 773, 49
+  size: 17, 10
+  orig: 17, 10
+  offset: 0, 0
+  index: -1
+sideburns_upper_arm-b
+  rotate: false
+  xy: 719, 63
+  size: 71, 125
+  orig: 71, 125
+  offset: 0, 0
+  index: -1
+sideburns_upper_arm-f
+  rotate: false
+  xy: 1042, 178
+  size: 98, 76
+  orig: 98, 76
+  offset: 0, 0
+  index: -1
+sideburns_upper_eyelid-b
+  rotate: false
+  xy: 519, 29
+  size: 13, 12
+  orig: 13, 12
+  offset: 0, 0
+  index: -1
+sideburns_upper_eyelid-f
+  rotate: false
+  xy: 66, 2
+  size: 20, 10
+  orig: 20, 10
+  offset: 0, 0
+  index: -1
+sideburns_upper_leg-b
+  rotate: false
+  xy: 349, 54
+  size: 102, 119
+  orig: 102, 119
+  offset: 0, 0
+  index: -1
+sideburns_upper_leg-f
+  rotate: false
+  xy: 636, 45
+  size: 79, 143
+  orig: 79, 143
+  offset: 0, 0
+  index: -1
+sideburns_upper_lip
+  rotate: false
+  xy: 33, 7
+  size: 29, 19
+  orig: 29, 19
+  offset: 0, 0
+  index: -1
+sideburns_upper_sleeve-b
+  rotate: false
+  xy: 1680, 182
+  size: 49, 72
+  orig: 49, 72
+  offset: 0, 0
+  index: -1
+sideburns_upper_sleeve-f
+  rotate: false
+  xy: 1428, 168
+  size: 66, 86
+  orig: 66, 86
+  offset: 0, 0
+  index: -1
+sideburns_upper_teeth
+  rotate: false
+  xy: 537, 46
+  size: 22, 8
+  orig: 22, 8
+  offset: 0, 0
+  index: -1

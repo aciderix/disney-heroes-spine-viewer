@@ -1,0 +1,272 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 357
+  size: 387, 253
+  orig: 387, 253
+  offset: 0, 0
+  index: -1
+bow
+  rotate: false
+  xy: 2, 129
+  size: 312, 224
+  orig: 312, 224
+  offset: 0, 0
+  index: -1
+bow-head
+  rotate: false
+  xy: 327, 48
+  size: 79, 74
+  orig: 79, 74
+  offset: 0, 0
+  index: -1
+bow-neck
+  rotate: false
+  xy: 2, 9
+  size: 186, 116
+  orig: 186, 116
+  offset: 0, 0
+  index: -1
+chest
+  rotate: false
+  xy: 1449, 830
+  size: 188, 192
+  orig: 188, 192
+  offset: 0, 0
+  index: -1
+chest-b
+  rotate: false
+  xy: 1257, 830
+  size: 188, 192
+  orig: 188, 192
+  offset: 0, 0
+  index: -1
+dropped-bow-1
+  rotate: false
+  xy: 596, 637
+  size: 139, 131
+  orig: 139, 131
+  offset: 0, 0
+  index: -1
+dropped-bow-2
+  rotate: false
+  xy: 993, 831
+  size: 260, 191
+  orig: 260, 191
+  offset: 0, 0
+  index: -1
+ear-b
+  rotate: false
+  xy: 639, 315
+  size: 104, 93
+  orig: 104, 93
+  offset: 0, 0
+  index: -1
+ear-f
+  rotate: false
+  xy: 439, 612
+  size: 153, 156
+  orig: 153, 156
+  offset: 0, 0
+  index: -1
+eye-closed-b
+  rotate: false
+  xy: 410, 69
+  size: 44, 53
+  orig: 44, 53
+  offset: 0, 0
+  index: -1
+eye-closed-f
+  rotate: false
+  xy: 1972, 963
+  size: 66, 59
+  orig: 66, 59
+  offset: 0, 0
+  index: -1
+eyeball-b
+  rotate: false
+  xy: 739, 712
+  size: 39, 56
+  orig: 39, 56
+  offset: 0, 0
+  index: -1
+eyeball-f
+  rotate: false
+  xy: 567, 260
+  size: 65, 59
+  orig: 65, 59
+  offset: 0, 0
+  index: -1
+eyebrow-b
+  rotate: false
+  xy: 596, 619
+  size: 31, 14
+  orig: 31, 14
+  offset: 0, 0
+  index: -1
+eyebrow-f
+  rotate: false
+  xy: 739, 671
+  size: 39, 37
+  orig: 39, 37
+  offset: 0, 0
+  index: -1
+eyelashes-b
+  rotate: false
+  xy: 567, 146
+  size: 38, 49
+  orig: 38, 49
+  offset: 0, 0
+  index: -1
+eyelashes-f
+  rotate: false
+  xy: 327, 3
+  size: 70, 41
+  orig: 70, 41
+  offset: 0, 0
+  index: -1
+eyes-light-b
+  rotate: false
+  xy: 619, 242
+  size: 13, 14
+  orig: 13, 14
+  offset: 0, 0
+  index: -1
+eyes-light-f
+  rotate: false
+  xy: 747, 394
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 614
+  size: 433, 408
+  orig: 433, 408
+  offset: 0, 0
+  index: -1
+hind-leg-b
+  rotate: false
+  xy: 459, 118
+  size: 104, 201
+  orig: 104, 201
+  offset: 0, 0
+  index: -1
+hind-leg-f
+  rotate: false
+  xy: 1641, 773
+  size: 182, 249
+  orig: 182, 249
+  offset: 0, 0
+  index: -1
+hind-leg-walk-f
+  rotate: false
+  xy: 393, 323
+  size: 119, 285
+  orig: 119, 285
+  offset: 0, 0
+  index: -1
+hind-leg-walk-line-f
+  rotate: false
+  xy: 516, 323
+  size: 119, 285
+  orig: 119, 285
+  offset: 0, 0
+  index: -1
+jaw
+  rotate: false
+  xy: 1972, 848
+  size: 49, 45
+  orig: 49, 45
+  offset: 0, 0
+  index: -1
+leg-b
+  rotate: false
+  xy: 639, 412
+  size: 127, 221
+  orig: 127, 221
+  offset: 0, 0
+  index: -1
+leg-f
+  rotate: false
+  xy: 784, 770
+  size: 205, 252
+  orig: 205, 252
+  offset: 0, 0
+  index: -1
+leg-walk-f
+  rotate: false
+  xy: 1827, 770
+  size: 141, 252
+  orig: 141, 252
+  offset: 0, 0
+  index: -1
+lower-mouth
+  rotate: false
+  xy: 1972, 897
+  size: 52, 62
+  orig: 52, 62
+  offset: 0, 0
+  index: -1
+milk-bowl
+  rotate: false
+  xy: 439, 772
+  size: 341, 250
+  orig: 341, 250
+  offset: 0, 0
+  index: -1
+pupil-b
+  rotate: false
+  xy: 318, 323
+  size: 27, 30
+  orig: 27, 30
+  offset: 0, 0
+  index: -1
+pupil-f
+  rotate: false
+  xy: 1972, 808
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+tail
+  rotate: false
+  xy: 318, 126
+  size: 137, 193
+  orig: 137, 193
+  offset: 0, 0
+  index: -1
+tongue
+  rotate: false
+  xy: 567, 199
+  size: 48, 57
+  orig: 48, 57
+  offset: 0, 0
+  index: -1
+upper-mouth
+  rotate: false
+  xy: 1146, 760
+  size: 92, 67
+  orig: 92, 67
+  offset: 0, 0
+  index: -1
+whiskers-b
+  rotate: false
+  xy: 993, 762
+  size: 149, 65
+  orig: 149, 65
+  offset: 0, 0
+  index: -1
+whiskers-f
+  rotate: false
+  xy: 192, 2
+  size: 131, 112
+  orig: 131, 112
+  offset: 0, 0
+  index: -1

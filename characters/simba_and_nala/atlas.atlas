@@ -1,0 +1,936 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+nala_angry_eyebrow-b
+  rotate: false
+  xy: 1534, 873
+  size: 35, 40
+  orig: 35, 40
+  offset: 0, 0
+  index: -1
+nala_angry_eyebrow-f
+  rotate: false
+  xy: 586, 2
+  size: 93, 47
+  orig: 93, 47
+  offset: 0, 0
+  index: -1
+nala_attack_elbow-f
+  rotate: false
+  xy: 988, 674
+  size: 168, 147
+  orig: 168, 147
+  offset: 0, 0
+  index: -1
+nala_attack_paw-f
+  rotate: false
+  xy: 1702, 102
+  size: 111, 119
+  orig: 111, 119
+  offset: 0, 0
+  index: -1
+nala_attack_shoulder-f
+  rotate: false
+  xy: 827, 637
+  size: 157, 164
+  orig: 157, 164
+  offset: 0, 0
+  index: -1
+nala_back_ankle-b
+  rotate: false
+  xy: 1434, 705
+  size: 99, 148
+  orig: 99, 148
+  offset: 0, 0
+  index: -1
+nala_back_ankle-f
+  rotate: false
+  xy: 1925, 111
+  size: 88, 146
+  orig: 88, 146
+  offset: 0, 0
+  index: -1
+nala_back_paw-b
+  rotate: false
+  xy: 1057, 5
+  size: 100, 60
+  orig: 100, 60
+  offset: 0, 0
+  index: -1
+nala_back_paw-f
+  rotate: false
+  xy: 709, 183
+  size: 95, 57
+  orig: 95, 57
+  offset: 0, 0
+  index: -1
+nala_back_thigh-b
+  rotate: false
+  xy: 1604, 322
+  size: 126, 190
+  orig: 126, 190
+  offset: 0, 0
+  index: -1
+nala_back_thigh-f
+  rotate: false
+  xy: 1124, 284
+  size: 185, 209
+  orig: 185, 209
+  offset: 0, 0
+  index: -1
+nala_body
+  rotate: false
+  xy: 463, 244
+  size: 483, 240
+  orig: 483, 240
+  offset: 0, 0
+  index: -1
+nala_death_backleg-f
+  rotate: false
+  xy: 1734, 325
+  size: 134, 217
+  orig: 134, 217
+  offset: 0, 0
+  index: -1
+nala_ear-b
+  rotate: false
+  xy: 341, 4
+  size: 72, 32
+  orig: 72, 32
+  offset: 0, 0
+  index: -1
+nala_eyeball-b
+  rotate: false
+  xy: 1205, 641
+  size: 18, 34
+  orig: 18, 34
+  offset: 0, 0
+  index: -1
+nala_eyeball-f
+  rotate: false
+  xy: 1086, 220
+  size: 38, 33
+  orig: 38, 33
+  offset: 0, 0
+  index: -1
+nala_eyebrow-b
+  rotate: false
+  xy: 582, 53
+  size: 10, 11
+  orig: 10, 11
+  offset: 0, 0
+  index: -1
+nala_eyebrow-f
+  rotate: false
+  xy: 461, 51
+  size: 59, 13
+  orig: 59, 13
+  offset: 0, 0
+  index: -1
+nala_eyelid-b
+  rotate: false
+  xy: 1246, 645
+  size: 12, 30
+  orig: 12, 30
+  offset: 0, 0
+  index: -1
+nala_eyelid-f
+  rotate: false
+  xy: 988, 637
+  size: 43, 33
+  orig: 43, 33
+  offset: 0, 0
+  index: -1
+nala_front_elbow-b
+  rotate: false
+  xy: 1467, 87
+  size: 111, 128
+  orig: 111, 128
+  offset: 0, 0
+  index: -1
+nala_front_elbow-f
+  rotate: false
+  xy: 1063, 70
+  size: 154, 144
+  orig: 154, 144
+  offset: 0, 0
+  index: -1
+nala_front_paw-b
+  rotate: false
+  xy: 1161, 2
+  size: 110, 64
+  orig: 110, 64
+  offset: 0, 0
+  index: -1
+nala_front_shoulder-b
+  rotate: false
+  xy: 994, 825
+  size: 146, 197
+  orig: 146, 197
+  offset: 0, 0
+  index: -1
+nala_head
+  rotate: false
+  xy: 2, 15
+  size: 251, 154
+  orig: 251, 154
+  offset: 0, 0
+  index: -1
+nala_hurt_mouth
+  rotate: false
+  xy: 257, 5
+  size: 80, 31
+  orig: 80, 31
+  offset: 0, 0
+  index: -1
+nala_lower_mouth
+  rotate: false
+  xy: 1225, 218
+  size: 87, 62
+  orig: 87, 62
+  offset: 0, 0
+  index: -1
+nala_paw-b2
+  rotate: false
+  xy: 1735, 810
+  size: 66, 116
+  orig: 66, 116
+  offset: 0, 0
+  index: -1
+nala_paw-f1
+  rotate: false
+  xy: 796, 68
+  size: 137, 111
+  orig: 137, 111
+  offset: 0, 0
+  index: -1
+nala_paw-f2
+  rotate: false
+  xy: 1009, 497
+  size: 128, 136
+  orig: 128, 136
+  offset: 0, 0
+  index: -1
+nala_pupil-b
+  rotate: false
+  xy: 1130, 640
+  size: 25, 30
+  orig: 25, 30
+  offset: 0, 0
+  index: -1
+nala_pupil-f
+  rotate: false
+  xy: 1035, 639
+  size: 29, 31
+  orig: 29, 31
+  offset: 0, 0
+  index: -1
+nala_skill2_front_elbow-f
+  rotate: false
+  xy: 787, 825
+  size: 203, 197
+  orig: 203, 197
+  offset: 0, 0
+  index: -1
+nala_skill2_front_shoulder-f
+  rotate: false
+  xy: 950, 257
+  size: 170, 234
+  orig: 170, 234
+  offset: 0, 0
+  index: -1
+nala_skill2_nose
+  rotate: false
+  xy: 776, 4
+  size: 64, 49
+  orig: 64, 49
+  offset: 0, 0
+  index: -1
+nala_skill2_paw-f
+  rotate: false
+  xy: 569, 490
+  size: 121, 117
+  orig: 121, 117
+  offset: 0, 0
+  index: -1
+nala_stand_back_paw-b
+  rotate: false
+  xy: 683, 5
+  size: 89, 48
+  orig: 89, 48
+  offset: 0, 0
+  index: -1
+nala_stand_back_paw-f
+  rotate: false
+  xy: 808, 184
+  size: 95, 56
+  orig: 95, 56
+  offset: 0, 0
+  index: -1
+nala_stand_back_thigh-b
+  rotate: false
+  xy: 1353, 84
+  size: 110, 131
+  orig: 110, 131
+  offset: 0, 0
+  index: -1
+nala_stand_eblow-f
+  rotate: false
+  xy: 1144, 830
+  size: 131, 192
+  orig: 131, 192
+  offset: 0, 0
+  index: -1
+nala_stand_elbow-b
+  rotate: false
+  xy: 1394, 514
+  size: 97, 170
+  orig: 97, 170
+  offset: 0, 0
+  index: -1
+nala_stand_front_paw-f
+  rotate: false
+  xy: 1499, 220
+  size: 124, 80
+  orig: 124, 80
+  offset: 0, 0
+  index: -1
+nala_stand_shoulder-b
+  rotate: false
+  xy: 1279, 837
+  size: 132, 185
+  orig: 132, 185
+  offset: 0, 0
+  index: -1
+nala_stand_shoulder-f
+  rotate: false
+  xy: 1263, 505
+  size: 127, 170
+  orig: 127, 170
+  offset: 0, 0
+  index: -1
+nala_tail
+  rotate: false
+  xy: 569, 793
+  size: 214, 229
+  orig: 214, 229
+  offset: 0, 0
+  index: -1
+nala_upper_mouth
+  rotate: false
+  xy: 952, 3
+  size: 101, 62
+  orig: 101, 62
+  offset: 0, 0
+  index: -1
+nala_upper_teeth
+  rotate: false
+  xy: 787, 805
+  size: 45, 16
+  orig: 45, 16
+  offset: 0, 0
+  index: -1
+simba_angry_eyebrow-b
+  rotate: false
+  xy: 1068, 640
+  size: 27, 30
+  orig: 27, 30
+  offset: 0, 0
+  index: -1
+simba_angry_eyebrow-f
+  rotate: false
+  xy: 417, 5
+  size: 71, 31
+  orig: 71, 31
+  offset: 0, 0
+  index: -1
+simba_back_paw-b
+  rotate: false
+  xy: 1128, 218
+  size: 93, 62
+  orig: 93, 62
+  offset: 0, 0
+  index: -1
+simba_back_paw-f
+  rotate: false
+  xy: 463, 174
+  size: 113, 66
+  orig: 113, 66
+  offset: 0, 0
+  index: -1
+simba_back_thigh-b
+  rotate: false
+  xy: 1805, 795
+  size: 129, 227
+  orig: 129, 227
+  offset: 0, 0
+  index: -1
+simba_back_thigh-f
+  rotate: false
+  xy: 1313, 297
+  size: 155, 204
+  orig: 155, 204
+  offset: 0, 0
+  index: -1
+simba_body
+  rotate: false
+  xy: 2, 173
+  size: 457, 311
+  orig: 457, 311
+  offset: 0, 0
+  index: -1
+simba_closed_eyelid-b
+  rotate: false
+  xy: 1573, 874
+  size: 23, 39
+  orig: 23, 39
+  offset: 0, 0
+  index: -1
+simba_closed_eyelid-f
+  rotate: false
+  xy: 907, 194
+  size: 66, 46
+  orig: 66, 46
+  offset: 0, 0
+  index: -1
+simba_death_backankle-f
+  rotate: false
+  xy: 694, 504
+  size: 137, 103
+  orig: 137, 103
+  offset: 0, 0
+  index: -1
+simba_death_backleg-f
+  rotate: false
+  xy: 1472, 304
+  size: 128, 206
+  orig: 128, 206
+  offset: 0, 0
+  index: -1
+simba_death_backpaw-f
+  rotate: false
+  xy: 844, 2
+  size: 104, 62
+  orig: 104, 62
+  offset: 0, 0
+  index: -1
+simba_death_backthigh-f
+  rotate: false
+  xy: 1160, 679
+  size: 160, 147
+  orig: 160, 147
+  offset: 0, 0
+  index: -1
+simba_death_elbow-f
+  rotate: false
+  xy: 1582, 102
+  size: 116, 114
+  orig: 116, 114
+  offset: 0, 0
+  index: -1
+simba_death_mouth
+  rotate: false
+  xy: 1756, 227
+  size: 122, 94
+  orig: 122, 94
+  offset: 0, 0
+  index: -1
+simba_death_shoulder-f
+  rotate: false
+  xy: 461, 68
+  size: 182, 101
+  orig: 182, 101
+  offset: 0, 0
+  index: -1
+simba_eyeball-b
+  rotate: false
+  xy: 1181, 644
+  size: 20, 31
+  orig: 20, 31
+  offset: 0, 0
+  index: -1
+simba_eyeball-f
+  rotate: false
+  xy: 1041, 218
+  size: 41, 35
+  orig: 41, 35
+  offset: 0, 0
+  index: -1
+simba_eyelid-b
+  rotate: false
+  xy: 1159, 641
+  size: 18, 29
+  orig: 18, 29
+  offset: 0, 0
+  index: -1
+simba_eyelid-f
+  rotate: false
+  xy: 492, 3
+  size: 42, 44
+  orig: 42, 44
+  offset: 0, 0
+  index: -1
+simba_front_ankle-f
+  rotate: false
+  xy: 1938, 891
+  size: 96, 131
+  orig: 96, 131
+  offset: 0, 0
+  index: -1
+simba_front_elbow-b
+  rotate: false
+  xy: 257, 40
+  size: 200, 129
+  orig: 200, 129
+  offset: 0, 0
+  index: -1
+simba_front_elbow-f
+  rotate: false
+  xy: 1674, 6
+  size: 141, 92
+  orig: 141, 92
+  offset: 0, 0
+  index: -1
+simba_front_paw-f
+  rotate: false
+  xy: 580, 181
+  size: 125, 59
+  orig: 125, 59
+  offset: 0, 0
+  index: -1
+simba_front_shoulder-b
+  rotate: false
+  xy: 835, 495
+  size: 170, 138
+  orig: 170, 138
+  offset: 0, 0
+  index: -1
+simba_front_shoulder-f
+  rotate: false
+  xy: 1415, 857
+  size: 115, 165
+  orig: 115, 165
+  offset: 0, 0
+  index: -1
+simba_head
+  rotate: false
+  xy: 569, 611
+  size: 254, 178
+  orig: 254, 178
+  offset: 0, 0
+  index: -1
+simba_hurt_mouth
+  rotate: false
+  xy: 1627, 225
+  size: 125, 93
+  orig: 125, 93
+  offset: 0, 0
+  index: -1
+simba_paw-b2
+  rotate: false
+  xy: 1978, 678
+  size: 66, 116
+  orig: 66, 116
+  offset: 0, 0
+  index: -1
+simba_paw-f1
+  rotate: false
+  xy: 1638, 768
+  size: 93, 145
+  orig: 93, 145
+  offset: 0, 0
+  index: -1
+simba_paw-f2
+  rotate: false
+  xy: 1221, 78
+  size: 128, 136
+  orig: 128, 136
+  offset: 0, 0
+  index: -1
+simba_pupil-b
+  rotate: false
+  xy: 1227, 649
+  size: 15, 26
+  orig: 15, 26
+  offset: 0, 0
+  index: -1
+simba_pupil-f
+  rotate: false
+  xy: 1099, 641
+  size: 27, 29
+  orig: 27, 29
+  offset: 0, 0
+  index: -1
+simba_roar_inner_mouth
+  rotate: false
+  xy: 1951, 2
+  size: 86, 105
+  orig: 86, 105
+  offset: 0, 0
+  index: -1
+simba_roar_lower_mouth
+  rotate: false
+  xy: 1324, 688
+  size: 106, 145
+  orig: 106, 145
+  offset: 0, 0
+  index: -1
+simba_roar_teeth
+  rotate: false
+  xy: 1978, 594
+  size: 59, 80
+  orig: 59, 80
+  offset: 0, 0
+  index: -1
+simba_roar_tongue
+  rotate: false
+  xy: 977, 203
+  size: 60, 50
+  orig: 60, 50
+  offset: 0, 0
+  index: -1
+simba_roar_upper_mouth
+  rotate: false
+  xy: 1819, 15
+  size: 128, 87
+  orig: 128, 87
+  offset: 0, 0
+  index: -1
+simba_skill2_elbow-f
+  rotate: false
+  xy: 1595, 516
+  size: 122, 206
+  orig: 122, 206
+  offset: 0, 0
+  index: -1
+simba_skill2_paw-b
+  rotate: false
+  xy: 1537, 726
+  size: 97, 143
+  orig: 97, 143
+  offset: 0, 0
+  index: -1
+simba_skill2_paw-b1
+  rotate: false
+  xy: 1141, 505
+  size: 118, 131
+  orig: 118, 131
+  offset: 0, 0
+  index: -1
+simba_skill2_paw-f
+  rotate: false
+  xy: 937, 69
+  size: 122, 121
+  orig: 122, 121
+  offset: 0, 0
+  index: -1
+simba_skill2_paw-f1
+  rotate: false
+  xy: 647, 57
+  size: 145, 120
+  orig: 145, 120
+  offset: 0, 0
+  index: -1
+simba_skill2_shoulder-f
+  rotate: false
+  xy: 1868, 549
+  size: 106, 242
+  orig: 106, 242
+  offset: 0, 0
+  index: -1
+simba_skill2_tongue
+  rotate: false
+  xy: 1275, 3
+  size: 128, 71
+  orig: 128, 71
+  offset: 0, 0
+  index: -1
+simba_stand_elbow-b
+  rotate: false
+  xy: 1817, 106
+  size: 104, 117
+  orig: 104, 117
+  offset: 0, 0
+  index: -1
+simba_stand_front_paw-f
+  rotate: false
+  xy: 1533, 3
+  size: 137, 80
+  orig: 137, 80
+  offset: 0, 0
+  index: -1
+simba_stand_paw-b
+  rotate: false
+  xy: 1407, 4
+  size: 122, 76
+  orig: 122, 76
+  offset: 0, 0
+  index: -1
+simba_stand_shoulder-b
+  rotate: false
+  xy: 1495, 531
+  size: 96, 170
+  orig: 96, 170
+  offset: 0, 0
+  index: -1
+simba_stand_shoulder-f
+  rotate: false
+  xy: 1721, 546
+  size: 143, 218
+  orig: 143, 218
+  offset: 0, 0
+  index: -1
+simba_tail
+  rotate: false
+  xy: 1882, 261
+  size: 145, 284
+  orig: 145, 284
+  offset: 0, 0
+  index: -1
+simba_tongue
+  rotate: false
+  xy: 538, 10
+  size: 44, 37
+  orig: 44, 37
+  offset: 0, 0
+  index: -1
+simba_upper_teeth
+  rotate: false
+  xy: 524, 51
+  size: 54, 13
+  orig: 54, 13
+  offset: 0, 0
+  index: -1
+simba_victory_paw-b
+  rotate: false
+  xy: 1672, 930
+  size: 129, 92
+  orig: 129, 92
+  offset: 0, 0
+  index: -1
+simba_victory_shoulder-b
+  rotate: false
+  xy: 1534, 917
+  size: 134, 105
+  orig: 134, 105
+  offset: 0, 0
+  index: -1
+simba_walk_backpaw-f1
+  rotate: false
+  xy: 1938, 798
+  size: 99, 89
+  orig: 99, 89
+  offset: 0, 0
+  index: -1
+simba_whiskers
+  rotate: false
+  xy: 1316, 219
+  size: 179, 74
+  orig: 179, 74
+  offset: 0, 0
+  index: -1
+skill1_spin
+  rotate: false
+  xy: 2, 488
+  size: 563, 534
+  orig: 563, 534
+  offset: 0, 0
+  index: -1
+
+unit-DEFAULT-untrimmed2.etc1
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+nala_back_thigh_f1
+  rotate: false
+  xy: 254, 15
+  size: 112, 191
+  orig: 112, 191
+  offset: 0, 0
+  index: -1
+nala_death_mouth
+  rotate: false
+  xy: 1102, 44
+  size: 93, 71
+  orig: 93, 71
+  offset: 0, 0
+  index: -1
+nala_front_ankle-f
+  rotate: false
+  xy: 600, 69
+  size: 88, 137
+  orig: 88, 137
+  offset: 0, 0
+  index: -1
+nala_front_paw-f
+  rotate: false
+  xy: 692, 27
+  size: 117, 70
+  orig: 117, 70
+  offset: 0, 0
+  index: -1
+nala_front_shoulder-f
+  rotate: false
+  xy: 2, 12
+  size: 121, 194
+  orig: 121, 194
+  offset: 0, 0
+  index: -1
+nala_inner_mouth
+  rotate: false
+  xy: 600, 2
+  size: 83, 63
+  orig: 83, 63
+  offset: 0, 0
+  index: -1
+nala_paw-b1
+  rotate: false
+  xy: 808, 116
+  size: 122, 90
+  orig: 122, 90
+  offset: 0, 0
+  index: -1
+nala_stand_back_ankle-b
+  rotate: false
+  xy: 1793, 90
+  size: 76, 116
+  orig: 76, 116
+  offset: 0, 0
+  index: -1
+nala_stand_back_ankle-f
+  rotate: false
+  xy: 1705, 85
+  size: 84, 121
+  orig: 84, 121
+  offset: 0, 0
+  index: -1
+nala_stand_back_hind-f
+  rotate: false
+  xy: 924, 24
+  size: 87, 88
+  orig: 87, 88
+  offset: 0, 0
+  index: -1
+nala_stand_back_thigh-f
+  rotate: false
+  xy: 127, 16
+  size: 123, 190
+  orig: 123, 190
+  offset: 0, 0
+  index: -1
+nala_stand_paw-b
+  rotate: false
+  xy: 1873, 136
+  size: 119, 70
+  orig: 119, 70
+  offset: 0, 0
+  index: -1
+nala_walk_backpaw-b
+  rotate: false
+  xy: 1015, 6
+  size: 83, 106
+  orig: 83, 106
+  offset: 0, 0
+  index: -1
+nala_walk_backpaw-f
+  rotate: false
+  xy: 1514, 89
+  size: 96, 117
+  orig: 96, 117
+  offset: 0, 0
+  index: -1
+simba_back_ankle-b
+  rotate: false
+  xy: 1303, 107
+  size: 103, 99
+  orig: 103, 99
+  offset: 0, 0
+  index: -1
+simba_back_ankle-f
+  rotate: false
+  xy: 1614, 78
+  size: 87, 128
+  orig: 87, 128
+  offset: 0, 0
+  index: -1
+simba_back_hind-f
+  rotate: false
+  xy: 692, 101
+  size: 112, 105
+  orig: 112, 105
+  offset: 0, 0
+  index: -1
+simba_back_thigh_f1
+  rotate: false
+  xy: 370, 15
+  size: 112, 191
+  orig: 112, 191
+  offset: 0, 0
+  index: -1
+simba_ear-b
+  rotate: false
+  xy: 1286, 36
+  size: 73, 67
+  orig: 73, 67
+  offset: 0, 0
+  index: -1
+simba_front_paw-b
+  rotate: false
+  xy: 1873, 63
+  size: 118, 69
+  orig: 118, 69
+  offset: 0, 0
+  index: -1
+simba_inner_mouth
+  rotate: false
+  xy: 1199, 44
+  size: 83, 71
+  orig: 83, 71
+  offset: 0, 0
+  index: -1
+simba_lower_mouth
+  rotate: false
+  xy: 813, 30
+  size: 107, 82
+  orig: 107, 82
+  offset: 0, 0
+  index: -1
+simba_paw-b1
+  rotate: false
+  xy: 934, 116
+  size: 122, 90
+  orig: 122, 90
+  offset: 0, 0
+  index: -1
+simba_stand_eblow-f
+  rotate: false
+  xy: 486, 16
+  size: 110, 190
+  orig: 110, 190
+  offset: 0, 0
+  index: -1
+simba_upper_mouth
+  rotate: false
+  xy: 1060, 119
+  size: 125, 87
+  orig: 125, 87
+  offset: 0, 0
+  index: -1
+simba_victory_elbow-b
+  rotate: false
+  xy: 1410, 90
+  size: 100, 116
+  orig: 100, 116
+  offset: 0, 0
+  index: -1
+simba_walk_backpaw-f
+  rotate: false
+  xy: 1189, 119
+  size: 110, 87
+  orig: 110, 87
+  offset: 0, 0
+  index: -1

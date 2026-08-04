@@ -1,0 +1,216 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+angle
+  rotate: false
+  xy: 2, 157
+  size: 395, 412
+  orig: 395, 412
+  offset: 0, 0
+  index: -1
+angle-b
+  rotate: false
+  xy: 401, 165
+  size: 237, 404
+  orig: 237, 404
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 2, 573
+  size: 568, 437
+  orig: 568, 437
+  offset: 0, 0
+  index: -1
+ear
+  rotate: false
+  xy: 984, 645
+  size: 89, 47
+  orig: 89, 47
+  offset: 0, 0
+  index: -1
+ear-b
+  rotate: false
+  xy: 774, 342
+  size: 78, 51
+  orig: 78, 51
+  offset: 0, 0
+  index: -1
+eye_brow-b
+  rotate: false
+  xy: 261, 123
+  size: 33, 30
+  orig: 33, 30
+  offset: 0, 0
+  index: -1
+eye_brow-f
+  rotate: false
+  xy: 831, 573
+  size: 68, 23
+  orig: 68, 23
+  offset: 0, 0
+  index: -1
+eyeball-b
+  rotate: false
+  xy: 1199, 753
+  size: 22, 27
+  orig: 22, 27
+  offset: 0, 0
+  index: -1
+eyeball-f
+  rotate: false
+  xy: 1703, 778
+  size: 35, 30
+  orig: 35, 30
+  offset: 0, 0
+  index: -1
+face
+  rotate: false
+  xy: 1247, 822
+  size: 186, 188
+  orig: 186, 188
+  offset: 0, 0
+  index: -1
+hair-f
+  rotate: false
+  xy: 831, 696
+  size: 245, 314
+  orig: 245, 314
+  offset: 0, 0
+  index: -1
+hair-f2
+  rotate: false
+  xy: 574, 573
+  size: 253, 437
+  orig: 253, 437
+  offset: 0, 0
+  index: -1
+hair-f3
+  rotate: false
+  xy: 1247, 793
+  size: 50, 25
+  orig: 50, 25
+  offset: 0, 0
+  index: -1
+lower_arm-b
+  rotate: false
+  xy: 1437, 784
+  size: 136, 226
+  orig: 136, 226
+  offset: 0, 0
+  index: -1
+lower_arm-f
+  rotate: false
+  xy: 1577, 764
+  size: 122, 246
+  orig: 122, 246
+  offset: 0, 0
+  index: -1
+lower_leg-b
+  rotate: false
+  xy: 1080, 784
+  size: 163, 226
+  orig: 163, 226
+  offset: 0, 0
+  index: -1
+lower_leg-f
+  rotate: false
+  xy: 642, 306
+  size: 128, 263
+  orig: 128, 263
+  offset: 0, 0
+  index: -1
+lower_mouth
+  rotate: false
+  xy: 130, 68
+  size: 127, 85
+  orig: 127, 85
+  offset: 0, 0
+  index: -1
+lower_teeth
+  rotate: false
+  xy: 1080, 718
+  size: 115, 62
+  orig: 115, 62
+  offset: 0, 0
+  index: -1
+pupil-b
+  rotate: false
+  xy: 890, 548
+  size: 16, 21
+  orig: 16, 21
+  offset: 0, 0
+  index: -1
+pupil-f
+  rotate: false
+  xy: 903, 573
+  size: 21, 23
+  orig: 21, 23
+  offset: 0, 0
+  index: -1
+tail
+  rotate: false
+  xy: 774, 397
+  size: 112, 172
+  orig: 112, 172
+  offset: 0, 0
+  index: -1
+tongue
+  rotate: false
+  xy: 1953, 859
+  size: 38, 92
+  orig: 38, 92
+  offset: 0, 0
+  index: -1
+upper_arm-b
+  rotate: false
+  xy: 1843, 825
+  size: 106, 185
+  orig: 106, 185
+  offset: 0, 0
+  index: -1
+upper_arm-f
+  rotate: false
+  xy: 642, 133
+  size: 120, 169
+  orig: 120, 169
+  offset: 0, 0
+  index: -1
+upper_b
+  rotate: false
+  xy: 1953, 955
+  size: 89, 55
+  orig: 89, 55
+  offset: 0, 0
+  index: -1
+upper_leg-b
+  rotate: false
+  xy: 2, 2
+  size: 124, 151
+  orig: 124, 151
+  offset: 0, 0
+  index: -1
+upper_leg-f
+  rotate: false
+  xy: 1703, 812
+  size: 136, 198
+  orig: 136, 198
+  offset: 0, 0
+  index: -1
+upper_mouth
+  rotate: false
+  xy: 831, 600
+  size: 149, 92
+  orig: 149, 92
+  offset: 0, 0
+  index: -1
+upper_teeth
+  rotate: false
+  xy: 130, 4
+  size: 116, 60
+  orig: 116, 60
+  offset: 0, 0
+  index: -1

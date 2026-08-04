@@ -1,0 +1,286 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bag-b
+  rotate: false
+  xy: 986, 437
+  size: 35, 56
+  orig: 35, 56
+  offset: 0, 0
+  index: -1
+bag-f
+  rotate: false
+  xy: 266, 112
+  size: 47, 64
+  orig: 47, 64
+  offset: 0, 0
+  index: -1
+belt
+  rotate: false
+  xy: 654, 381
+  size: 71, 41
+  orig: 71, 41
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 242, 180
+  size: 106, 106
+  orig: 106, 106
+  offset: 0, 0
+  index: -1
+cloth-b
+  rotate: false
+  xy: 155, 59
+  size: 63, 96
+  orig: 63, 96
+  offset: 0, 0
+  index: -1
+cloth-f
+  rotate: false
+  xy: 561, 378
+  size: 89, 115
+  orig: 89, 115
+  offset: 0, 0
+  index: -1
+dress-b
+  rotate: false
+  xy: 431, 352
+  size: 126, 141
+  orig: 126, 141
+  offset: 0, 0
+  index: -1
+dress-f
+  rotate: false
+  xy: 2, 159
+  size: 236, 334
+  orig: 236, 334
+  offset: 0, 0
+  index: -1
+face_light
+  rotate: false
+  xy: 625, 338
+  size: 39, 36
+  orig: 39, 36
+  offset: 0, 0
+  index: -1
+face_light1
+  rotate: false
+  xy: 423, 197
+  size: 30, 27
+  orig: 30, 27
+  offset: 0, 0
+  index: -1
+face_light2
+  rotate: false
+  xy: 423, 228
+  size: 37, 32
+  orig: 37, 32
+  offset: 0, 0
+  index: -1
+face_light3
+  rotate: false
+  xy: 668, 337
+  size: 41, 40
+  orig: 41, 40
+  offset: 0, 0
+  index: -1
+face_light4
+  rotate: false
+  xy: 517, 264
+  size: 29, 37
+  orig: 29, 37
+  offset: 0, 0
+  index: -1
+face_light5
+  rotate: false
+  xy: 355, 149
+  size: 44, 41
+  orig: 44, 41
+  offset: 0, 0
+  index: -1
+face_light6
+  rotate: false
+  xy: 445, 154
+  size: 29, 32
+  orig: 29, 32
+  offset: 0, 0
+  index: -1
+hand-b
+  rotate: false
+  xy: 825, 444
+  size: 89, 49
+  orig: 89, 49
+  offset: 0, 0
+  index: -1
+hand-f
+  rotate: false
+  xy: 222, 65
+  size: 40, 90
+  orig: 40, 90
+  offset: 0, 0
+  index: -1
+hood-b
+  rotate: false
+  xy: 2, 14
+  size: 149, 141
+  orig: 149, 141
+  offset: 0, 0
+  index: -1
+hood-f
+  rotate: false
+  xy: 242, 290
+  size: 185, 203
+  orig: 185, 203
+  offset: 0, 0
+  index: -1
+index_finger-f
+  rotate: false
+  xy: 317, 125
+  size: 34, 51
+  orig: 34, 51
+  offset: 0, 0
+  index: -1
+lower_arm-b
+  rotate: false
+  xy: 741, 430
+  size: 80, 63
+  orig: 80, 63
+  offset: 0, 0
+  index: -1
+lower_arm-f
+  rotate: false
+  xy: 918, 411
+  size: 64, 82
+  orig: 64, 82
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 403, 144
+  size: 38, 46
+  orig: 38, 46
+  offset: 0, 0
+  index: -1
+orb-b
+  rotate: false
+  xy: 464, 226
+  size: 32, 33
+  orig: 32, 33
+  offset: 0, 0
+  index: -1
+orb-b1
+  rotate: false
+  xy: 155, 2
+  size: 54, 53
+  orig: 54, 53
+  offset: 0, 0
+  index: -1
+orb-b2
+  rotate: false
+  xy: 457, 190
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1
+orb-b3
+  rotate: false
+  xy: 290, 18
+  size: 38, 40
+  orig: 38, 40
+  offset: 0, 0
+  index: -1
+orb-f
+  rotate: false
+  xy: 986, 398
+  size: 33, 35
+  orig: 33, 35
+  offset: 0, 0
+  index: -1
+orb-f1
+  rotate: false
+  xy: 402, 101
+  size: 41, 39
+  orig: 41, 39
+  offset: 0, 0
+  index: -1
+orb-f2
+  rotate: false
+  xy: 245, 19
+  size: 41, 39
+  orig: 41, 39
+  offset: 0, 0
+  index: -1
+orb-f3
+  rotate: false
+  xy: 355, 105
+  size: 43, 40
+  orig: 43, 40
+  offset: 0, 0
+  index: -1
+orb-f4
+  rotate: false
+  xy: 476, 263
+  size: 37, 38
+  orig: 37, 38
+  offset: 0, 0
+  index: -1
+pinky_finger-b
+  rotate: false
+  xy: 713, 336
+  size: 21, 41
+  orig: 21, 41
+  offset: 0, 0
+  index: -1
+shoulder_pad-b
+  rotate: false
+  xy: 561, 339
+  size: 60, 35
+  orig: 60, 35
+  offset: 0, 0
+  index: -1
+shoulder_pad-f
+  rotate: false
+  xy: 654, 426
+  size: 83, 67
+  orig: 83, 67
+  offset: 0, 0
+  index: -1
+thumb-b
+  rotate: false
+  xy: 266, 62
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: -1
+thumb-f
+  rotate: false
+  xy: 213, 6
+  size: 28, 49
+  orig: 28, 49
+  offset: 0, 0
+  index: -1
+upper_arm-b
+  rotate: false
+  xy: 352, 194
+  size: 67, 92
+  orig: 67, 92
+  offset: 0, 0
+  index: -1
+upper_arm-f
+  rotate: false
+  xy: 431, 305
+  size: 104, 43
+  orig: 104, 43
+  offset: 0, 0
+  index: -1
+upper_arm_shadow-f
+  rotate: false
+  xy: 431, 264
+  size: 41, 37
+  orig: 41, 37
+  offset: 0, 0
+  index: -1

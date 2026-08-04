@@ -1,0 +1,69 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chest
+  rotate: false
+  xy: 2, 34
+  size: 343, 206
+  orig: 343, 206
+  offset: 0, 0
+  index: -1
+chest_close_cover
+  rotate: false
+  xy: 656, 99
+  size: 343, 141
+  orig: 343, 141
+  offset: 0, 0
+  index: -1
+chest_open_cover
+  rotate: false
+  xy: 349, 49
+  size: 303, 191
+  orig: 303, 191
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 2, 2
+  size: 38, 28
+  orig: 38, 28
+  offset: 0, 0
+  index: -1
+lower_teeth-b
+  rotate: false
+  xy: 1302, 130
+  size: 218, 110
+  orig: 218, 110
+  offset: 0, 0
+  index: -1
+lower_teeth-f
+  rotate: false
+  xy: 1524, 151
+  size: 234, 89
+  orig: 234, 89
+  offset: 0, 0
+  index: -1
+tongue
+  rotate: false
+  xy: 1003, 70
+  size: 295, 170
+  orig: 295, 170
+  offset: 0, 0
+  index: -1
+tongue_shadow
+  rotate: false
+  xy: 1957, 106
+  size: 62, 134
+  orig: 62, 134
+  offset: 0, 0
+  index: -1
+upper_teeth
+  rotate: false
+  xy: 1762, 125
+  size: 191, 115
+  orig: 191, 115
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,272 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+barrel-b
+  rotate: false
+  xy: 1055, 31
+  size: 115, 145
+  orig: 115, 145
+  offset: 0, 0
+  index: -1
+barrel-f
+  rotate: false
+  xy: 930, 29
+  size: 121, 147
+  orig: 121, 147
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 457, 202
+  size: 344, 308
+  orig: 344, 308
+  offset: 0, 0
+  index: -1
+cannon_ball
+  rotate: false
+  xy: 805, 180
+  size: 328, 330
+  orig: 328, 330
+  offset: 0, 0
+  index: -1
+cannon_gun
+  rotate: false
+  xy: 2, 284
+  size: 451, 226
+  orig: 451, 226
+  offset: 0, 0
+  index: -1
+cannon_holder
+  rotate: false
+  xy: 236, 63
+  size: 166, 217
+  orig: 166, 217
+  offset: 0, 0
+  index: -1
+collar-b
+  rotate: false
+  xy: 557, 73
+  size: 136, 125
+  orig: 136, 125
+  offset: 0, 0
+  index: -1
+collar-f
+  rotate: false
+  xy: 1174, 109
+  size: 120, 84
+  orig: 120, 84
+  offset: 0, 0
+  index: -1
+eye-b
+  rotate: false
+  xy: 2, 12
+  size: 30, 24
+  orig: 30, 24
+  offset: 0, 0
+  index: -1
+eye-f
+  rotate: false
+  xy: 1174, 2
+  size: 55, 39
+  orig: 55, 39
+  offset: 0, 0
+  index: -1
+eye_glow-b
+  rotate: false
+  xy: 1583, 136
+  size: 55, 52
+  orig: 55, 52
+  offset: 0, 0
+  index: -1
+eye_glow-f
+  rotate: false
+  xy: 1300, 53
+  size: 92, 72
+  orig: 92, 72
+  offset: 0, 0
+  index: -1
+eyebrow-b
+  rotate: false
+  xy: 236, 40
+  size: 35, 19
+  orig: 35, 19
+  offset: 0, 0
+  index: -1
+eyebrow-f
+  rotate: false
+  xy: 1438, 138
+  size: 65, 41
+  orig: 65, 41
+  offset: 0, 0
+  index: -1
+face
+  rotate: false
+  xy: 1518, 348
+  size: 175, 162
+  orig: 175, 162
+  offset: 0, 0
+  index: -1
+foot-b
+  rotate: false
+  xy: 1518, 300
+  size: 174, 44
+  orig: 174, 44
+  offset: 0, 0
+  index: -1
+foot-f
+  rotate: false
+  xy: 1298, 129
+  size: 136, 50
+  orig: 136, 50
+  offset: 0, 0
+  index: -1
+foot-f1
+  rotate: false
+  xy: 1174, 45
+  size: 122, 60
+  orig: 122, 60
+  offset: 0, 0
+  index: -1
+hand-b
+  rotate: false
+  xy: 1652, 209
+  size: 81, 87
+  orig: 81, 87
+  offset: 0, 0
+  index: -1
+hand-f
+  rotate: false
+  xy: 1396, 42
+  size: 80, 83
+  orig: 80, 83
+  offset: 0, 0
+  index: -1
+knee_guard-b
+  rotate: false
+  xy: 406, 214
+  size: 35, 66
+  orig: 35, 66
+  offset: 0, 0
+  index: -1
+knee_guard-f
+  rotate: false
+  xy: 1507, 125
+  size: 72, 63
+  orig: 72, 63
+  offset: 0, 0
+  index: -1
+lower_arm-b
+  rotate: false
+  xy: 803, 63
+  size: 123, 113
+  orig: 123, 113
+  offset: 0, 0
+  index: -1
+lower_arm-f
+  rotate: false
+  xy: 406, 62
+  size: 147, 136
+  orig: 147, 136
+  offset: 0, 0
+  index: -1
+lower_leg-b
+  rotate: false
+  xy: 1493, 192
+  size: 155, 104
+  orig: 155, 104
+  offset: 0, 0
+  index: -1
+lower_leg-f
+  rotate: false
+  xy: 1697, 372
+  size: 180, 138
+  orig: 180, 138
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 697, 101
+  size: 102, 97
+  orig: 102, 97
+  offset: 0, 0
+  index: -1
+pipe-b
+  rotate: false
+  xy: 1355, 9
+  size: 34, 40
+  orig: 34, 40
+  offset: 0, 0
+  index: -1
+pipe-b1
+  rotate: false
+  xy: 1326, 183
+  size: 163, 120
+  orig: 163, 120
+  offset: 0, 0
+  index: -1
+pipe-f
+  rotate: false
+  xy: 1233, 2
+  size: 31, 39
+  orig: 31, 39
+  offset: 0, 0
+  index: -1
+pipe-f1
+  rotate: false
+  xy: 2, 40
+  size: 230, 240
+  orig: 230, 240
+  offset: 0, 0
+  index: -1
+pipe-f2
+  rotate: false
+  xy: 1268, 3
+  size: 39, 38
+  orig: 39, 38
+  offset: 0, 0
+  index: -1
+upper_arm-b
+  rotate: false
+  xy: 1881, 356
+  size: 149, 154
+  orig: 149, 154
+  offset: 0, 0
+  index: -1
+upper_arm-f
+  rotate: false
+  xy: 1137, 320
+  size: 212, 190
+  orig: 212, 190
+  offset: 0, 0
+  index: -1
+upper_leg-b
+  rotate: false
+  xy: 1137, 197
+  size: 185, 119
+  orig: 185, 119
+  offset: 0, 0
+  index: -1
+upper_leg-f
+  rotate: false
+  xy: 1353, 307
+  size: 161, 203
+  orig: 161, 203
+  offset: 0, 0
+  index: -1
+victory_eye-b
+  rotate: false
+  xy: 1311, 4
+  size: 40, 45
+  orig: 40, 45
+  offset: 0, 0
+  index: -1
+victory_eye-f
+  rotate: false
+  xy: 697, 24
+  size: 87, 73
+  orig: 87, 73
+  offset: 0, 0
+  index: -1

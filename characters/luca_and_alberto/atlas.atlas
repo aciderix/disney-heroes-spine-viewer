@@ -1,0 +1,1728 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+alb_m_entrance_fingers-b
+  rotate: false
+  xy: 372, 393
+  size: 31, 35
+  orig: 31, 35
+  offset: 0, 0
+  index: -1
+alb_m_entrance_hand-b
+  rotate: false
+  xy: 1471, 887
+  size: 39, 30
+  orig: 39, 30
+  offset: 0, 0
+  index: -1
+alb_m_entrance_hand-f
+  rotate: false
+  xy: 1182, 915
+  size: 50, 45
+  orig: 50, 45
+  offset: 0, 0
+  index: -1
+alb_m_entrance_pinky_finger-f
+  rotate: false
+  xy: 622, 281
+  size: 16, 15
+  orig: 16, 15
+  offset: 0, 0
+  index: -1
+alb_m_entrance_thumb-b
+  rotate: false
+  xy: 945, 802
+  size: 26, 21
+  orig: 26, 21
+  offset: 0, 0
+  index: -1
+alberto_body
+  rotate: false
+  xy: 405, 514
+  size: 129, 119
+  orig: 129, 119
+  offset: 0, 0
+  index: -1
+alberto_ear-b
+  rotate: false
+  xy: 1556, 882
+  size: 19, 35
+  orig: 19, 35
+  offset: 0, 0
+  index: -1
+alberto_eyeball-b
+  rotate: false
+  xy: 599, 157
+  size: 20, 29
+  orig: 20, 29
+  offset: 0, 0
+  index: -1
+alberto_eyeball-f
+  rotate: false
+  xy: 900, 644
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+alberto_eyebrow-b
+  rotate: false
+  xy: 660, 234
+  size: 19, 13
+  orig: 19, 13
+  offset: 0, 0
+  index: -1
+alberto_eyebrow-f
+  rotate: false
+  xy: 104, 2
+  size: 31, 10
+  orig: 31, 10
+  offset: 0, 0
+  index: -1
+alberto_face
+  rotate: false
+  xy: 548, 612
+  size: 124, 201
+  orig: 124, 201
+  offset: 0, 0
+  index: -1
+alberto_fingers-b
+  rotate: false
+  xy: 786, 384
+  size: 38, 40
+  orig: 38, 40
+  offset: 0, 0
+  index: -1
+alberto_foot-b
+  rotate: false
+  xy: 538, 362
+  size: 68, 32
+  orig: 68, 32
+  offset: 0, 0
+  index: -1
+alberto_foot-f
+  rotate: false
+  xy: 407, 422
+  size: 91, 41
+  orig: 91, 41
+  offset: 0, 0
+  index: -1
+alberto_hand-b
+  rotate: false
+  xy: 400, 3
+  size: 38, 36
+  orig: 38, 36
+  offset: 0, 0
+  index: -1
+alberto_hand-f
+  rotate: false
+  xy: 671, 390
+  size: 53, 39
+  orig: 53, 39
+  offset: 0, 0
+  index: -1
+alberto_hip
+  rotate: false
+  xy: 762, 483
+  size: 59, 50
+  orig: 59, 50
+  offset: 0, 0
+  index: -1
+alberto_hit_fingers-b
+  rotate: false
+  xy: 367, 2
+  size: 29, 37
+  orig: 29, 37
+  offset: 0, 0
+  index: -1
+alberto_hit_hand-b
+  rotate: false
+  xy: 627, 435
+  size: 41, 48
+  orig: 41, 48
+  offset: 0, 0
+  index: -1
+alberto_hit_index_finger-b
+  rotate: false
+  xy: 243, 371
+  size: 13, 25
+  orig: 13, 25
+  offset: 0, 0
+  index: -1
+alberto_hit_pinky_finger-b
+  rotate: false
+  xy: 1376, 814
+  size: 22, 15
+  orig: 22, 15
+  offset: 0, 0
+  index: -1
+alberto_hit_pinky_finger-b1
+  rotate: false
+  xy: 1266, 791
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: -1
+alberto_hit_thumb-b
+  rotate: false
+  xy: 473, 156
+  size: 23, 29
+  orig: 23, 29
+  offset: 0, 0
+  index: -1
+alberto_inner_mouth
+  rotate: false
+  xy: 728, 389
+  size: 54, 35
+  orig: 54, 35
+  offset: 0, 0
+  index: -1
+alberto_lower_arm-b
+  rotate: false
+  xy: 299, 94
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+alberto_lower_arm-f
+  rotate: false
+  xy: 509, 268
+  size: 36, 59
+  orig: 36, 59
+  offset: 0, 0
+  index: -1
+alberto_lower_leg-b
+  rotate: false
+  xy: 757, 715
+  size: 52, 98
+  orig: 52, 98
+  offset: 0, 0
+  index: -1
+alberto_lower_leg-f
+  rotate: false
+  xy: 146, 2
+  size: 58, 92
+  orig: 58, 92
+  offset: 0, 0
+  index: -1
+alberto_lower_lip
+  rotate: false
+  xy: 818, 538
+  size: 59, 33
+  orig: 59, 33
+  offset: 0, 0
+  index: -1
+alberto_lower_teeth
+  rotate: false
+  xy: 1360, 833
+  size: 53, 22
+  orig: 53, 22
+  offset: 0, 0
+  index: -1
+alberto_m_arm_fin-b
+  rotate: false
+  xy: 815, 428
+  size: 24, 51
+  orig: 24, 51
+  offset: 0, 0
+  index: -1
+alberto_m_arm_fin-f
+  rotate: false
+  xy: 864, 575
+  size: 23, 50
+  orig: 23, 50
+  offset: 0, 0
+  index: -1
+alberto_m_body
+  rotate: false
+  xy: 146, 98
+  size: 73, 132
+  orig: 73, 132
+  offset: 0, 0
+  index: -1
+alberto_m_ear_fin-b
+  rotate: false
+  xy: 389, 137
+  size: 35, 41
+  orig: 35, 41
+  offset: 0, 0
+  index: -1
+alberto_m_ear_fin-f
+  rotate: false
+  xy: 549, 239
+  size: 50, 39
+  orig: 50, 39
+  offset: 0, 0
+  index: -1
+alberto_m_eyeball-b
+  rotate: false
+  xy: 1426, 853
+  size: 18, 34
+  orig: 18, 34
+  offset: 0, 0
+  index: -1
+alberto_m_eyeball-f
+  rotate: false
+  xy: 291, 2
+  size: 36, 37
+  orig: 36, 37
+  offset: 0, 0
+  index: -1
+alberto_m_eyebrow-b
+  rotate: false
+  xy: 885, 368
+  size: 14, 12
+  orig: 14, 12
+  offset: 0, 0
+  index: -1
+alberto_m_eyebrow-f
+  rotate: false
+  xy: 1579, 864
+  size: 23, 11
+  orig: 23, 11
+  offset: 0, 0
+  index: -1
+alberto_m_face
+  rotate: false
+  xy: 2, 65
+  size: 140, 191
+  orig: 140, 191
+  offset: 0, 0
+  index: -1
+alberto_m_foot-b
+  rotate: false
+  xy: 407, 467
+  size: 91, 43
+  orig: 91, 43
+  offset: 0, 0
+  index: -1
+alberto_m_foot-f
+  rotate: false
+  xy: 2, 6
+  size: 98, 55
+  orig: 98, 55
+  offset: 0, 0
+  index: -1
+alberto_m_hand-b
+  rotate: false
+  xy: 1141, 811
+  size: 37, 64
+  orig: 37, 64
+  offset: 0, 0
+  index: -1
+alberto_m_hand-f
+  rotate: false
+  xy: 1313, 863
+  size: 46, 44
+  orig: 46, 44
+  offset: 0, 0
+  index: -1
+alberto_m_index_finger-f
+  rotate: false
+  xy: 828, 380
+  size: 22, 44
+  orig: 22, 44
+  offset: 0, 0
+  index: -1
+alberto_m_inner_mouth
+  rotate: false
+  xy: 871, 818
+  size: 70, 41
+  orig: 70, 41
+  offset: 0, 0
+  index: -1
+alberto_m_lower_arm-b
+  rotate: false
+  xy: 1100, 797
+  size: 37, 75
+  orig: 37, 75
+  offset: 0, 0
+  index: -1
+alberto_m_lower_arm-f
+  rotate: false
+  xy: 374, 324
+  size: 29, 65
+  orig: 29, 65
+  offset: 0, 0
+  index: -1
+alberto_m_lower_eyelid-b
+  rotate: false
+  xy: 932, 553
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+alberto_m_lower_eyelid-f
+  rotate: false
+  xy: 469, 248
+  size: 35, 20
+  orig: 35, 20
+  offset: 0, 0
+  index: -1
+alberto_m_lower_leg-b
+  rotate: false
+  xy: 243, 400
+  size: 34, 100
+  orig: 34, 100
+  offset: 0, 0
+  index: -1
+alberto_m_lower_leg-f
+  rotate: false
+  xy: 717, 489
+  size: 41, 101
+  orig: 41, 101
+  offset: 0, 0
+  index: -1
+alberto_m_lower_lip
+  rotate: false
+  xy: 676, 594
+  size: 74, 41
+  orig: 74, 41
+  offset: 0, 0
+  index: -1
+alberto_m_lower_teeth
+  rotate: false
+  xy: 467, 331
+  size: 65, 28
+  orig: 65, 28
+  offset: 0, 0
+  index: -1
+alberto_m_mid_finger-f
+  rotate: false
+  xy: 449, 53
+  size: 21, 48
+  orig: 21, 48
+  offset: 0, 0
+  index: -1
+alberto_m_neck
+  rotate: false
+  xy: 1682, 885
+  size: 28, 34
+  orig: 28, 34
+  offset: 0, 0
+  index: -1
+alberto_m_pant-b
+  rotate: false
+  xy: 329, 247
+  size: 50, 62
+  orig: 50, 62
+  offset: 0, 0
+  index: -1
+alberto_m_pant-f
+  rotate: false
+  xy: 319, 313
+  size: 51, 74
+  orig: 51, 74
+  offset: 0, 0
+  index: -1
+alberto_m_pelvic
+  rotate: false
+  xy: 1236, 905
+  size: 73, 53
+  orig: 73, 53
+  offset: 0, 0
+  index: -1
+alberto_m_pupil-b
+  rotate: false
+  xy: 712, 364
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+alberto_m_pupil-f
+  rotate: false
+  xy: 969, 589
+  size: 17, 24
+  orig: 17, 24
+  offset: 0, 0
+  index: -1
+alberto_m_tail
+  rotate: false
+  xy: 2, 817
+  size: 365, 205
+  orig: 365, 205
+  offset: 0, 0
+  index: -1
+alberto_m_thumb-b
+  rotate: false
+  xy: 1864, 895
+  size: 20, 35
+  orig: 20, 35
+  offset: 0, 0
+  index: -1
+alberto_m_thumb-f
+  rotate: false
+  xy: 603, 238
+  size: 20, 39
+  orig: 20, 39
+  offset: 0, 0
+  index: -1
+alberto_m_tongue
+  rotate: false
+  xy: 645, 363
+  size: 29, 21
+  orig: 29, 21
+  offset: 0, 0
+  index: -1
+alberto_m_upper_arm-b
+  rotate: false
+  xy: 975, 805
+  size: 47, 90
+  orig: 47, 90
+  offset: 0, 0
+  index: -1
+alberto_m_upper_arm-f
+  rotate: false
+  xy: 754, 629
+  size: 56, 82
+  orig: 56, 82
+  offset: 0, 0
+  index: -1
+alberto_m_upper_eyelid-b
+  rotate: false
+  xy: 464, 11
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: -1
+alberto_m_upper_eyelid-f
+  rotate: false
+  xy: 1186, 790
+  size: 35, 24
+  orig: 35, 24
+  offset: 0, 0
+  index: -1
+alberto_m_upper_leg-b
+  rotate: false
+  xy: 347, 94
+  size: 31, 50
+  orig: 31, 50
+  offset: 0, 0
+  index: -1
+alberto_m_upper_leg-f
+  rotate: false
+  xy: 389, 182
+  size: 35, 62
+  orig: 35, 62
+  offset: 0, 0
+  index: -1
+alberto_m_upper_lip
+  rotate: false
+  xy: 1236, 881
+  size: 71, 20
+  orig: 71, 20
+  offset: 0, 0
+  index: -1
+alberto_m_upper_teeth
+  rotate: false
+  xy: 1300, 833
+  size: 56, 26
+  orig: 56, 26
+  offset: 0, 0
+  index: -1
+alberto_neck
+  rotate: false
+  xy: 104, 16
+  size: 38, 45
+  orig: 38, 45
+  offset: 0, 0
+  index: -1
+alberto_nose
+  rotate: false
+  xy: 1714, 886
+  size: 28, 33
+  orig: 28, 33
+  offset: 0, 0
+  index: -1
+alberto_nose_shadow
+  rotate: false
+  xy: 678, 365
+  size: 30, 21
+  orig: 30, 21
+  offset: 0, 0
+  index: -1
+alberto_pant-b
+  rotate: false
+  xy: 261, 241
+  size: 64, 62
+  orig: 64, 62
+  offset: 0, 0
+  index: -1
+alberto_pant-f
+  rotate: false
+  xy: 1026, 806
+  size: 70, 66
+  orig: 70, 66
+  offset: 0, 0
+  index: -1
+alberto_pant-f1
+  rotate: false
+  xy: 935, 682
+  size: 40, 32
+  orig: 40, 32
+  offset: 0, 0
+  index: -1
+alberto_pinky_finger-f
+  rotate: false
+  xy: 1541, 869
+  size: 11, 14
+  orig: 11, 14
+  offset: 0, 0
+  index: -1
+alberto_pupil-b
+  rotate: false
+  xy: 467, 363
+  size: 11, 17
+  orig: 11, 17
+  offset: 0, 0
+  index: -1
+alberto_pupil-f
+  rotate: false
+  xy: 953, 552
+  size: 16, 18
+  orig: 16, 18
+  offset: 0, 0
+  index: -1
+alberto_skill3_fingers-b1
+  rotate: false
+  xy: 609, 333
+  size: 23, 25
+  orig: 23, 25
+  offset: 0, 0
+  index: -1
+alberto_skill3_hand-b
+  rotate: false
+  xy: 1514, 887
+  size: 38, 30
+  orig: 38, 30
+  offset: 0, 0
+  index: -1
+alberto_skill3_hand-b1
+  rotate: false
+  xy: 1611, 888
+  size: 33, 31
+  orig: 33, 31
+  offset: 0, 0
+  index: -1
+alberto_skill3_hand-f
+  rotate: false
+  xy: 935, 718
+  size: 40, 35
+  orig: 40, 35
+  offset: 0, 0
+  index: -1
+alberto_skill3_index_finger-b
+  rotate: false
+  xy: 652, 207
+  size: 21, 23
+  orig: 21, 23
+  offset: 0, 0
+  index: -1
+alberto_skill3_index_finger-b1
+  rotate: false
+  xy: 1352, 811
+  size: 20, 18
+  orig: 20, 18
+  offset: 0, 0
+  index: -1
+alberto_skill3_index_finger-b2
+  rotate: false
+  xy: 1284, 813
+  size: 14, 13
+  orig: 14, 13
+  offset: 0, 0
+  index: -1
+alberto_skill3_index_finger-f
+  rotate: false
+  xy: 449, 35
+  size: 22, 14
+  orig: 22, 14
+  offset: 0, 0
+  index: -1
+alberto_skill3_mid_finger-b
+  rotate: false
+  xy: 854, 369
+  size: 27, 22
+  orig: 27, 22
+  offset: 0, 0
+  index: -1
+alberto_skill3_mid_finger-f
+  rotate: false
+  xy: 623, 160
+  size: 27, 19
+  orig: 27, 19
+  offset: 0, 0
+  index: -1
+alberto_skill3_pinky_finger-b
+  rotate: false
+  xy: 940, 574
+  size: 21, 16
+  orig: 21, 16
+  offset: 0, 0
+  index: -1
+alberto_skill3_pinky_finger-f
+  rotate: false
+  xy: 654, 156
+  size: 21, 23
+  orig: 21, 23
+  offset: 0, 0
+  index: -1
+alberto_skill3_ring_finger-b
+  rotate: false
+  xy: 642, 281
+  size: 26, 21
+  orig: 26, 21
+  offset: 0, 0
+  index: -1
+alberto_skill3_ring_finger-f
+  rotate: false
+  xy: 623, 183
+  size: 26, 20
+  orig: 26, 20
+  offset: 0, 0
+  index: -1
+alberto_skill3_thumb-b
+  rotate: false
+  xy: 885, 384
+  size: 13, 14
+  orig: 13, 14
+  offset: 0, 0
+  index: -1
+alberto_skill3_thumb-b1
+  rotate: false
+  xy: 885, 402
+  size: 17, 12
+  orig: 17, 12
+  offset: 0, 0
+  index: -1
+alberto_skill3_thumb-b2
+  rotate: false
+  xy: 1556, 864
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+alberto_skill3_thumb-f
+  rotate: false
+  xy: 760, 367
+  size: 22, 18
+  orig: 22, 18
+  offset: 0, 0
+  index: -1
+alberto_teeth
+  rotate: false
+  xy: 412, 248
+  size: 53, 20
+  orig: 53, 20
+  offset: 0, 0
+  index: -1
+alberto_thumb-b
+  rotate: false
+  xy: 627, 251
+  size: 24, 26
+  orig: 24, 26
+  offset: 0, 0
+  index: -1
+alberto_tounge
+  rotate: false
+  xy: 610, 363
+  size: 31, 21
+  orig: 31, 21
+  offset: 0, 0
+  index: -1
+alberto_upper_arm-b
+  rotate: false
+  xy: 281, 391
+  size: 87, 37
+  orig: 87, 37
+  offset: 0, 0
+  index: -1
+alberto_upper_arm-f
+  rotate: false
+  xy: 1026, 876
+  size: 102, 38
+  orig: 102, 38
+  offset: 0, 0
+  index: -1
+alberto_upper_eyelid-b
+  rotate: false
+  xy: 1328, 807
+  size: 20, 22
+  orig: 20, 22
+  offset: 0, 0
+  index: -1
+alberto_upper_eyelid-f
+  rotate: false
+  xy: 1746, 893
+  size: 33, 26
+  orig: 33, 26
+  offset: 0, 0
+  index: -1
+alberto_upper_leg-b
+  rotate: false
+  xy: 745, 428
+  size: 66, 51
+  orig: 66, 51
+  offset: 0, 0
+  index: -1
+alberto_upper_leg-f
+  rotate: false
+  xy: 482, 363
+  size: 52, 50
+  orig: 52, 50
+  offset: 0, 0
+  index: -1
+alberto_upper_lip
+  rotate: false
+  xy: 1363, 859
+  size: 59, 28
+  orig: 59, 28
+  offset: 0, 0
+  index: -1
+alberto_victory_foot-f
+  rotate: false
+  xy: 1786, 934
+  size: 98, 88
+  orig: 98, 88
+  offset: 0, 0
+  index: -1
+alberto_victory_hand-b
+  rotate: false
+  xy: 1182, 818
+  size: 44, 59
+  orig: 44, 59
+  offset: 0, 0
+  index: -1
+ball
+  rotate: false
+  xy: 1471, 921
+  size: 101, 101
+  orig: 101, 101
+  offset: 0, 0
+  index: -1
+bottle
+  rotate: false
+  xy: 155, 234
+  size: 102, 128
+  orig: 102, 128
+  offset: 0, 0
+  index: -1
+bottle_handle
+  rotate: false
+  xy: 881, 539
+  size: 20, 32
+  orig: 20, 32
+  offset: 0, 0
+  index: -1
+luca_attack_fingers-b
+  rotate: false
+  xy: 623, 207
+  size: 25, 23
+  orig: 25, 23
+  offset: 0, 0
+  index: -1
+luca_attack_hand-b
+  rotate: false
+  xy: 428, 149
+  size: 41, 32
+  orig: 41, 32
+  offset: 0, 0
+  index: -1
+luca_attack_hand-f
+  rotate: false
+  xy: 463, 272
+  size: 42, 55
+  orig: 42, 55
+  offset: 0, 0
+  index: -1
+luca_attack_index_finger-f
+  rotate: false
+  xy: 890, 439
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: -1
+luca_attack_index_finger-f1
+  rotate: false
+  xy: 442, 11
+  size: 18, 20
+  orig: 18, 20
+  offset: 0, 0
+  index: -1
+luca_attack_pinky_finger-b
+  rotate: false
+  xy: 878, 744
+  size: 14, 10
+  orig: 14, 10
+  offset: 0, 0
+  index: -1
+luca_attack_thumb-b
+  rotate: false
+  xy: 890, 459
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+luca_attack_thumb-b1
+  rotate: false
+  xy: 885, 418
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+luca_attack_thumb-f
+  rotate: false
+  xy: 655, 251
+  size: 24, 26
+  orig: 24, 26
+  offset: 0, 0
+  index: -1
+luca_collar-b
+  rotate: false
+  xy: 2029, 904
+  size: 17, 35
+  orig: 17, 35
+  offset: 0, 0
+  index: -1
+luca_collar-b1
+  rotate: false
+  xy: 627, 234
+  size: 29, 13
+  orig: 29, 13
+  offset: 0, 0
+  index: -1
+luca_collar-f
+  rotate: false
+  xy: 940, 757
+  size: 35, 41
+  orig: 35, 41
+  offset: 0, 0
+  index: -1
+luca_entrance_hand-f
+  rotate: false
+  xy: 878, 758
+  size: 58, 56
+  orig: 58, 56
+  offset: 0, 0
+  index: -1
+luca_entrance_thumb-f
+  rotate: false
+  xy: 622, 300
+  size: 15, 29
+  orig: 15, 29
+  offset: 0, 0
+  index: -1
+luca_eyeball-b
+  rotate: false
+  xy: 945, 827
+  size: 26, 32
+  orig: 26, 32
+  offset: 0, 0
+  index: -1
+luca_eyeball-f
+  rotate: false
+  xy: 428, 105
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+luca_eyebrow-b
+  rotate: false
+  xy: 728, 369
+  size: 28, 16
+  orig: 28, 16
+  offset: 0, 0
+  index: -1
+luca_eyebrow-f
+  rotate: false
+  xy: 1648, 887
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1
+luca_face
+  rotate: false
+  xy: 538, 487
+  size: 128, 121
+  orig: 128, 121
+  offset: 0, 0
+  index: -1
+luca_foot-b
+  rotate: false
+  xy: 261, 307
+  size: 54, 80
+  orig: 54, 80
+  offset: 0, 0
+  index: -1
+luca_foot-f
+  rotate: false
+  xy: 762, 537
+  size: 52, 88
+  orig: 52, 88
+  offset: 0, 0
+  index: -1
+luca_hair-b
+  rotate: false
+  xy: 547, 194
+  size: 48, 41
+  orig: 48, 41
+  offset: 0, 0
+  index: -1
+luca_hair-f
+  rotate: false
+  xy: 412, 272
+  size: 47, 56
+  orig: 47, 56
+  offset: 0, 0
+  index: -1
+luca_hair-f1
+  rotate: false
+  xy: 1888, 904
+  size: 86, 118
+  orig: 86, 118
+  offset: 0, 0
+  index: -1
+luca_hair-f2
+  rotate: false
+  xy: 653, 183
+  size: 21, 20
+  orig: 21, 20
+  offset: 0, 0
+  index: -1
+luca_hand-b
+  rotate: false
+  xy: 500, 201
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1
+luca_hand-f
+  rotate: false
+  xy: 1230, 830
+  size: 66, 47
+  orig: 66, 47
+  offset: 0, 0
+  index: -1
+luca_hip
+  rotate: false
+  xy: 825, 493
+  size: 57, 41
+  orig: 57, 41
+  offset: 0, 0
+  index: -1
+luca_inner_mouth
+  rotate: false
+  xy: 1977, 878
+  size: 40, 18
+  orig: 40, 18
+  offset: 0, 0
+  index: -1
+luca_lower_arm-b
+  rotate: false
+  xy: 536, 333
+  size: 69, 25
+  orig: 69, 25
+  offset: 0, 0
+  index: -1
+luca_lower_arm-f
+  rotate: false
+  xy: 1363, 891
+  size: 76, 28
+  orig: 76, 28
+  offset: 0, 0
+  index: -1
+luca_lower_leg-b
+  rotate: false
+  xy: 299, 148
+  size: 28, 89
+  orig: 28, 89
+  offset: 0, 0
+  index: -1
+luca_lower_leg-f
+  rotate: false
+  xy: 281, 432
+  size: 61, 77
+  orig: 61, 77
+  offset: 0, 0
+  index: -1
+luca_lower_lip
+  rotate: false
+  xy: 1141, 793
+  size: 41, 14
+  orig: 41, 14
+  offset: 0, 0
+  index: -1
+luca_m_arm_fin-b
+  rotate: false
+  xy: 422, 43
+  size: 23, 45
+  orig: 23, 45
+  offset: 0, 0
+  index: -1
+luca_m_arm_fin-f
+  rotate: false
+  xy: 473, 189
+  size: 23, 55
+  orig: 23, 55
+  offset: 0, 0
+  index: -1
+luca_m_body
+  rotate: false
+  xy: 223, 98
+  size: 72, 132
+  orig: 72, 132
+  offset: 0, 0
+  index: -1
+luca_m_collar-b
+  rotate: false
+  xy: 2029, 868
+  size: 17, 32
+  orig: 17, 32
+  offset: 0, 0
+  index: -1
+luca_m_collar-b1
+  rotate: false
+  xy: 508, 248
+  size: 37, 16
+  orig: 37, 16
+  offset: 0, 0
+  index: -1
+luca_m_collar-f
+  rotate: false
+  xy: 331, 2
+  size: 32, 37
+  orig: 32, 37
+  offset: 0, 0
+  index: -1
+luca_m_ear_fin-b
+  rotate: false
+  xy: 979, 761
+  size: 38, 40
+  orig: 38, 40
+  offset: 0, 0
+  index: -1
+luca_m_ear_fin-f
+  rotate: false
+  xy: 382, 92
+  size: 42, 41
+  orig: 42, 41
+  offset: 0, 0
+  index: -1
+luca_m_eyeball-b
+  rotate: false
+  xy: 891, 586
+  size: 22, 36
+  orig: 22, 36
+  offset: 0, 0
+  index: -1
+luca_m_eyeball-f
+  rotate: false
+  xy: 500, 156
+  size: 43, 41
+  orig: 43, 41
+  offset: 0, 0
+  index: -1
+luca_m_eyebrow-b
+  rotate: false
+  xy: 428, 93
+  size: 14, 8
+  orig: 14, 8
+  offset: 0, 0
+  index: -1
+luca_m_eyebrow-f
+  rotate: false
+  xy: 786, 369
+  size: 26, 11
+  orig: 26, 11
+  offset: 0, 0
+  index: -1
+luca_m_face
+  rotate: false
+  xy: 684, 859
+  size: 170, 163
+  orig: 170, 163
+  offset: 0, 0
+  index: -1
+luca_m_foot-b
+  rotate: false
+  xy: 538, 398
+  size: 81, 35
+  orig: 81, 35
+  offset: 0, 0
+  index: -1
+luca_m_foot-f
+  rotate: false
+  xy: 538, 437
+  size: 85, 46
+  orig: 85, 46
+  offset: 0, 0
+  index: -1
+luca_m_hand-b
+  rotate: false
+  xy: 979, 722
+  size: 35, 35
+  orig: 35, 35
+  offset: 0, 0
+  index: -1
+luca_m_hand-f
+  rotate: false
+  xy: 1132, 879
+  size: 43, 35
+  orig: 43, 35
+  offset: 0, 0
+  index: -1
+luca_m_index_finger-b
+  rotate: false
+  xy: 599, 190
+  size: 20, 44
+  orig: 20, 44
+  offset: 0, 0
+  index: -1
+luca_m_index_finger-f
+  rotate: false
+  xy: 2029, 943
+  size: 17, 37
+  orig: 17, 37
+  offset: 0, 0
+  index: -1
+luca_m_inner_mouth
+  rotate: false
+  xy: 547, 161
+  size: 48, 29
+  orig: 48, 29
+  offset: 0, 0
+  index: -1
+luca_m_lower_arm-b
+  rotate: false
+  xy: 428, 185
+  size: 41, 59
+  orig: 41, 59
+  offset: 0, 0
+  index: -1
+luca_m_lower_arm-f
+  rotate: false
+  xy: 383, 248
+  size: 25, 72
+  orig: 25, 72
+  offset: 0, 0
+  index: -1
+luca_m_lower_eyelid-b
+  rotate: false
+  xy: 1417, 830
+  size: 23, 19
+  orig: 23, 19
+  offset: 0, 0
+  index: -1
+luca_m_lower_eyelid-f
+  rotate: false
+  xy: 1935, 880
+  size: 38, 20
+  orig: 38, 20
+  offset: 0, 0
+  index: -1
+luca_m_lower_leg-b
+  rotate: false
+  xy: 502, 417
+  size: 32, 93
+  orig: 32, 93
+  offset: 0, 0
+  index: -1
+luca_m_lower_leg-f
+  rotate: false
+  xy: 670, 489
+  size: 43, 101
+  orig: 43, 101
+  offset: 0, 0
+  index: -1
+luca_m_lower_lip
+  rotate: false
+  xy: 1179, 881
+  size: 53, 30
+  orig: 53, 30
+  offset: 0, 0
+  index: -1
+luca_m_mid_finger-b
+  rotate: false
+  xy: 917, 586
+  size: 19, 36
+  orig: 19, 36
+  offset: 0, 0
+  index: -1
+luca_m_mid_finger-f
+  rotate: false
+  xy: 2029, 984
+  size: 17, 38
+  orig: 17, 38
+  offset: 0, 0
+  index: -1
+luca_m_neck
+  rotate: false
+  xy: 854, 395
+  size: 27, 41
+  orig: 27, 41
+  offset: 0, 0
+  index: -1
+luca_m_pant-b
+  rotate: false
+  xy: 378, 43
+  size: 40, 45
+  orig: 40, 45
+  offset: 0, 0
+  index: -1
+luca_m_pant-f
+  rotate: false
+  xy: 1313, 911
+  size: 46, 47
+  orig: 46, 47
+  offset: 0, 0
+  index: -1
+luca_m_pelvic
+  rotate: false
+  xy: 807, 818
+  size: 60, 37
+  orig: 60, 37
+  offset: 0, 0
+  index: -1
+luca_m_pinky_finger-b
+  rotate: false
+  xy: 1448, 854
+  size: 18, 34
+  orig: 18, 34
+  offset: 0, 0
+  index: -1
+luca_m_pupil-b
+  rotate: false
+  xy: 969, 617
+  size: 15, 26
+  orig: 15, 26
+  offset: 0, 0
+  index: -1
+luca_m_pupil-f
+  rotate: false
+  xy: 940, 594
+  size: 25, 29
+  orig: 25, 29
+  offset: 0, 0
+  index: -1
+luca_m_tail
+  rotate: false
+  xy: 371, 817
+  size: 309, 205
+  orig: 309, 205
+  offset: 0, 0
+  index: -1
+luca_m_thumb-b
+  rotate: false
+  xy: 905, 552
+  size: 23, 30
+  orig: 23, 30
+  offset: 0, 0
+  index: -1
+luca_m_thumb-f
+  rotate: false
+  xy: 886, 504
+  size: 21, 31
+  orig: 21, 31
+  offset: 0, 0
+  index: -1
+luca_m_tongue
+  rotate: false
+  xy: 936, 627
+  size: 29, 16
+  orig: 29, 16
+  offset: 0, 0
+  index: -1
+luca_m_upper_arm-b
+  rotate: false
+  xy: 814, 663
+  size: 43, 77
+  orig: 43, 77
+  offset: 0, 0
+  index: -1
+luca_m_upper_arm-f
+  rotate: false
+  xy: 331, 170
+  size: 54, 73
+  orig: 54, 73
+  offset: 0, 0
+  index: -1
+luca_m_upper_eyelid-b
+  rotate: false
+  xy: 1443, 892
+  size: 24, 27
+  orig: 24, 27
+  offset: 0, 0
+  index: -1
+luca_m_upper_eyelid-f
+  rotate: false
+  xy: 814, 629
+  size: 40, 30
+  orig: 40, 30
+  offset: 0, 0
+  index: -1
+luca_m_upper_leg-b
+  rotate: false
+  xy: 900, 680
+  size: 31, 74
+  orig: 31, 74
+  offset: 0, 0
+  index: -1
+luca_m_upper_leg-f
+  rotate: false
+  xy: 861, 660
+  size: 35, 80
+  orig: 35, 80
+  offset: 0, 0
+  index: -1
+luca_m_upper_lip
+  rotate: false
+  xy: 1230, 813
+  size: 50, 13
+  orig: 50, 13
+  offset: 0, 0
+  index: -1
+luca_m_upper_teeth
+  rotate: false
+  xy: 331, 148
+  size: 41, 18
+  orig: 41, 18
+  offset: 0, 0
+  index: -1
+luca_neck
+  rotate: false
+  xy: 344, 43
+  size: 30, 47
+  orig: 30, 47
+  offset: 0, 0
+  index: -1
+luca_nose
+  rotate: false
+  xy: 1470, 857
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+luca_nose_shadow
+  rotate: false
+  xy: 636, 337
+  size: 29, 22
+  orig: 29, 22
+  offset: 0, 0
+  index: -1
+luca_pant-f
+  rotate: false
+  xy: 407, 332
+  size: 56, 48
+  orig: 56, 48
+  offset: 0, 0
+  index: -1
+luca_pant-f1
+  rotate: false
+  xy: 1579, 879
+  size: 28, 40
+  orig: 28, 40
+  offset: 0, 0
+  index: -1
+luca_pupil-b
+  rotate: false
+  xy: 890, 480
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: -1
+luca_pupil-f
+  rotate: false
+  xy: 1302, 807
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+luca_shirt
+  rotate: false
+  xy: 155, 366
+  size: 84, 134
+  orig: 84, 134
+  offset: 0, 0
+  index: -1
+luca_shirt_button
+  rotate: false
+  xy: 1300, 866
+  size: 9, 11
+  orig: 9, 11
+  offset: 0, 0
+  index: -1
+luca_shirt_button1
+  rotate: false
+  xy: 376, 149
+  size: 9, 17
+  orig: 9, 17
+  offset: 0, 0
+  index: -1
+luca_shirt_button2
+  rotate: false
+  xy: 965, 574
+  size: 9, 11
+  orig: 9, 11
+  offset: 0, 0
+  index: -1
+luca_skill4_hand-f
+  rotate: false
+  xy: 843, 440
+  size: 43, 49
+  orig: 43, 49
+  offset: 0, 0
+  index: -1
+luca_tongue
+  rotate: false
+  xy: 1611, 873
+  size: 26, 11
+  orig: 26, 11
+  offset: 0, 0
+  index: -1
+luca_upper_arm-b
+  rotate: false
+  xy: 813, 744
+  size: 61, 70
+  orig: 61, 70
+  offset: 0, 0
+  index: -1
+luca_upper_arm-f
+  rotate: false
+  xy: 346, 432
+  size: 57, 77
+  orig: 57, 77
+  offset: 0, 0
+  index: -1
+luca_upper_eyelid-b
+  rotate: false
+  xy: 641, 306
+  size: 25, 27
+  orig: 25, 27
+  offset: 0, 0
+  index: -1
+luca_upper_eyelid-f
+  rotate: false
+  xy: 979, 687
+  size: 38, 31
+  orig: 38, 31
+  offset: 0, 0
+  index: -1
+luca_upper_leg-b
+  rotate: false
+  xy: 1786, 895
+  size: 74, 35
+  orig: 74, 35
+  offset: 0, 0
+  index: -1
+luca_upper_leg-f
+  rotate: false
+  xy: 407, 384
+  size: 71, 34
+  orig: 71, 34
+  offset: 0, 0
+  index: -1
+luca_upper_lip
+  rotate: false
+  xy: 1888, 883
+  size: 43, 17
+  orig: 43, 17
+  offset: 0, 0
+  index: -1
+luca_upper_teeth
+  rotate: false
+  xy: 1225, 793
+  size: 37, 16
+  orig: 37, 16
+  offset: 0, 0
+  index: -1
+luca_upper_teeth1
+  rotate: false
+  xy: 894, 626
+  size: 38, 14
+  orig: 38, 14
+  offset: 0, 0
+  index: -1
+luca_victory_hand-b
+  rotate: false
+  xy: 623, 388
+  size: 44, 43
+  orig: 44, 43
+  offset: 0, 0
+  index: -1
+luca_victory_hand-f
+  rotate: false
+  xy: 549, 282
+  size: 51, 47
+  orig: 51, 47
+  offset: 0, 0
+  index: -1
+spinning_effect
+  rotate: false
+  xy: 676, 639
+  size: 74, 84
+  orig: 74, 84
+  offset: 0, 0
+  index: -1
+spinning_effect1
+  rotate: false
+  xy: 676, 727
+  size: 77, 86
+  orig: 77, 86
+  offset: 0, 0
+  index: -1
+spinning_effect2
+  rotate: false
+  xy: 208, 13
+  size: 79, 81
+  orig: 79, 81
+  offset: 0, 0
+  index: -1
+spinning_vespa_wheel-f
+  rotate: false
+  xy: 1576, 923
+  size: 101, 99
+  orig: 101, 99
+  offset: 0, 0
+  index: -1
+umbrella
+  rotate: false
+  xy: 2, 504
+  size: 240, 309
+  orig: 240, 309
+  offset: 0, 0
+  index: -1
+umbrella_stick
+  rotate: false
+  xy: 1026, 918
+  size: 152, 42
+  orig: 152, 42
+  offset: 0, 0
+  index: -1
+vespa_back_seat
+  rotate: false
+  xy: 684, 817
+  size: 119, 38
+  orig: 119, 38
+  offset: 0, 0
+  index: -1
+vespa_back_seat1
+  rotate: false
+  xy: 1505, 859
+  size: 32, 24
+  orig: 32, 24
+  offset: 0, 0
+  index: -1
+vespa_body
+  rotate: false
+  xy: 2, 260
+  size: 149, 240
+  orig: 149, 240
+  offset: 0, 0
+  index: -1
+vespa_body_seat
+  rotate: false
+  xy: 1236, 962
+  size: 123, 60
+  orig: 123, 60
+  offset: 0, 0
+  index: -1
+vespa_clutch-b
+  rotate: false
+  xy: 858, 629
+  size: 32, 27
+  orig: 32, 27
+  offset: 0, 0
+  index: -1
+vespa_clutch-f
+  rotate: false
+  xy: 291, 43
+  size: 49, 47
+  orig: 49, 47
+  offset: 0, 0
+  index: -1
+vespa_handle
+  rotate: false
+  xy: 936, 647
+  size: 38, 31
+  orig: 38, 31
+  offset: 0, 0
+  index: -1
+vespa_handlebar
+  rotate: false
+  xy: 1026, 964
+  size: 206, 58
+  orig: 206, 58
+  offset: 0, 0
+  index: -1
+vespa_headlight_patch
+  rotate: false
+  xy: 818, 575
+  size: 42, 50
+  orig: 42, 50
+  offset: 0, 0
+  index: -1
+vespa_lower_body
+  rotate: false
+  xy: 246, 637
+  size: 298, 176
+  orig: 298, 176
+  offset: 0, 0
+  index: -1
+vespa_lower_body-b
+  rotate: false
+  xy: 604, 281
+  size: 14, 48
+  orig: 14, 48
+  offset: 0, 0
+  index: -1
+vespa_mudgard
+  rotate: false
+  xy: 246, 513
+  size: 155, 120
+  orig: 155, 120
+  offset: 0, 0
+  index: -1
+vespa_rear_fender
+  rotate: false
+  xy: 858, 899
+  size: 164, 123
+  orig: 164, 123
+  offset: 0, 0
+  index: -1
+vespa_silencer
+  rotate: false
+  xy: 858, 863
+  size: 113, 32
+  orig: 113, 32
+  offset: 0, 0
+  index: -1
+vespa_wheel-b
+  rotate: false
+  xy: 1363, 923
+  size: 104, 99
+  orig: 104, 99
+  offset: 0, 0
+  index: -1
+vespa_wheel-f
+  rotate: false
+  xy: 1681, 923
+  size: 101, 99
+  orig: 101, 99
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 672, 433
+  size: 69, 52
+  orig: 69, 52
+  offset: 0, 0
+  index: -1
+wrench
+  rotate: false
+  xy: 1978, 900
+  size: 47, 122
+  orig: 47, 122
+  offset: 0, 0
+  index: -1

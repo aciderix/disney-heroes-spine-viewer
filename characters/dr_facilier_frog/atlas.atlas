@@ -1,0 +1,160 @@
+texture.png
+unit-DEFAULT-untrimmed.etc1
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frog_body
+  rotate: false
+  xy: 119, 42
+  size: 107, 84
+  orig: 107, 84
+  offset: 0, 0
+  index: -1
+frog_eyeball-b
+  rotate: false
+  xy: 119, 3
+  size: 26, 35
+  orig: 26, 35
+  offset: 0, 0
+  index: -1
+frog_eyeball-f
+  rotate: false
+  xy: 972, 34
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: -1
+frog_eyebrow-b
+  rotate: false
+  xy: 2, 2
+  size: 20, 18
+  orig: 20, 18
+  offset: 0, 0
+  index: -1
+frog_eyebrow-f
+  rotate: false
+  xy: 149, 15
+  size: 25, 23
+  orig: 25, 23
+  offset: 0, 0
+  index: -1
+frog_face
+  rotate: false
+  xy: 2, 24
+  size: 113, 102
+  orig: 113, 102
+  offset: 0, 0
+  index: -1
+frog_foot-b
+  rotate: false
+  xy: 544, 88
+  size: 111, 38
+  orig: 111, 38
+  offset: 0, 0
+  index: -1
+frog_foot-f
+  rotate: false
+  xy: 424, 82
+  size: 116, 44
+  orig: 116, 44
+  offset: 0, 0
+  index: -1
+frog_hand-b
+  rotate: false
+  xy: 659, 95
+  size: 110, 31
+  orig: 110, 31
+  offset: 0, 0
+  index: -1
+frog_hand-f
+  rotate: false
+  xy: 773, 88
+  size: 98, 38
+  orig: 98, 38
+  offset: 0, 0
+  index: -1
+frog_lower_arm-b
+  rotate: false
+  xy: 514, 26
+  size: 56, 52
+  orig: 56, 52
+  offset: 0, 0
+  index: -1
+frog_lower_arm-f
+  rotate: false
+  xy: 972, 76
+  size: 45, 50
+  orig: 45, 50
+  offset: 0, 0
+  index: -1
+frog_lower_leg-b
+  rotate: false
+  xy: 424, 9
+  size: 86, 69
+  orig: 86, 69
+  offset: 0, 0
+  index: -1
+frog_lower_leg-f
+  rotate: false
+  xy: 875, 61
+  size: 93, 65
+  orig: 93, 65
+  offset: 0, 0
+  index: -1
+frog_pupil-b
+  rotate: false
+  xy: 205, 24
+  size: 12, 14
+  orig: 12, 14
+  offset: 0, 0
+  index: -1
+frog_pupil-f
+  rotate: false
+  xy: 1006, 58
+  size: 11, 14
+  orig: 11, 14
+  offset: 0, 0
+  index: -1
+frog_upper_arm-b
+  rotate: false
+  xy: 574, 40
+  size: 41, 44
+  orig: 41, 44
+  offset: 0, 0
+  index: -1
+frog_upper_arm-f
+  rotate: false
+  xy: 619, 35
+  size: 32, 49
+  orig: 32, 49
+  offset: 0, 0
+  index: -1
+frog_upper_eyelid-b
+  rotate: false
+  xy: 26, 5
+  size: 19, 15
+  orig: 19, 15
+  offset: 0, 0
+  index: -1
+frog_upper_eyelid-f
+  rotate: false
+  xy: 178, 15
+  size: 23, 23
+  orig: 23, 23
+  offset: 0, 0
+  index: -1
+frog_upper_leg-b
+  rotate: false
+  xy: 230, 53
+  size: 94, 73
+  orig: 94, 73
+  offset: 0, 0
+  index: -1
+frog_upper_leg-f
+  rotate: false
+  xy: 328, 57
+  size: 92, 69
+  orig: 92, 69
+  offset: 0, 0
+  index: -1
