@@ -20,17 +20,50 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 .viewer-wrap { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a2e; min-height: 0; }
 #canvas { width: 100%; height: 100%; display: block; background: transparent; }
 .loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #555; font-size: 14px; z-index: 10; }
-.controls { background: #16213e; padding: 6px 10px; border-top: 1px solid #0f3460; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; flex-shrink: 0; }
-.controls::-webkit-scrollbar { display: none; }
-.controls select, .controls button, .controls input { background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 6px; padding: 5px 8px; font-size: 12px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
-.controls button:hover { background: #1a4a7a; }
-.controls button:disabled { opacity: 0.4; cursor: default; }
-.controls label { font-size: 11px; color: #8899aa; white-space: nowrap; flex-shrink: 0; }
-.controls input[type="range"] { width: 70px; }
-.anim-name { font-weight: 600; color: #e94560; }
 .info-bar { background: #0d1b2a; padding: 4px 10px; font-size: 11px; color: #6a7a8a; display: flex; gap: 20px; flex-shrink: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .info-bar::-webkit-scrollbar { display: none; }
 .gif-status { color: #e94560; font-size: 12px; }
+
+/* Controls drawer (slide-up from bottom) */
+.controls-toggle {
+  position: fixed; bottom: 12px; right: 12px; z-index: 100;
+  background: #16213e; border: 1px solid #0f3460; color: #e0e0e0;
+  border-radius: 50%; width: 44px; height: 44px;
+  font-size: 20px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  transition: transform 0.2s, background 0.2s;
+}
+.controls-toggle:hover { background: #1a4a7a; }
+.controls-toggle:active { transform: scale(0.9); }
+.controls-toggle.active { background: #e94560; }
+
+.controls-drawer {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 101;
+  background: #16213e; border-top: 2px solid #0f3460;
+  transform: translateY(100%); transition: transform 0.3s ease;
+  padding: 14px 16px 20px; border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
+}
+.controls-drawer.open { transform: translateY(0); }
+.controls-drawer::before {
+  content: ''; display: block; width: 40px; height: 4px;
+  background: #0f3460; border-radius: 2px; margin: 0 auto 12px;
+}
+.controls-content { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.controls-content select, .controls-content button, .controls-content input {
+  background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 8px;
+  padding: 8px 12px; font-size: 13px; cursor: pointer; white-space: nowrap;
+}
+.controls-content button:hover { background: #1a4a7a; }
+.controls-content button:disabled { opacity: 0.4; cursor: default; }
+.controls-content label { font-size: 12px; color: #8899aa; white-space: nowrap; }
+.controls-content input[type="range"] { width: 80px; padding: 0; }
+.controls-backdrop {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100;
+}
+.controls-backdrop.open { display: block; }
+
 .hidden { display: none; }
 .mobile-toggle { display: none; position: fixed; top: 8px; left: 8px; z-index: 100; background: #16213e; border: 1px solid #0f3460; color: #e0e0e0; border-radius: 6px; padding: 8px 12px; font-size: 18px; cursor: pointer; }
 .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 49; }
@@ -40,12 +73,10 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
   .sidebar { position: fixed; left: 0; top: 0; height: 100vh; z-index: 50; transform: translateX(-100%); transition: transform 0.25s ease; width: 75%; max-width: 260px; }
   .sidebar.open { transform: translateX(0); }
   .sidebar-backdrop.open { display: block; }
-  .controls { padding: 3px 4px; gap: 3px; flex-wrap: wrap; max-height: 62px; }
-  .controls select, .controls button { padding: 3px 5px; font-size: 9px; white-space: nowrap; flex-shrink: 0; border-radius: 4px; }
-  .controls label { font-size: 9px; flex-shrink: 0; }
-  .controls input[type="range"] { width: 36px; flex-shrink: 0; }
-  .info-bar { font-size: 8px; padding: 2px 4px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
-  .info-bar::-webkit-scrollbar { display: none; }
+  .info-bar { font-size: 9px; padding: 3px 6px; }
+  .controls-toggle { bottom: 12px; right: 12px; width: 48px; height: 48px; font-size: 22px; }
+  .controls-content select, .controls-content button { padding: 7px 10px; font-size: 12px; }
+  .controls-content input[type="range"] { width: 70px; }
 }
 </style>
 </head>
@@ -63,18 +94,23 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
       <canvas id="canvas"></canvas>
       <div class="loading" id="loading">Select a character to begin</div>
     </div>
-    <div class="controls">
-      <select id="skinSelect" disabled><option>Skin</option></select>
-      <select id="animSelect" disabled><option>Animations</option></select>
-      <button id="playBtn" disabled>⏸</button>
-      <label>⚡</label>
-      <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1">
-      <span id="speedVal" style="font-size:12px;width:30px">1.0×</span>
-      <button id="resetBtn" disabled>🔄</button>
-      <button id="gifBtn" disabled>GIF</button>
-      <span class="gif-status" id="gifStatus"></span>
-    </div>
   </main>
+</div>
+
+<button class="controls-toggle" id="controlsToggle">⚙</button>
+<div class="controls-backdrop" id="controlsBackdrop"></div>
+<div class="controls-drawer" id="controlsDrawer">
+  <div class="controls-content">
+    <select id="skinSelect" disabled><option>Skin</option></select>
+    <select id="animSelect" disabled><option>Animations</option></select>
+    <button id="playBtn" disabled>⏸</button>
+    <label>⚡</label>
+    <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1">
+    <span id="speedVal" style="font-size:12px;width:30px">1.0×</span>
+    <button id="resetBtn" disabled>🔄</button>
+    <button id="gifBtn" disabled>GIF</button>
+    <span class="gif-status" id="gifStatus"></span>
+  </div>
 </div>
 
 <script src="spine-webgl.js?v=14"></script>
@@ -871,6 +907,26 @@ if (typeof ResizeObserver !== 'undefined') {
   ro.observe(canvas.parentElement);
 }
 resizeAndFit();
+
+// Controls drawer
+const controlsToggle = document.getElementById('controlsToggle');
+const controlsDrawer = document.getElementById('controlsDrawer');
+const controlsBackdrop = document.getElementById('controlsBackdrop');
+controlsToggle.onclick = () => {
+  const isOpen = controlsDrawer.classList.toggle('open');
+  controlsBackdrop.classList.toggle('open', isOpen);
+  controlsToggle.classList.toggle('active', isOpen);
+  controlsToggle.textContent = isOpen ? '✕' : '⚙';
+  // Trigger resize after transition
+  setTimeout(resizeAndFit, 320);
+};
+controlsBackdrop.onclick = () => {
+  controlsDrawer.classList.remove('open');
+  controlsBackdrop.classList.remove('open');
+  controlsToggle.classList.remove('active');
+  controlsToggle.textContent = '⚙';
+  setTimeout(resizeAndFit, 320);
+};
 </script>
 </body>
 </html>
