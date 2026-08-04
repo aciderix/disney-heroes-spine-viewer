@@ -57,7 +57,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
   </main>
 </div>
 
-<script src="spine-webgl.js?v=9"></script>
+<script src="spine-webgl.js?v=10"></script>
 
 <script>
 // Character manifest
@@ -431,7 +431,7 @@ resetBtn.onclick = () => {
 // Initialize WebGL renderer
 function initRenderer() {
   const glConfig = { alpha: true, premultipliedAlpha: false };
-  sceneRenderer = new spine.webgl.SceneRenderer(canvas, canvas.getContext('webgl', glConfig) || canvas.getContext('experimental-webgl', glConfig));
+  sceneRenderer = new spine.webgl.SceneRenderer(canvas, canvas.getContext('webgl', glConfig) || canvas.getContext('experimental-webgl', glConfig), false);
 }
 initRenderer();
 
@@ -456,17 +456,17 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=9');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=10');
     const atlasText = await atlasRes.text();
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=9');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=10');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=9';
+    img.src = basePath + 'texture.png?v=10';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
