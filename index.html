@@ -38,10 +38,13 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
   .sidebar { position: fixed; left: 0; top: 0; height: 100vh; z-index: 50; transform: translateX(-100%); transition: transform 0.25s ease; width: 75%; max-width: 260px; }
   .sidebar.open { transform: translateX(0); }
   .sidebar-backdrop.open { display: block; }
-  .controls { padding: 6px 8px; gap: 6px; }
-  .controls select, .controls button { padding: 5px 8px; font-size: 11px; }
-  .controls input[type="range"] { width: 50px; }
-  .info-bar { font-size: 10px; padding: 4px 8px; }
+  .controls { padding: 4px 6px; gap: 4px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .controls::-webkit-scrollbar { display: none; }
+  .controls select, .controls button { padding: 4px 6px; font-size: 10px; white-space: nowrap; flex-shrink: 0; }
+  .controls label { font-size: 10px; flex-shrink: 0; }
+  .controls input[type="range"] { width: 40px; flex-shrink: 0; }
+  .info-bar { font-size: 9px; padding: 3px 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .info-bar::-webkit-scrollbar { display: none; }
 }
 </style>
 </head>
@@ -492,7 +495,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=15');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=16');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -505,13 +508,13 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=15');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=16');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=15';
+    img.src = basePath + 'texture.png?v=16';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -611,15 +614,7 @@ async function loadCharacter(char, li) {
     currentState.apply(currentSkeleton);
     currentSkeleton.updateWorldTransform();
     
-    // Set up camera to frame the skeleton
-    const skelW = skeletonData.width || 500;
-    const skelH = skeletonData.height || 800;
-    sceneRenderer.camera.position.x = skelW / 2;
-    sceneRenderer.camera.position.y = skelH / 2;
-    // Set viewport to skeleton dimensions, then fit to canvas aspect ratio
-    sceneRenderer.camera.setViewport(skelW * 1.1, skelH * 1.1);
-    sceneRenderer.camera.update();
-    // Now fit the viewport to the canvas aspect ratio
+    // Set up camera to frame the skeleton - resizeAndFit handles all centering
     resizeAndFit();
     
     // Enable controls
@@ -753,6 +748,11 @@ function renderLoop() {
     currentSkeleton.updateWorldTransform();
   }
   
+  // Ensure canvas fits container
+  const wrap = canvas.parentElement;
+  if (canvas.width != wrap.clientWidth || canvas.height != wrap.clientHeight) {
+    resizeAndFit();
+  }
   // Clear canvas
   const gl = sceneRenderer.context.gl;
   gl.clearColor(0.102, 0.102, 0.180, 1);
@@ -765,41 +765,50 @@ function renderLoop() {
   }
 }
 
-// Resize canvas to fit window and adjust camera
+// Resize canvas to fit container and center skeleton
 function resizeAndFit() {
   const wrap = canvas.parentElement;
   const w = wrap.clientWidth;
   const h = wrap.clientHeight;
+  if (w <= 0 || h <= 0) return;
   if (canvas.width != w || canvas.height != h) {
     canvas.width = w;
     canvas.height = h;
   }
   if (sceneRenderer) {
     sceneRenderer.context.gl.viewport(0, 0, canvas.width, canvas.height);
-    // Adjust camera viewport to maintain skeleton aspect ratio
+    // Adjust camera viewport to maintain skeleton aspect ratio and center it
     if (skeletonData) {
       const skelW = skeletonData.width || 500;
       const skelH = skeletonData.height || 800;
-      const targetW = skelW * 1.1;
-      const targetH = skelH * 1.1;
+      const targetW = skelW * 1.15;
+      const targetH = skelH * 1.15;
       const targetRatio = targetH / targetW;
       const sourceRatio = h / w;
-      let scale, vpW, vpH;
+      let vpW, vpH;
       if (targetRatio < sourceRatio) {
-        scale = targetW / w;
+        // Canvas is taller than skeleton aspect - fit width, expand height
         vpW = targetW;
-        vpH = h * scale;
+        vpH = targetW * sourceRatio;
       } else {
-        scale = targetH / h;
-        vpW = w * scale;
+        // Canvas is wider than skeleton aspect - fit height, expand width
         vpH = targetH;
+        vpW = targetH / sourceRatio;
       }
       sceneRenderer.camera.setViewport(vpW, vpH);
+      // Center camera on skeleton center
+      sceneRenderer.camera.position.x = skelW / 2;
+      sceneRenderer.camera.position.y = skelH / 2;
       sceneRenderer.camera.update();
     }
   }
 }
 window.addEventListener('resize', resizeAndFit);
+// Also observe canvas container for size changes (e.g. controls wrapping)
+if (typeof ResizeObserver !== 'undefined') {
+  const ro = new ResizeObserver(() => resizeAndFit());
+  ro.observe(canvas.parentElement);
+}
 resizeAndFit();
 </script>
 </body>
