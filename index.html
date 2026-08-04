@@ -494,6 +494,7 @@ animSelect.onchange = () => {
     currentState.update(0.1);
     currentState.apply(currentSkeleton);
     currentSkeleton.updateWorldTransform();
+    resetMaxBounds();
     resizeAndFit();
   }
 };
@@ -504,6 +505,7 @@ resetBtn.onclick = () => {
     currentState.update(0.1);
     currentState.apply(currentSkeleton);
     currentSkeleton.updateWorldTransform();
+    resetMaxBounds();
     resizeAndFit();
   }
 };
@@ -665,6 +667,7 @@ async function loadCharacter(char, li) {
     currentSkeleton.updateWorldTransform();
     
     // Set up camera to frame the skeleton - resizeAndFit handles all centering
+    resetMaxBounds();
     resizeAndFit();
     scheduleRefit();
     
@@ -827,6 +830,12 @@ function renderLoop() {
     currentState.update(delta * speedMul);
     currentState.apply(currentSkeleton);
     currentSkeleton.updateWorldTransform();
+    // Track max bounds across animation frames for auto-fitting
+    updateMaxBounds();
+    if (_needsRefit) {
+      _needsRefit = false;
+      resizeAndFit();
+    }
   }
   
   // Clear canvas
@@ -848,11 +857,56 @@ const _boundsTemp = [];
 let _resizeCount = 0;
 let _fitTimer = null;
 
-function getSkeletonBounds() {
-  // Returns {x, y, w, h} — the best available bounding box for the skeleton
-  let skelX = 0, skelY = 0, skelW = 0, skelH = 0;
+// Track the MAXIMUM bounds seen across all animation frames.
+// This lets us fit the viewport to the widest pose the skeleton ever reaches,
+// so nothing ever clips — no manual padding tuning needed.
+let _maxBounds = null;  // { x, y, w, h } or null
+let _needsRefit = false;
 
-  // 1. Try runtime getBounds (most accurate for current pose)
+function resetMaxBounds() {
+  _maxBounds = null;
+  _needsRefit = true;
+}
+
+function updateMaxBounds() {
+  if (!currentSkeleton) return;
+  try {
+    currentSkeleton.getBounds(_boundsOffset, _boundsSize, _boundsTemp);
+    if (_boundsSize[0] <= 0 || _boundsSize[1] <= 0 ||
+        !isFinite(_boundsOffset[0]) || !isFinite(_boundsOffset[1]) ||
+        !isFinite(_boundsSize[0]) || !isFinite(_boundsSize[1])) return;
+    const bx = _boundsOffset[0], by = _boundsOffset[1], bw = _boundsSize[0], bh = _boundsSize[1];
+    if (!_maxBounds) {
+      _maxBounds = { x: bx, y: by, w: bw, h: bh };
+      _needsRefit = true;
+    } else {
+      // Expand the union to include the new bounds
+      const minX = Math.min(_maxBounds.x, bx);
+      const minY = Math.min(_maxBounds.y, by);
+      const maxX = Math.max(_maxBounds.x + _maxBounds.w, bx + bw);
+      const maxY = Math.max(_maxBounds.y + _maxBounds.h, by + bh);
+      const newW = maxX - minX;
+      const newH = maxY - minY;
+      // Only flag for refit if bounds grew by more than 3%
+      if (newW > _maxBounds.w * 1.03 || newH > _maxBounds.h * 1.03) {
+        _needsRefit = true;
+      }
+      _maxBounds.x = minX;
+      _maxBounds.y = minY;
+      _maxBounds.w = newW;
+      _maxBounds.h = newH;
+    }
+  } catch (e) { /* ignore */ }
+}
+
+function getSkeletonBounds() {
+  // Priority 1: use accumulated max bounds from animation sampling
+  if (_maxBounds && _maxBounds.w > 0 && _maxBounds.h > 0) {
+    return { x: _maxBounds.x, y: _maxBounds.y, w: _maxBounds.w, h: _maxBounds.h };
+  }
+
+  // Priority 2: try runtime getBounds (current pose)
+  let skelX = 0, skelY = 0, skelW = 0, skelH = 0;
   if (currentSkeleton) {
     currentSkeleton.updateWorldTransform();
     try {
@@ -868,37 +922,24 @@ function getSkeletonBounds() {
     } catch (e) { /* ignore */ }
   }
 
-  // 2. Also check skeletonData dimensions (Spine project configured size)
-  let dataW = 0, dataH = 0;
+  // Priority 3: skeletonData dimensions
   if (skeletonData) {
-    dataW = skeletonData.width || 0;
-    dataH = skeletonData.height || 0;
-  }
-
-  // 3. Take the UNION of both bounds to be safe — use whichever is larger
-  if (dataW > 0 && dataH > 0) {
-    if (skelW <= 0 || skelH <= 0) {
-      // getBounds failed, use skeletonData
-      skelW = dataW;
-      skelH = dataH;
-      // Try to center around skeleton's root bone origin
-      if (skeletonData.x) skelX = skeletonData.x;
-      if (skeletonData.y) skelY = skeletonData.y;
-    } else {
-      // Use the larger of the two to ensure we never clip
-      const combinedW = Math.max(skelW, dataW);
-      const combinedH = Math.max(skelH, dataH);
-      // Keep the center from getBounds if available
-      const cx = skelX + skelW / 2;
-      const cy = skelY + skelH / 2;
-      skelW = combinedW;
-      skelH = combinedH;
-      skelX = cx - skelW / 2;
-      skelY = cy - skelH / 2;
+    const dataW = skeletonData.width || 0;
+    const dataH = skeletonData.height || 0;
+    if (dataW > 0 && dataH > 0) {
+      if (skelW <= 0 || skelH <= 0) {
+        skelW = dataW;
+        skelH = dataH;
+        if (skeletonData.x) skelX = skeletonData.x;
+        if (skeletonData.y) skelY = skeletonData.y;
+      } else {
+        skelW = Math.max(skelW, dataW);
+        skelH = Math.max(skelH, dataH);
+      }
     }
   }
 
-  // 4. Final fallback — horizontal rectangle (not the old 500×800 portrait default!)
+  // Final fallback
   if (skelW <= 0 || skelH <= 0) {
     skelW = 600;
     skelH = 400;
@@ -932,13 +973,11 @@ function resizeAndFit() {
     const b = getSkeletonBounds();
     let skelX = b.x, skelY = b.y, skelW = b.w, skelH = b.h;
 
-    // Dynamic padding: wider in portrait to leave room for arm/weapon animations
-    const isPortrait = h > w;
-    const padX = isPortrait ? 1.6 : 1.15;
-    const padY = 1.15;
-
-    const targetW = Math.max(skelW * padX, 1);
-    const targetH = Math.max(skelH * padY, 1);
+    // Minimal padding — max bounds already accounts for animation extent.
+    // Small extra margin (8%) just for visual breathing room.
+    const pad = 1.08;
+    const targetW = Math.max(skelW * pad, 1);
+    const targetH = Math.max(skelH * pad, 1);
 
     // Standard 'contain': scale so skeleton fits entirely within canvas
     const scale = Math.min(w / targetW, h / targetH);
