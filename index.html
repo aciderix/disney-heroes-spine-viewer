@@ -177,7 +177,7 @@ async function loadCharacter(char, li) {
     });
     
     // Create texture atlas with custom loader
-    const texture = new spine.Texture(img);
+    const texture = new spine.canvas.CanvasTexture(img);
     currentAtlas = new spine.TextureAtlas(atlasText, function(path) {
       return texture;
     });
