@@ -504,7 +504,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=19');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=20');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -517,13 +517,13 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=19');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=20');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=19';
+    img.src = basePath + 'texture.png?v=20';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -630,9 +630,12 @@ async function loadCharacter(char, li) {
     
     // Set up camera to frame the skeleton - resizeAndFit handles all centering
     resizeAndFit();
-    // Retry after layout settles (important for mobile)
+    _resizeCount = 0;
+    // Retry after layout settles (important for mobile) + during first frames
     setTimeout(resizeAndFit, 100);
     setTimeout(resizeAndFit, 300);
+    setTimeout(resizeAndFit, 600);
+    setTimeout(resizeAndFit, 1000);
     
     // Enable controls
     animSelect.disabled = false;
@@ -654,13 +657,14 @@ async function loadCharacter(char, li) {
   }
 }
 
-// GIF recording using canvas capture
+// GIF recording - downscaled to prevent mobile crashes
 let gifFrames = [];
 let gifRecording = false;
 let gifFrameCount = 0;
-const GIF_FPS = 15;
-const GIF_DURATION = 3; // seconds
+const GIF_FPS = 10;
+const GIF_DURATION = 2; // seconds
 const GIF_MAX_FRAMES = GIF_FPS * GIF_DURATION;
+const GIF_MAX_WIDTH = 320; // downscale to prevent OOM on mobile
 
 gifBtn.onclick = () => {
   if (gifRecording) return;
@@ -668,12 +672,17 @@ gifBtn.onclick = () => {
   gifFrames = [];
   gifFrameCount = 0;
   gifBtn.disabled = true;
-  gifBtn.textContent = '⏳ Capturing...';
-  document.getElementById('gifStatus').textContent = `Recording 0/${GIF_MAX_FRAMES} frames`;
+  gifBtn.textContent = '⏳';
+  document.getElementById('gifStatus').textContent = `Capturing 0/${GIF_MAX_FRAMES}...`;
   
   let gifLastTime = performance.now();
   const gifInterval = 1000 / GIF_FPS;
   let gifAccum = 0;
+  
+  // Pre-calculate downscaled dimensions
+  const scale = Math.min(1, GIF_MAX_WIDTH / canvas.width);
+  const gifW = Math.round(canvas.width * scale);
+  const gifH = Math.round(canvas.height * scale);
   
   const gifLoop = () => {
     if (!gifRecording) return;
@@ -684,21 +693,21 @@ gifBtn.onclick = () => {
     
     if (gifAccum >= gifInterval) {
       gifAccum = 0;
-      // Capture canvas frame
-      canvas.toBlob((blob) => {
-        if (blob) {
-          gifFrames.push(blob);
-        }
-        gifFrameCount++;
-        document.getElementById('gifStatus').textContent = `Recording ${gifFrameCount}/${GIF_MAX_FRAMES} frames`;
-        
-        if (gifFrameCount >= GIF_MAX_FRAMES) {
-          gifRecording = false;
-          gifBtn.disabled = false;
-          gifBtn.textContent = 'GIF';
-          downloadGif();
-        }
-      }, 'image/png');
+      // Capture downscaled frame to save memory
+      const tmpC = document.createElement('canvas');
+      tmpC.width = gifW;
+      tmpC.height = gifH;
+      tmpC.getContext('2d').drawImage(canvas, 0, 0, gifW, gifH);
+      gifFrames.push(tmpC);
+      gifFrameCount++;
+      document.getElementById('gifStatus').textContent = `Capturing ${gifFrameCount}/${GIF_MAX_FRAMES}...`;
+      
+      if (gifFrameCount >= GIF_MAX_FRAMES) {
+        gifRecording = false;
+        gifBtn.disabled = false;
+        gifBtn.textContent = 'GIF';
+        downloadGif(gifW, gifH);
+      }
     }
     if (gifRecording) requestAnimationFrame(gifLoop);
   };
@@ -707,20 +716,22 @@ gifBtn.onclick = () => {
 
 let _gifWorkerBlobUrl = null;
 async function getGifWorkerBlobUrl() {
-  // Cross-origin worker scripts are blocked by browsers (esp. on mobile Chrome).
-  // Fetch the worker script and create a same-origin blob URL instead.
   if (_gifWorkerBlobUrl) return _gifWorkerBlobUrl;
-  const res = await fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js');
-  const text = await res.text();
-  const blob = new Blob([text], { type: 'application/javascript' });
-  _gifWorkerBlobUrl = URL.createObjectURL(blob);
-  return _gifWorkerBlobUrl;
+  try {
+    const res = await fetch('https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js');
+    const text = await res.text();
+    const blob = new Blob([text], { type: 'application/javascript' });
+    _gifWorkerBlobUrl = URL.createObjectURL(blob);
+    return _gifWorkerBlobUrl;
+  } catch (e) {
+    return 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js';
+  }
 }
 
-async function downloadGif() {
-  document.getElementById('gifStatus').textContent = 'Encoding GIF...';
+async function downloadGif(gifW, gifH) {
+  document.getElementById('gifStatus').textContent = 'Encoding...';
+  // Free frame canvases during encoding to save memory
   try {
-    // Use gif.js library loaded dynamically
     if (typeof GIF === 'undefined') {
       const script = document.createElement('script');
       script.src = 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js';
@@ -730,21 +741,18 @@ async function downloadGif() {
     const workerBlobUrl = await getGifWorkerBlobUrl();
     
     const gif = new GIF({
-      workers: 2,
-      quality: 10,
-      width: canvas.width,
-      height: canvas.height,
+      workers: 1,           // single worker to limit memory
+      quality: 20,          // lower quality = less memory
+      width: gifW,
+      height: gifH,
       workerScript: workerBlobUrl
     });
     
-    for (const blob of gifFrames) {
-      const img = await createImageBitmap(blob);
-      const tmpCanvas = document.createElement('canvas');
-      tmpCanvas.width = canvas.width;
-      tmpCanvas.height = canvas.height;
-      tmpCanvas.getContext('2d').drawImage(img, 0, 0);
-      gif.addFrame(tmpCanvas, { delay: 1000 / GIF_FPS });
+    for (const frameCanvas of gifFrames) {
+      gif.addFrame(frameCanvas, { delay: 1000 / GIF_FPS, copy: true });
     }
+    // Free frames immediately
+    gifFrames = [];
     
     gif.on('finished', (blob) => {
       const url = URL.createObjectURL(blob);
@@ -753,7 +761,7 @@ async function downloadGif() {
       a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
       a.click();
       URL.revokeObjectURL(url);
-      document.getElementById('gifStatus').textContent = 'GIF downloaded!';
+      document.getElementById('gifStatus').textContent = 'Done!';
       setTimeout(() => { document.getElementById('gifStatus').textContent = ''; }, 3000);
     });
     
@@ -762,6 +770,7 @@ async function downloadGif() {
     document.getElementById('gifStatus').textContent = 'GIF error: ' + e.message;
     gifBtn.disabled = false;
     gifBtn.textContent = 'GIF';
+    gifFrames = [];
   }
 }
 
@@ -795,6 +804,7 @@ function renderLoop() {
 const _boundsOffset = [0, 0];
 const _boundsSize = [0, 0];
 const _boundsTemp = [];
+let _resizeCount = 0;
 function resizeAndFit() {
   const wrap = canvas.parentElement;
   const w = wrap.clientWidth || window.innerWidth;
@@ -808,7 +818,6 @@ function resizeAndFit() {
     sceneRenderer.context.gl.viewport(0, 0, canvas.width, canvas.height);
     let skelX = 0, skelY = 0, skelW = 500, skelH = 800;
     if (currentSkeleton) {
-      // Ensure world transform is up to date before measuring bounds
       currentSkeleton.updateWorldTransform();
       try {
         currentSkeleton.getBounds(_boundsOffset, _boundsSize, _boundsTemp);
@@ -824,21 +833,22 @@ function resizeAndFit() {
       skelH = skeletonData.height || 800;
     }
     // Add padding around the skeleton
-    const pad = 1.15;
-    const targetW = skelW * pad;
-    const targetH = skelH * pad;
+    const pad = 1.2;
+    const targetW = Math.max(skelW * pad, 1);
+    const targetH = Math.max(skelH * pad, 1);
     const targetRatio = targetH / targetW;
     const sourceRatio = h / w;
     let vpW, vpH;
     if (targetRatio < sourceRatio) {
+      // Skeleton is wider relative to canvas — fit width
       vpW = targetW;
       vpH = targetW * sourceRatio;
     } else {
+      // Skeleton is taller relative to canvas — fit height
       vpH = targetH;
       vpW = targetH / sourceRatio;
     }
     sceneRenderer.camera.setViewport(vpW, vpH);
-    // Center on the skeleton's actual runtime-computed center
     sceneRenderer.camera.position.x = skelX + skelW / 2;
     sceneRenderer.camera.position.y = skelY + skelH / 2;
     sceneRenderer.camera.update();
