@@ -1,0 +1,489 @@
+
+unit-DEFAULT-untrimmed.etc1
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+death_hair
+  rotate: false
+  xy: 803, 171
+  size: 98, 122
+  orig: 98, 122
+  offset: 0, 0
+  index: -1
+eyeball-b
+  rotate: false
+  xy: 957, 427
+  size: 20, 24
+  orig: 20, 24
+  offset: 0, 0
+  index: -1
+eyeball-f
+  rotate: false
+  xy: 905, 278
+  size: 31, 28
+  orig: 31, 28
+  offset: 0, 0
+  index: -1
+eyebrow-b
+  rotate: false
+  xy: 1937, 419
+  size: 15, 10
+  orig: 15, 10
+  offset: 0, 0
+  index: -1
+eyebrow-f
+  rotate: false
+  xy: 1952, 433
+  size: 26, 24
+  orig: 26, 24
+  offset: 0, 0
+  index: -1
+face
+  rotate: false
+  xy: 1701, 418
+  size: 85, 92
+  orig: 85, 92
+  offset: 0, 0
+  index: -1
+fin-b
+  rotate: false
+  xy: 230, 26
+  size: 180, 114
+  orig: 180, 114
+  offset: 0, 0
+  index: -1
+fin-f
+  rotate: false
+  xy: 230, 144
+  size: 217, 120
+  orig: 217, 120
+  offset: 0, 0
+  index: -1
+fish_body
+  rotate: false
+  xy: 694, 297
+  size: 152, 124
+  orig: 152, 124
+  offset: 0, 0
+  index: -1
+fish_fin
+  rotate: false
+  xy: 901, 310
+  size: 42, 56
+  orig: 42, 56
+  offset: 0, 0
+  index: -1
+fish_gills
+  rotate: false
+  xy: 626, 84
+  size: 52, 58
+  orig: 52, 58
+  offset: 0, 0
+  index: -1
+fish_lower_lip
+  rotate: false
+  xy: 1701, 374
+  size: 59, 40
+  orig: 59, 40
+  offset: 0, 0
+  index: -1
+fish_upper_lip
+  rotate: false
+  xy: 1832, 453
+  size: 56, 57
+  orig: 56, 57
+  offset: 0, 0
+  index: -1
+fish_water
+  rotate: false
+  xy: 973, 460
+  size: 305, 50
+  orig: 305, 50
+  offset: 0, 0
+  index: -1
+fish_water_patch
+  rotate: false
+  xy: 1282, 475
+  size: 194, 35
+  orig: 194, 35
+  offset: 0, 0
+  index: -1
+hair-b
+  rotate: false
+  xy: 2, 10
+  size: 224, 254
+  orig: 224, 254
+  offset: 0, 0
+  index: -1
+hair-b2
+  rotate: false
+  xy: 1958, 461
+  size: 54, 49
+  orig: 54, 49
+  offset: 0, 0
+  index: -1
+hair-f
+  rotate: false
+  xy: 1480, 441
+  size: 115, 69
+  orig: 115, 69
+  offset: 0, 0
+  index: -1
+hair-f1
+  rotate: false
+  xy: 1599, 388
+  size: 98, 122
+  orig: 98, 122
+  offset: 0, 0
+  index: -1
+hand-b
+  rotate: false
+  xy: 1792, 386
+  size: 35, 31
+  orig: 35, 31
+  offset: 0, 0
+  index: -1
+hand-f
+  rotate: false
+  xy: 1832, 412
+  size: 36, 37
+  orig: 36, 37
+  offset: 0, 0
+  index: -1
+index_finger-b
+  rotate: false
+  xy: 353, 9
+  size: 29, 13
+  orig: 29, 13
+  offset: 0, 0
+  index: -1
+index_finger-f
+  rotate: false
+  xy: 1892, 433
+  size: 27, 26
+  orig: 27, 26
+  offset: 0, 0
+  index: -1
+inner_mouth
+  rotate: false
+  xy: 1379, 453
+  size: 25, 18
+  orig: 25, 18
+  offset: 0, 0
+  index: -1
+lower_arm-b
+  rotate: false
+  xy: 1790, 421
+  size: 38, 89
+  orig: 38, 89
+  offset: 0, 0
+  index: -1
+lower_arm-f
+  rotate: false
+  xy: 515, 48
+  size: 46, 94
+  orig: 46, 94
+  offset: 0, 0
+  index: -1
+lower_body
+  rotate: false
+  xy: 565, 77
+  size: 57, 65
+  orig: 57, 65
+  offset: 0, 0
+  index: -1
+lower_lip
+  rotate: false
+  xy: 286, 6
+  size: 29, 16
+  orig: 29, 16
+  offset: 0, 0
+  index: -1
+mid_finger-b
+  rotate: false
+  xy: 319, 8
+  size: 30, 14
+  orig: 30, 14
+  offset: 0, 0
+  index: -1
+mid_finger-f
+  rotate: false
+  xy: 1982, 430
+  size: 24, 27
+  orig: 24, 27
+  offset: 0, 0
+  index: -1
+mouth_patch
+  rotate: false
+  xy: 803, 160
+  size: 8, 7
+  orig: 8, 7
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 850, 306
+  size: 47, 46
+  orig: 47, 46
+  offset: 0, 0
+  index: -1
+nose
+  rotate: false
+  xy: 2016, 463
+  size: 22, 47
+  orig: 22, 47
+  offset: 0, 0
+  index: -1
+pelvis_fin-b
+  rotate: false
+  xy: 898, 370
+  size: 47, 52
+  orig: 47, 52
+  offset: 0, 0
+  index: -1
+pelvis_fin-f
+  rotate: false
+  xy: 850, 356
+  size: 44, 65
+  orig: 44, 65
+  offset: 0, 0
+  index: -1
+pinky_finger-b
+  rotate: false
+  xy: 386, 9
+  size: 23, 13
+  orig: 23, 13
+  offset: 0, 0
+  index: -1
+pinky_finger-f
+  rotate: false
+  xy: 456, 2
+  size: 26, 23
+  orig: 26, 23
+  offset: 0, 0
+  index: -1
+pupil-b
+  rotate: false
+  xy: 682, 127
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+pupil-f
+  rotate: false
+  xy: 1457, 454
+  size: 14, 17
+  orig: 14, 17
+  offset: 0, 0
+  index: -1
+ring_finger-b
+  rotate: false
+  xy: 1315, 458
+  size: 28, 13
+  orig: 28, 13
+  offset: 0, 0
+  index: -1
+ring_finger-f
+  rotate: false
+  xy: 1923, 433
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 2, 268
+  size: 458, 242
+  orig: 458, 242
+  offset: 0, 0
+  index: -1
+seashell_bikini-f
+  rotate: false
+  xy: 1892, 463
+  size: 62, 47
+  orig: 62, 47
+  offset: 0, 0
+  index: -1
+skill2_fingers-f
+  rotate: false
+  xy: 515, 27
+  size: 38, 17
+  orig: 38, 17
+  offset: 0, 0
+  index: -1
+skill2_hand-f
+  rotate: false
+  xy: 1831, 383
+  size: 38, 25
+  orig: 38, 25
+  offset: 0, 0
+  index: -1
+skill2_pinky_finger-f
+  rotate: false
+  xy: 1282, 459
+  size: 29, 12
+  orig: 29, 12
+  offset: 0, 0
+  index: -1
+skill2_thumb-f
+  rotate: false
+  xy: 1347, 455
+  size: 28, 16
+  orig: 28, 16
+  offset: 0, 0
+  index: -1
+skill3_hand-b
+  rotate: false
+  xy: 1764, 381
+  size: 24, 33
+  orig: 24, 33
+  offset: 0, 0
+  index: -1
+skill3_index_finger-b
+  rotate: false
+  xy: 925, 248
+  size: 18, 26
+  orig: 18, 26
+  offset: 0, 0
+  index: -1
+skill3_mid_finger-b
+  rotate: false
+  xy: 905, 205
+  size: 20, 27
+  orig: 20, 27
+  offset: 0, 0
+  index: -1
+skill3_pinky_finger-b
+  rotate: false
+  xy: 1436, 454
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+skill3_ring_finger-b
+  rotate: false
+  xy: 486, 2
+  size: 19, 23
+  orig: 19, 23
+  offset: 0, 0
+  index: -1
+skill3_thumb-b
+  rotate: false
+  xy: 905, 236
+  size: 16, 38
+  orig: 16, 38
+  offset: 0, 0
+  index: -1
+tail
+  rotate: false
+  xy: 464, 146
+  size: 226, 275
+  orig: 226, 275
+  offset: 0, 0
+  index: -1
+thumb-b
+  rotate: false
+  xy: 1872, 419
+  size: 16, 30
+  orig: 16, 30
+  offset: 0, 0
+  index: -1
+thumb-f
+  rotate: false
+  xy: 1408, 456
+  size: 24, 15
+  orig: 24, 15
+  offset: 0, 0
+  index: -1
+tongue
+  rotate: false
+  xy: 1916, 419
+  size: 17, 10
+  orig: 17, 10
+  offset: 0, 0
+  index: -1
+upper_arm-b
+  rotate: false
+  xy: 414, 25
+  size: 38, 115
+  orig: 38, 115
+  offset: 0, 0
+  index: -1
+upper_arm-f
+  rotate: false
+  xy: 456, 29
+  size: 55, 113
+  orig: 55, 113
+  offset: 0, 0
+  index: -1
+upper_body
+  rotate: false
+  xy: 694, 158
+  size: 105, 135
+  orig: 105, 135
+  offset: 0, 0
+  index: -1
+upper_eyelid-b
+  rotate: false
+  xy: 230, 2
+  size: 17, 20
+  orig: 17, 20
+  offset: 0, 0
+  index: -1
+upper_eyelid-f
+  rotate: false
+  xy: 905, 174
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+upper_lip
+  rotate: false
+  xy: 251, 5
+  size: 31, 17
+  orig: 31, 17
+  offset: 0, 0
+  index: -1
+upper_teeth
+  rotate: false
+  xy: 1892, 419
+  size: 20, 10
+  orig: 20, 10
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 464, 455
+  size: 505, 55
+  orig: 505, 55
+  offset: 0, 0
+  index: -1
+water_patch
+  rotate: false
+  xy: 877, 426
+  size: 76, 25
+  orig: 76, 25
+  offset: 0, 0
+  index: -1
+water_splash
+  rotate: false
+  xy: 565, 55
+  size: 50, 18
+  orig: 50, 18
+  offset: 0, 0
+  index: -1
+water_splash1
+  rotate: false
+  xy: 509, 4
+  size: 38, 19
+  orig: 38, 19
+  offset: 0, 0
+  index: -1
+water_wave
+  rotate: false
+  xy: 464, 425
+  size: 409, 26
+  orig: 409, 26
+  offset: 0, 0
+  index: -1
