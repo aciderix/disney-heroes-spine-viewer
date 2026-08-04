@@ -1,0 +1,52 @@
+name: Extract All Characters
+
+on:
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install numpy pillow
+          sudo apt-get update && sudo apt-get install -y libgl1
+
+      - name: Download game archives
+        run: |
+          mkdir -p /tmp
+          wget -q -O /tmp/world_add_325.zip "https://github.com/${{ github.repository }}/releases/download/game-archives/world_add_325.zip"
+          wget -q -O /tmp/world_initial_325.zip "https://github.com/${{ github.repository }}/releases/download/game-archives/world_initial_325.zip"
+          wget -q -O /tmp/char_index.json "https://github.com/${{ github.repository }}/releases/download/game-archives/char_index.json"
+          ls -lh /tmp/*.zip /tmp/*.json
+
+      - name: Run extraction
+        run: |
+          cd ${{ github.workspace }}
+          python3 tools/extract_all_actions.py
+
+      - name: Commit and push
+        run: |
+          cd ${{ github.workspace }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add characters/
+          git commit -m "Extract all 315 characters (GitHub Actions)" || echo "No changes to commit"
+          git push
+
+      - name: Show results
+        run: |
+          cd ${{ github.workspace }}
+          ls characters/ | wc -l
+          du -sh characters/
