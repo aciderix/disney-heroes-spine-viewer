@@ -666,12 +666,7 @@ async function loadCharacter(char, li) {
     
     // Set up camera to frame the skeleton - resizeAndFit handles all centering
     resizeAndFit();
-    _resizeCount = 0;
-    // Retry after layout settles (important for mobile) + during first frames
-    setTimeout(resizeAndFit, 100);
-    setTimeout(resizeAndFit, 300);
-    setTimeout(resizeAndFit, 600);
-    setTimeout(resizeAndFit, 1000);
+    scheduleRefit();
     
     // Enable controls
     animSelect.disabled = false;
@@ -846,11 +841,72 @@ function renderLoop() {
   }
 }
 
-// Resize canvas to fit container and center skeleton using its REAL runtime bounds
+// Resize canvas to fit container and center skeleton
 const _boundsOffset = [0, 0];
 const _boundsSize = [0, 0];
 const _boundsTemp = [];
 let _resizeCount = 0;
+let _fitTimer = null;
+
+function getSkeletonBounds() {
+  // Returns {x, y, w, h} — the best available bounding box for the skeleton
+  let skelX = 0, skelY = 0, skelW = 0, skelH = 0;
+
+  // 1. Try runtime getBounds (most accurate for current pose)
+  if (currentSkeleton) {
+    currentSkeleton.updateWorldTransform();
+    try {
+      currentSkeleton.getBounds(_boundsOffset, _boundsSize, _boundsTemp);
+      if (_boundsSize[0] > 0 && _boundsSize[1] > 0 &&
+          isFinite(_boundsOffset[0]) && isFinite(_boundsOffset[1]) &&
+          isFinite(_boundsSize[0]) && isFinite(_boundsSize[1])) {
+        skelX = _boundsOffset[0];
+        skelY = _boundsOffset[1];
+        skelW = _boundsSize[0];
+        skelH = _boundsSize[1];
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  // 2. Also check skeletonData dimensions (Spine project configured size)
+  let dataW = 0, dataH = 0;
+  if (skeletonData) {
+    dataW = skeletonData.width || 0;
+    dataH = skeletonData.height || 0;
+  }
+
+  // 3. Take the UNION of both bounds to be safe — use whichever is larger
+  if (dataW > 0 && dataH > 0) {
+    if (skelW <= 0 || skelH <= 0) {
+      // getBounds failed, use skeletonData
+      skelW = dataW;
+      skelH = dataH;
+      // Try to center around skeleton's root bone origin
+      if (skeletonData.x) skelX = skeletonData.x;
+      if (skeletonData.y) skelY = skeletonData.y;
+    } else {
+      // Use the larger of the two to ensure we never clip
+      const combinedW = Math.max(skelW, dataW);
+      const combinedH = Math.max(skelH, dataH);
+      // Keep the center from getBounds if available
+      const cx = skelX + skelW / 2;
+      const cy = skelY + skelH / 2;
+      skelW = combinedW;
+      skelH = combinedH;
+      skelX = cx - skelW / 2;
+      skelY = cy - skelH / 2;
+    }
+  }
+
+  // 4. Final fallback — horizontal rectangle (not the old 500×800 portrait default!)
+  if (skelW <= 0 || skelH <= 0) {
+    skelW = 600;
+    skelH = 400;
+  }
+
+  return { x: skelX, y: skelY, w: skelW, h: skelH };
+}
+
 function resizeAndFit() {
   const wrap = canvas.parentElement;
   const w = wrap.clientWidth || window.innerWidth;
@@ -862,43 +918,42 @@ function resizeAndFit() {
   canvas.style.height = h + 'px';
   if (sceneRenderer) {
     sceneRenderer.context.gl.viewport(0, 0, canvas.width, canvas.height);
-    let skelX = 0, skelY = 0, skelW = 500, skelH = 800;
-    if (currentSkeleton) {
-      currentSkeleton.updateWorldTransform();
-      try {
-        currentSkeleton.getBounds(_boundsOffset, _boundsSize, _boundsTemp);
-        if (_boundsSize[0] > 0 && _boundsSize[1] > 0 && isFinite(_boundsOffset[0]) && isFinite(_boundsOffset[1])) {
-          skelX = _boundsOffset[0];
-          skelY = _boundsOffset[1];
-          skelW = _boundsSize[0];
-          skelH = _boundsSize[1];
-        }
-      } catch (e) { /* fall back to defaults */ }
-    } else if (skeletonData) {
-      skelW = skeletonData.width || 500;
-      skelH = skeletonData.height || 800;
-    }
-    // Add padding around the skeleton
-    const pad = 1.2;
+
+    const b = getSkeletonBounds();
+    let skelX = b.x, skelY = b.y, skelW = b.w, skelH = b.h;
+
+    // Padding around skeleton
+    const pad = 1.15;
     const targetW = Math.max(skelW * pad, 1);
     const targetH = Math.max(skelH * pad, 1);
-    const targetRatio = targetH / targetW;
-    const sourceRatio = h / w;
-    let vpW, vpH;
-    if (targetRatio < sourceRatio) {
-      // Skeleton is wider relative to canvas — fit width
-      vpW = targetW;
-      vpH = targetW * sourceRatio;
-    } else {
-      // Skeleton is taller relative to canvas — fit height
-      vpH = targetH;
-      vpW = targetH / sourceRatio;
-    }
+
+    // Standard 'contain': scale so skeleton fits entirely within canvas
+    // scale = min(canvas_w / targetW, canvas_h / targetH)
+    // viewport = canvas / scale (world units visible)
+    const scale = Math.min(w / targetW, h / targetH);
+    const vpW = w / scale;
+    const vpH = h / scale;
+
     sceneRenderer.camera.setViewport(vpW, vpH);
     sceneRenderer.camera.position.x = skelX + skelW / 2;
     sceneRenderer.camera.position.y = skelY + skelH / 2;
     sceneRenderer.camera.update();
   }
+}
+
+// Periodically refit during animation — skeleton bounds can change
+// as the first animation frames are applied
+function scheduleRefit() {
+  if (_fitTimer) clearTimeout(_fitTimer);
+  _resizeCount = 0;
+  const refit = () => {
+    resizeAndFit();
+    _resizeCount++;
+    if (_resizeCount < 20) {
+      _fitTimer = setTimeout(refit, 100 * (_resizeCount + 1));
+    }
+  };
+  refit();
 }
 window.addEventListener('resize', resizeAndFit);
 // Also observe canvas container for size changes (e.g. controls wrapping)
