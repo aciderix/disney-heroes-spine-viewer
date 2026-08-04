@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disney Heroes — Spine Viewer</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; overflow: hidden; height: 100vh; }
+.app { display: flex; height: 100vh; }
+.sidebar { width: 220px; background: #16213e; overflow-y: auto; border-right: 1px solid #0f3460; flex-shrink: 0; }
+.sidebar h1 { font-size: 14px; padding: 16px; color: #e94560; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.char-list { list-style: none; }
+.char-item { padding: 10px 16px; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.char-item:hover { background: #0f3460; }
+.char-item.active { background: #e94560; color: #fff; }
+.char-thumb { width: 32px; height: 32px; border-radius: 6px; background: #0f3460; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.main { flex: 1; display: flex; flex-direction: column; }
+.viewer-wrap { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a2e; }
+#canvas { max-width: 100%; max-height: 100%; background: transparent; }
+.loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #555; font-size: 14px; }
+.controls { background: #16213e; padding: 12px 20px; border-top: 1px solid #0f3460; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.controls select, .controls button, .controls input { background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
+.controls button:hover { background: #1a4a7a; }
+.controls button:disabled { opacity: 0.4; cursor: default; }
+.controls label { font-size: 12px; color: #8899aa; }
+.controls input[type="range"] { width: 80px; }
+.anim-name { font-weight: 600; color: #e94560; }
+.info-bar { background: #0d1b2a; padding: 6px 20px; font-size: 11px; color: #6a7a8a; display: flex; gap: 20px; }
+.gif-status { color: #e94560; font-size: 12px; }
+.hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <h1>🎭 Disney Heroes</h1>
+    <ul class="char-list" id="charList"></ul>
+  </aside>
+  <main class="main">
+    <div class="info-bar" id="infoBar">Select a character</div>
+    <div class="viewer-wrap">
+      <canvas id="canvas" width="800" height="600"></canvas>
+      <div class="loading" id="loading">Select a character to begin</div>
+    </div>
+    <div class="controls">
+      <select id="animSelect" disabled><option>Animations</option></select>
+      <button id="playBtn" disabled>⏸ Pause</button>
+      <label>Speed</label>
+      <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1">
+      <span id="speedVal" style="font-size:12px;width:30px">1.0×</span>
+      <label>Scale</label>
+      <input type="range" id="scaleSlider" min="0.1" max="3" step="0.1" value="1">
+      <span id="scaleVal" style="font-size:12px;width:30px">1.0×</span>
+      <button id="gifBtn" disabled>🎬 Export GIF</button>
+      <span class="gif-status" id="gifStatus"></span>
+    </div>
+  </main>
+</div>
+
+<script src="spine-canvas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js"></script>
+
+<script>
+// Character manifest
+const CHARACTERS = [
+  {name:'aladdin',display:'Aladdin',emoji:'🧞'},
+  {name:'elsa',display:'Elsa',emoji:'❄️'},
+  {name:'buzz_lightyear',display:'Buzz Lightyear',emoji:'🚀'},
+  {name:'beast',display:'Beast',emoji:'🦁'},
+  {name:'genie',display:'Genie',emoji:'🪔'},
+  {name:'hades',display:'Hades',emoji:'🔥'},
+  {name:'ariel',display:'Ariel',emoji:'🧜‍♀️'},
+  {name:'baymax',display:'Baymax',emoji:'🤖'},
+  {name:'captain_hook',display:'Captain Hook',emoji:'🪝'},
+  {name:'dash',display:'Dash',emoji:'💨'},
+  {name:'donald_duck',display:'Donald Duck',emoji:'🦆'},
+  {name:'frozone',display:'Frozone',emoji:'🧊'},
+  {name:'jack_skellington',display:'Jack Skellington',emoji:'💀'},
+  {name:'belle',display:'Belle',emoji:'🌹'},
+  {name:'goofy',display:'Goofy',emoji:'🐶'},
+];
+
+// State
+let currentSkeleton = null, currentState = null, skeletonData = null;
+let currentAtlas = null, renderer = null, lastTime = 0;
+let playing = true, speedMul = 1.0, userScale = 1.0;
+let canvas, ctx, animFrame = null;
+let currentChar = null;
+
+// GIF recording state
+let recording = false, gifFrames = [], gifStartTime = 0;
+const GIF_FPS = 15, GIF_DURATION = 3, GIF_W = 480, GIF_H = 360;
+
+// Build character list
+const charList = document.getElementById('charList');
+CHARACTERS.forEach(c => {
+  const li = document.createElement('li');
+  li.className = 'char-item';
+  li.innerHTML = `<span class="char-thumb">${c.emoji}</span> ${c.display}`;
+  li.onclick = () => loadCharacter(c, li);
+  charList.appendChild(li);
+});
+
+// Controls
+const animSelect = document.getElementById('animSelect');
+const playBtn = document.getElementById('playBtn');
+const speedSlider = document.getElementById('speedSlider');
+const scaleSlider = document.getElementById('scaleSlider');
+const gifBtn = document.getElementById('gifBtn');
+const gifStatus = document.getElementById('gifStatus');
+const infoBar = document.getElementById('infoBar');
+const loadingEl = document.getElementById('loading');
+
+canvas = document.getElementById('canvas');
+ctx = canvas.getContext('2d');
+
+speedSlider.oninput = () => {
+  speedMul = parseFloat(speedSlider.value);
+  document.getElementById('speedVal').textContent = speedMul.toFixed(1) + '×';
+};
+scaleSlider.oninput = () => {
+  userScale = parseFloat(scaleSlider.value);
+  document.getElementById('scaleVal').textContent = userScale.toFixed(1) + '×';
+};
+playBtn.onclick = () => {
+  playing = !playing;
+  playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
+};
+animSelect.onchange = () => {
+  if (currentState && animSelect.value) {
+    currentState.setAnimation(0, animSelect.value, true);
+  }
+};
+
+gifBtn.onclick = () => {
+  if (recording) return;
+  startGifRecording();
+};
+
+async function loadCharacter(char, li) {
+  // Update active state
+  document.querySelectorAll('.char-item').forEach(el => el.classList.remove('active'));
+  li.classList.add('active');
+  
+  loadingEl.style.display = 'block';
+  loadingEl.textContent = `Loading ${char.display}...`;
+  infoBar.textContent = `Loading ${char.display}...`;
+  animSelect.disabled = true;
+  playBtn.disabled = true;
+  gifBtn.disabled = true;
+  
+  // Stop current animation
+  if (animFrame) cancelAnimationFrame(animFrame);
+  currentSkeleton = null;
+  currentState = null;
+  
+  currentChar = char;
+  const basePath = `characters/${char.name}/`;
+  
+  try {
+    // Load atlas text
+    const atlasRes = await fetch(basePath + 'atlas.atlas');
+    const atlasText = await atlasRes.text();
+    
+    // Load JSON skeleton
+    const jsonRes = await fetch(basePath + 'skeleton.json');
+    const jsonText = await jsonRes.text();
+    
+    // Load texture image
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = basePath + 'texture.png';
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+    });
+    
+    // Create texture atlas with custom loader
+    const texture = new spine.Texture(img);
+    currentAtlas = new spine.TextureAtlas(atlasText, function(path) {
+      return texture;
+    });
+    
+    // Create attachment loader
+    const attachmentLoader = new spine.AtlasAttachmentLoader(currentAtlas);
+    
+    // Parse skeleton JSON
+    const json = new spine.SkeletonJson(attachmentLoader);
+    skeletonData = json.readSkeletonData(JSON.parse(jsonText));
+    
+    // Create skeleton
+    currentSkeleton = new spine.Skeleton(skeletonData);
+    
+    // Set up animation
+    const stateData = new spine.AnimationStateData(skeletonData);
+    currentState = new spine.AnimationState(stateData);
+    
+    // Populate animation dropdown
+    animSelect.innerHTML = '';
+    const animNames = skeletonData.animations.map(a => a.name).sort();
+    animNames.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      animSelect.appendChild(opt);
+    });
+    
+    // Set default animation (prefer 'idle')
+    const defaultAnim = animNames.includes('idle') ? 'idle' : animNames[0];
+    currentState.setAnimation(0, defaultAnim, true);
+    animSelect.value = defaultAnim;
+    
+    // Create renderer
+    renderer = new spine.canvas.SkeletonRenderer(ctx);
+    
+    // Enable controls
+    animSelect.disabled = false;
+    playBtn.disabled = false;
+    gifBtn.disabled = false;
+    loadingEl.style.display = 'none';
+    
+    infoBar.textContent = `${char.display} — ${skeletonData.bones.length} bones, ${skeletonData.slots.length} slots, ${animNames.length} animations`;
+    
+    // Start render loop
+    lastTime = performance.now();
+    renderLoop();
+    
+  } catch (err) {
+    loadingEl.textContent = `Error: ${err.message}`;
+    infoBar.textContent = `Error loading ${char.display}: ${err.message}`;
+    console.error(err);
+  }
+}
+
+function renderLoop() {
+  animFrame = requestAnimationFrame(renderLoop);
+  
+  const now = performance.now();
+  let delta = (now - lastTime) / 1000;
+  lastTime = now;
+  if (delta > 0.1) delta = 0.1; // cap delta
+  
+  if (playing && currentState && currentSkeleton) {
+    currentState.update(delta * speedMul);
+    currentState.apply(currentSkeleton);
+    currentSkeleton.updateWorldTransform();
+  }
+  
+  // Clear and draw
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  if (currentSkeleton) {
+    ctx.save();
+    
+    // Center the skeleton
+    const skel = skeletonData;
+    const w = (skel.width || 500) * userScale;
+    const h = (skel.height || 800) * userScale;
+    
+    // Calculate scale to fit canvas
+    const sx = canvas.width / w * 0.8;
+    const sy = canvas.height / h * 0.9;
+    const fitScale = Math.min(sx, sy) * userScale;
+    
+    // Center horizontally, align bottom
+    ctx.translate(canvas.width / 2, canvas.height * 0.92);
+    ctx.scale(fitScale, -fitScale); // flip Y
+    
+    renderer.draw(currentSkeleton);
+    
+    ctx.restore();
+  }
+  
+  // Capture GIF frame
+  if (recording) {
+    const elapsed = (now - gifStartTime) / 1000;
+    if (elapsed >= GIF_DURATION) {
+      finishGifRecording();
+    } else if (Math.floor(elapsed * GIF_FPS) > gifFrames.length - 1) {
+      // Capture a frame
+      const tmpCanvas = document.createElement('canvas');
+      tmpCanvas.width = GIF_W;
+      tmpCanvas.height = GIF_H;
+      const tmpCtx = tmpCanvas.getContext('2d');
+      tmpCtx.fillStyle = '#1a1a2e';
+      tmpCtx.fillRect(0, 0, GIF_W, GIF_H);
+      tmpCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, GIF_W, GIF_H);
+      gifFrames.push(tmpCanvas);
+      const progress = elapsed / GIF_DURATION;
+      gifStatus.textContent = `Recording... ${Math.floor(progress * 100)}%`;
+    }
+  }
+}
+
+function startGifRecording() {
+  recording = true;
+  gifFrames = [];
+  gifStartTime = performance.now();
+  gifBtn.disabled = true;
+  gifStatus.textContent = 'Recording... 0%';
+}
+
+function finishGifRecording() {
+  recording = false;
+  gifStatus.textContent = 'Encoding GIF...';
+  
+  const gif = new GIF({
+    workers: 1,
+    quality: 10,
+    width: GIF_W,
+    height: GIF_H,
+    workerScript: 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js',
+    transparent: 0x1a1a2e,
+    background: '#1a1a2e'
+  });
+  
+  gifFrames.forEach(frame => {
+    gif.addFrame(frame, { delay: 1000 / GIF_FPS });
+  });
+  
+  gif.on('progress', p => {
+    gifStatus.textContent = `Encoding... ${Math.floor(p * 100)}%`;
+  });
+  
+  gif.on('finished', blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentChar.name}_${animSelect.value}.gif`;
+    a.click();
+    gifStatus.textContent = '✓ GIF downloaded';
+    gifBtn.disabled = false;
+    setTimeout(() => { gifStatus.textContent = ''; }, 3000);
+  });
+  
+  gif.render();
+}
+
+// Resize canvas to fit
+function resizeCanvas() {
+  const wrap = canvas.parentElement;
+  canvas.width = wrap.clientWidth;
+  canvas.height = wrap.clientHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+</script>
+</body>
+</html>
