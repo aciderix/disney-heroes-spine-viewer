@@ -20,14 +20,16 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 .viewer-wrap { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a2e; }
 #canvas { width: 100%; height: 100%; display: block; background: transparent; }
 .loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #555; font-size: 14px; z-index: 10; }
-.controls { background: #16213e; padding: 8px 12px; border-top: 1px solid #0f3460; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.controls select, .controls button, .controls input { background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+.controls { background: #16213e; padding: 6px 10px; border-top: 1px solid #0f3460; display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-shrink: 0; }
+.controls::-webkit-scrollbar { display: none; }
+.controls select, .controls button, .controls input { background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 6px; padding: 5px 8px; font-size: 12px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
 .controls button:hover { background: #1a4a7a; }
 .controls button:disabled { opacity: 0.4; cursor: default; }
-.controls label { font-size: 11px; color: #8899aa; }
+.controls label { font-size: 11px; color: #8899aa; white-space: nowrap; flex-shrink: 0; }
 .controls input[type="range"] { width: 70px; }
 .anim-name { font-weight: 600; color: #e94560; }
-.info-bar { background: #0d1b2a; padding: 6px 12px; font-size: 11px; color: #6a7a8a; display: flex; gap: 20px; }
+.info-bar { background: #0d1b2a; padding: 4px 10px; font-size: 11px; color: #6a7a8a; display: flex; gap: 20px; flex-shrink: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.info-bar::-webkit-scrollbar { display: none; }
 .gif-status { color: #e94560; font-size: 12px; }
 .hidden { display: none; }
 .mobile-toggle { display: none; position: fixed; top: 8px; left: 8px; z-index: 100; background: #16213e; border: 1px solid #0f3460; color: #e0e0e0; border-radius: 6px; padding: 8px 12px; font-size: 18px; cursor: pointer; }
@@ -495,7 +497,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=16');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=17');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -508,13 +510,13 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=16');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=17');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=16';
+    img.src = basePath + 'texture.png?v=17';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -748,11 +750,6 @@ function renderLoop() {
     currentSkeleton.updateWorldTransform();
   }
   
-  // Ensure canvas fits container
-  const wrap = canvas.parentElement;
-  if (canvas.width != wrap.clientWidth || canvas.height != wrap.clientHeight) {
-    resizeAndFit();
-  }
   // Clear canvas
   const gl = sceneRenderer.context.gl;
   gl.clearColor(0.102, 0.102, 0.180, 1);
@@ -771,34 +768,34 @@ function resizeAndFit() {
   const w = wrap.clientWidth;
   const h = wrap.clientHeight;
   if (w <= 0 || h <= 0) return;
-  if (canvas.width != w || canvas.height != h) {
-    canvas.width = w;
-    canvas.height = h;
-  }
+  canvas.width = w;
+  canvas.height = h;
   if (sceneRenderer) {
     sceneRenderer.context.gl.viewport(0, 0, canvas.width, canvas.height);
-    // Adjust camera viewport to maintain skeleton aspect ratio and center it
+    // Center skeleton using its actual bounds (x,y offset + width,height)
     if (skeletonData) {
+      const skelX = skeletonData.x || 0;
+      const skelY = skeletonData.y || 0;
       const skelW = skeletonData.width || 500;
       const skelH = skeletonData.height || 800;
-      const targetW = skelW * 1.15;
-      const targetH = skelH * 1.15;
+      // Add padding around the skeleton
+      const pad = 1.15;
+      const targetW = skelW * pad;
+      const targetH = skelH * pad;
       const targetRatio = targetH / targetW;
       const sourceRatio = h / w;
       let vpW, vpH;
       if (targetRatio < sourceRatio) {
-        // Canvas is taller than skeleton aspect - fit width, expand height
         vpW = targetW;
         vpH = targetW * sourceRatio;
       } else {
-        // Canvas is wider than skeleton aspect - fit height, expand width
         vpH = targetH;
         vpW = targetH / sourceRatio;
       }
       sceneRenderer.camera.setViewport(vpW, vpH);
-      // Center camera on skeleton center
-      sceneRenderer.camera.position.x = skelW / 2;
-      sceneRenderer.camera.position.y = skelH / 2;
+      // Center on the skeleton's actual center including offset
+      sceneRenderer.camera.position.x = skelX + skelW / 2;
+      sceneRenderer.camera.position.y = skelY + skelH / 2;
       sceneRenderer.camera.update();
     }
   }
