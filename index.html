@@ -1347,7 +1347,7 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     offCtx.drawImage(canvas, 0, 0, gifW, gifH);
   };
 
-  recorder.start(); // no timeslice — all data delivered on stop (robust for short clips)
+  recorder.start(500); // timeslice: flush data every 500ms (memory-friendly)
 
   // Wait for recorder to initialize
   await new Promise(r => setTimeout(r, 150));
@@ -1402,23 +1402,47 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   try { recorder.requestData(); } catch (e) { /* ignore */ }
   await new Promise(r => setTimeout(r, 200));
 
-  // Stop recorder and wait for final data + onstop event
-  // Use a timeout fallback in case onstop never fires
+  // Stop recorder. After stop(), the browser fires a final ondataavailable
+  // (with remaining data) followed by onstop. We wait for BOTH, plus a
+  // safety margin, before creating the blob.
   await new Promise((resolve) => {
-    let done = false;
-    const finish = () => { if (!done) { done = true; resolve(); } };
-    recorder.onstop = finish;
+    let stopped = false;
+    let lastDataTime = 0;
+
+    // Track data arrivals to detect the final flush
+    recorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) {
+        chunks.push(e.data);
+        lastDataTime = performance.now();
+      }
+    };
+
+    recorder.onstop = () => {
+      stopped = true;
+      // Wait up to 500ms after stop for the final ondataavailable to arrive
+      const check = () => {
+        const sinceData = performance.now() - lastDataTime;
+        if (sinceData < 300) {
+          // Data arrived recently, wait a bit more in case more is coming
+          setTimeout(check, 100);
+        } else {
+          // No new data for 300ms — safe to proceed
+          resolve();
+        }
+      };
+      // Start checking 200ms after onstop
+      setTimeout(check, 200);
+    };
+
     try {
       recorder.stop();
     } catch (e) {
-      finish();
+      resolve();
     }
-    // Fallback: resolve after 3s even if onstop doesn't fire
-    setTimeout(finish, 3000);
-  });
 
-  // Wait a moment for any final ondataavailable event to be processed
-  await new Promise(r => setTimeout(r, 150));
+    // Fallback: resolve after 5s no matter what
+    setTimeout(resolve, 5000);
+  });
 
   // Stop the track
   try { track.stop(); } catch (e) { /* ignore */ }
