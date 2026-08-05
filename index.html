@@ -1236,7 +1236,7 @@ async function exportGifJs(gifW, gifH, fps, durationSec) {
 }
 
 // ============================================================
-// Export via WebM (MediaRecorder — manual frame capture synced to render loop)
+// Export via WebM (MediaRecorder — deterministic frame-accurate capture)
 // ============================================================
 async function exportWebM(gifW, gifH, fps, durationSec) {
   exportInfo.textContent = 'Recording WebM...';
@@ -1267,8 +1267,7 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   }
 
   // Use manual capture mode: captureStream(0) means we control when
-  // frames are grabbed via track.requestFrame(). This is more reliable
-  // than auto-capture for WebGL canvases.
+  // frames are grabbed via track.requestFrame().
   const stream = canvas.captureStream(0);
   const track = stream.getVideoTracks()[0];
   if (!track) {
@@ -1303,50 +1302,74 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   exportRecording = true;
   exportCancelled = false;
 
-  // Start with timeslice to get periodic data (more robust than waiting for stop)
-  recorder.start(1000); // request data every 1000ms
+  // --- Pause the main render loop so we have full control over timing ---
+  if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
 
-  // Wait a moment for the recorder to initialize
-  await new Promise(r => setTimeout(r, 100));
+  // Save state so we can seamlessly restore after export
+  const savedAnimName = animSelect.value;
+  const savedPlaying = playing;
+  playing = false;
 
-  // Manually request frames at target FPS, synced to the render loop
+  // Helper: advance animation by a fixed delta and render one frame to the canvas.
+  // This is deterministic — the animation advances by exactly 1/fps each frame,
+  // independent of real-time performance.now() jitter or display refresh rate.
+  const renderSingleFrame = (animDelta) => {
+    if (currentState && currentSkeleton) {
+      currentState.update(animDelta * speedMul);
+      currentState.apply(currentSkeleton);
+      currentSkeleton.updateWorldTransform();
+    }
+
+    // Clear canvas
+    const gl = sceneRenderer.context.gl;
+    gl.clearColor(0.102, 0.102, 0.180, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    if (currentSkeleton) {
+      sceneRenderer.begin();
+      sceneRenderer.drawSkeleton(currentSkeleton, true);
+      sceneRenderer.end();
+    }
+  };
+
+  // Wait for one requestAnimationFrame tick — ensures the canvas has been
+  // composited by the browser before we ask the stream track to capture it.
+  const waitForCompositing = () => new Promise(r => requestAnimationFrame(() => r()));
+
+  recorder.start(1000); // timeslice: request data every 1000ms
+
+  // Wait for recorder to initialize
+  await new Promise(r => setTimeout(r, 150));
+
   const totalFrames = Math.ceil(fps * durationSec);
-  let frameNum = 0;
-  const frameInterval = 1000 / fps;
-  let lastFrameTime = performance.now();
-  const startTime = performance.now();
+  const frameDelta = 1 / fps; // exact per-frame animation step
 
-  await new Promise((resolve) => {
-    const captureFrame = () => {
-      if (!exportRecording || exportCancelled) { resolve(); return; }
+  // --- Deterministic frame-by-frame capture ---
+  for (let i = 0; i < totalFrames; i++) {
+    if (!exportRecording || exportCancelled) break;
 
-      const now = performance.now();
-      const elapsed = now - startTime;
+    // 1. Advance animation by exactly 1/fps and render
+    renderSingleFrame(frameDelta);
 
-      // Request a frame from the canvas track
-      if (track.requestFrame) {
-        try { track.requestFrame(); } catch (e) { /* ignore */ }
-      } else if (track.requestVideoFrameCallback) {
-        // Fallback: not needed, requestFrame is the standard
-      }
+    // 2. Let the browser composite the WebGL canvas
+    await waitForCompositing();
 
-      frameNum = Math.floor(elapsed / 1000 * fps);
-      const pct = Math.min(90, Math.round((elapsed / 1000 / durationSec) * 90));
-      setProgress(pct);
-      gifStatus.textContent = `Recording ${frameNum}/${totalFrames}...`;
+    // 3. Request the composited frame from the stream track
+    if (track.requestFrame) {
+      try { track.requestFrame(); } catch (e) { /* ignore */ }
+    }
 
-      if (elapsed / 1000 >= durationSec) { resolve(); return; }
+    // 4. Yield to the event loop so the MediaRecorder encoder can process
+    //    this frame before we overwrite the canvas with the next one.
+    await new Promise(r => setTimeout(r, 0));
 
-      // Schedule next frame at target FPS
-      const nextDelay = Math.max(0, frameInterval - (now - lastFrameTime));
-      lastFrameTime = now + nextDelay;
-      setTimeout(captureFrame, nextDelay);
-    };
-    captureFrame();
-  });
+    const pct = Math.min(90, Math.round(((i + 1) / totalFrames) * 90));
+    setProgress(pct);
+    gifStatus.textContent = `Recording ${i + 1}/${totalFrames}...`;
+  }
 
-  // Give the recorder a moment to capture the last frame
-  await new Promise(r => setTimeout(r, 200));
+  // Give the recorder a moment to capture and encode the last frame
+  await new Promise(r => setTimeout(r, 300));
 
   // Stop recorder and wait for final data
   await new Promise((resolve) => {
@@ -1356,6 +1379,14 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
 
   // Stop the track
   try { track.stop(); } catch (e) { /* ignore */ }
+
+  // --- Restore the live render loop ---
+  playing = savedPlaying;
+  if (currentState && savedAnimName) {
+    currentState.setAnimation(0, savedAnimName, true);
+  }
+  lastTime = performance.now();
+  renderLoop();
 
   if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; exportRecording = false; return; }
 
