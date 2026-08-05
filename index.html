@@ -874,8 +874,14 @@ function applyPreset(name) {
   const p = EXPORT_PRESETS[name];
   if (!p) return;
 
-  // For 'auto', let the controls stay at their defaults (auto-detection at export time)
-  if (name !== 'auto') {
+  if (name === 'auto') {
+    // Auto-detect best settings and fill the dropdowns so the user sees what will be used
+    const auto = autoDetectSettings();
+    exportFormat.value = auto.format || 'gif-fast';
+    exportResolution.value = '0'; // Auto
+    exportFps.value = String(auto.fps);
+    exportDuration.value = String(auto.duration);
+  } else {
     exportFormat.value = p.format || 'gif-fast';
     exportResolution.value = String(p.res);
     exportFps.value = String(p.fps);
@@ -885,6 +891,14 @@ function applyPreset(name) {
 
 document.querySelectorAll('.preset-btn').forEach(btn => {
   btn.onclick = () => applyPreset(btn.dataset.preset);
+});
+
+// When user manually changes a dropdown, deselect the active preset
+[exportFormat, exportResolution, exportFps, exportDuration].forEach(dropdown => {
+  dropdown.onchange = () => {
+    currentPreset = null;
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  };
 });
 
 // Open/close export panel
@@ -911,23 +925,17 @@ function autoDetectSettings() {
   return { fps, res, duration, format };
 }
 
-// Resolve actual export parameters from UI + preset
+// Resolve actual export parameters — always read from the dropdowns.
+// Presets pre-fill the dropdowns via applyPreset(), so the values are always current.
 function resolveExportParams() {
-  let fps, res, duration, format;
-
-  if (currentPreset === 'auto') {
-    const auto = autoDetectSettings();
-    fps = auto.fps; res = auto.res; duration = auto.duration; format = auto.format;
-  } else {
-    fps = parseInt(exportFps.value);
-    res = parseInt(exportResolution.value);
-    format = exportFormat.value;
-    const durVal = exportDuration.value;
-    duration = (durVal === 'loop') ? 'loop' : parseInt(durVal);
-  }
+  const fps = parseInt(exportFps.value);
+  let res = parseInt(exportResolution.value);
+  const format = exportFormat.value;
+  const durVal = exportDuration.value;
+  const duration = (durVal === 'loop') ? 'loop' : parseInt(durVal);
 
   // If resolution is 0 (auto), use canvas width
-  if (res === 0 || res === '0') {
+  if (isNaN(res) || res === 0) {
     const devMem = navigator.deviceMemory || 4;
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     res = isMobile ? (devMem < 4 ? 384 : 480) : 720;
