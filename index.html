@@ -1243,7 +1243,7 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   showProgress(true);
 
   // Check support
-  if (!canvas.captureStream) {
+  if (!HTMLCanvasElement.prototype.captureStream) {
     gifStatus.textContent = 'captureStream not supported';
     showProgress(false);
     return;
@@ -1266,9 +1266,18 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     return;
   }
 
+  // Create an offscreen canvas at the target export resolution.
+  // We render on the main WebGL canvas, then blit each frame onto this
+  // 2D canvas at the desired resolution, and capture the stream from it.
+  // This ensures the resolution parameter is actually respected.
+  const offCanvas = document.createElement('canvas');
+  offCanvas.width = gifW;
+  offCanvas.height = gifH;
+  const offCtx = offCanvas.getContext('2d');
+
   // Use manual capture mode: captureStream(0) means we control when
   // frames are grabbed via track.requestFrame().
-  const stream = canvas.captureStream(0);
+  const stream = offCanvas.captureStream(0);
   const track = stream.getVideoTracks()[0];
   if (!track) {
     gifStatus.textContent = 'No video track from canvas';
@@ -1276,8 +1285,8 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     return;
   }
 
-  // Bitrate: ensure minimum sane value
-  const bitrate = Math.max(2000000, Math.min(12000000, canvas.width * canvas.height * fps * 0.15));
+  // Bitrate: based on the EXPORT resolution, not the display canvas size
+  const bitrate = Math.max(2000000, Math.min(12000000, gifW * gifH * fps * 0.15));
 
   let recorder;
   try {
@@ -1310,7 +1319,8 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   const savedPlaying = playing;
   playing = false;
 
-  // Helper: advance animation by a fixed delta and render one frame to the canvas.
+  // Helper: advance animation by a fixed delta and render one frame to the
+  // main WebGL canvas, then blit it to the offscreen canvas at export resolution.
   // This is deterministic — the animation advances by exactly 1/fps each frame,
   // independent of real-time performance.now() jitter or display refresh rate.
   const renderSingleFrame = (animDelta) => {
@@ -1320,7 +1330,7 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
       currentSkeleton.updateWorldTransform();
     }
 
-    // Clear canvas
+    // Clear and render on the main WebGL canvas
     const gl = sceneRenderer.context.gl;
     gl.clearColor(0.102, 0.102, 0.180, 1);
     gl.clear(gl.COLOR_BUFFER_BIT);
@@ -1330,6 +1340,9 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
       sceneRenderer.drawSkeleton(currentSkeleton, true);
       sceneRenderer.end();
     }
+
+    // Blit to offscreen canvas at target export resolution
+    offCtx.drawImage(canvas, 0, 0, gifW, gifH);
   };
 
   // Wait for one requestAnimationFrame tick — ensures the canvas has been
