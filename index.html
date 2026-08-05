@@ -1351,49 +1351,46 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   await new Promise(r => setTimeout(r, 150));
 
   const totalFrames = Math.ceil(fps * durationSec);
-  const frameDelta = 1 / fps;      // exact per-frame animation step
+  const frameDelta = 1 / fps;       // exact per-frame animation step
   const frameInterval = 1000 / fps; // real-time ms between captured frames
 
-  // --- Paced deterministic capture ---
-  // We use requestAnimationFrame with a time accumulator to deliver frames
-  // at real-time intervals (so the encoder gets correct timestamps), but
-  // advance the animation by a FIXED 1/fps step each frame (so the motion
-  // is perfectly smooth regardless of display refresh rate or CPU load).
+  // --- Drift-corrected deterministic capture ---
+  // We pace frame delivery using setTimeout targeting ABSOLUTE timestamps
+  // measured from the recording start. This prevents drift (each frame's
+  // target time is startTime + i * interval, regardless of how long the
+  // previous frame took). The remaining setTimeout jitter is ±1-5ms, far
+  // less than the ±16.67ms (one rAF tick) jitter from a rAF accumulator.
+  //
+  // The animation advances by a FIXED 1/fps step per frame (deterministic),
+  // so motion is perfectly smooth regardless of delivery timing.
   let frameNum = 0;
-  let lastCaptureTime = performance.now();
-  let accum = 0;
+  const startTime = performance.now();
 
   await new Promise((resolve) => {
-    const captureLoop = () => {
+    const captureFrame = () => {
       if (!exportRecording || exportCancelled) { resolve(); return; }
 
-      const now = performance.now();
-      accum += now - lastCaptureTime;
-      lastCaptureTime = now;
+      // 1. Advance animation by exactly 1/fps and render
+      renderSingleFrame(frameDelta);
 
-      if (accum >= frameInterval) {
-        accum -= frameInterval; // subtract exactly one interval (carry remainder)
-
-        // Advance animation by the fixed deterministic step and render
-        renderSingleFrame(frameDelta);
-
-        // Request the frame from the offscreen canvas stream track
-        if (track.requestFrame) {
-          try { track.requestFrame(); } catch (e) { /* ignore */ }
-        }
-
-        frameNum++;
-        const pct = Math.min(90, Math.round((frameNum / totalFrames) * 90));
-        setProgress(pct);
-        gifStatus.textContent = `Recording ${frameNum}/${totalFrames}...`;
-
-        if (frameNum >= totalFrames) { resolve(); return; }
+      // 2. Request the frame from the offscreen canvas stream track
+      if (track.requestFrame) {
+        try { track.requestFrame(); } catch (e) { /* ignore */ }
       }
 
-      requestAnimationFrame(captureLoop);
+      frameNum++;
+      const pct = Math.min(90, Math.round((frameNum / totalFrames) * 90));
+      setProgress(pct);
+      gifStatus.textContent = `Recording ${frameNum}/${totalFrames}...`;
+
+      if (frameNum >= totalFrames) { resolve(); return; }
+
+      // 3. Schedule next frame targeting an absolute timestamp — no drift
+      const target = startTime + frameNum * frameInterval;
+      const delay = Math.max(1, target - performance.now());
+      setTimeout(captureFrame, delay);
     };
-    lastCaptureTime = performance.now();
-    captureLoop();
+    captureFrame();
   });
 
   // Give the recorder a moment to capture and encode the last frame
