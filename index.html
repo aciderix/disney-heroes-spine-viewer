@@ -24,6 +24,49 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 .info-bar::-webkit-scrollbar { display: none; }
 .gif-status { color: #e94560; font-size: 12px; }
 
+/* Export panel */
+.export-panel {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 102;
+  background: #16213e; border-top: 2px solid #0f3460;
+  padding: 16px 16px 24px; border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
+  max-height: 80vh; overflow-y: auto;
+}
+.export-panel.open { display: block; }
+.export-panel::before {
+  content: ''; display: block; width: 40px; height: 4px;
+  background: #0f3460; border-radius: 2px; margin: 0 auto 12px;
+}
+.export-panel h3 { font-size: 14px; color: #e94560; font-weight: 700; margin-bottom: 12px; text-align: center; letter-spacing: 0.5px; }
+.export-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center; margin-bottom: 10px; }
+.export-row label { font-size: 12px; color: #8899aa; min-width: 70px; text-align: right; }
+.export-row select, .export-row input {
+  background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 8px;
+  padding: 7px 10px; font-size: 13px; cursor: pointer;
+}
+.export-row select { min-width: 120px; }
+.export-presets { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+.preset-btn {
+  background: #0f3460; color: #e0e0e0; border: 1px solid #1a4a7a; border-radius: 8px;
+  padding: 8px 14px; font-size: 12px; cursor: pointer; transition: all 0.15s;
+}
+.preset-btn:hover { background: #1a4a7a; }
+.preset-btn.active { background: #e94560; border-color: #e94560; color: #fff; }
+.export-actions { display: flex; gap: 10px; justify-content: center; margin-top: 14px; }
+.export-actions button {
+  background: #e94560; color: #fff; border: none; border-radius: 8px;
+  padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.export-actions button:hover { background: #ff5a6e; }
+.export-actions button.secondary { background: #0f3460; color: #e0e0e0; }
+.export-actions button.secondary:hover { background: #1a4a7a; }
+.export-actions button:disabled { opacity: 0.4; cursor: default; }
+.export-info { font-size: 11px; color: #6a7a8a; text-align: center; margin-top: 8px; }
+.gif-progress-bar { width: 100%; height: 6px; background: #0f3460; border-radius: 3px; margin-top: 10px; display: none; overflow: hidden; }
+.gif-progress-bar.show { display: block; }
+.gif-progress-fill { height: 100%; background: #e94560; border-radius: 3px; transition: width 0.2s; width: 0%; }
+
+
 /* Controls drawer (slide-up from bottom) */
 .controls-toggle {
   position: fixed; bottom: 12px; right: 12px; z-index: 100;
@@ -129,8 +172,63 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
     <span id="speedVal" style="font-size:12px;width:30px">1.0×</span>
     <button id="resetBtn" disabled>🔄</button>
     <button id="gifBtn" disabled>GIF</button>
+    <button id="exportBtn" disabled>📥 Export</button>
     <span class="gif-status" id="gifStatus"></span>
   </div>
+</div>
+
+<!-- Export panel -->
+<div class="export-panel" id="exportPanel">
+  <h3>Export Animation</h3>
+  <div class="export-presets">
+    <button class="preset-btn active" data-preset="auto">Auto</button>
+    <button class="preset-btn" data-preset="low">Low</button>
+    <button class="preset-btn" data-preset="medium">Medium</button>
+    <button class="preset-btn" data-preset="high">High</button>
+    <button class="preset-btn" data-preset="ultra">Ultra</button>
+  </div>
+  <div class="export-row">
+    <label>Format</label>
+    <select id="exportFormat">
+      <option value="gif-fast">GIF (Fast)</option>
+      <option value="gif-hq">GIF (High Quality)</option>
+      <option value="webm">WebM (Video)</option>
+    </select>
+  </div>
+  <div class="export-row">
+    <label>Resolution</label>
+    <select id="exportResolution">
+      <option value="0">Auto</option>
+      <option value="384">384px</option>
+      <option value="480">480px</option>
+      <option value="720">720px</option>
+      <option value="1080">1080px</option>
+    </select>
+  </div>
+  <div class="export-row">
+    <label>FPS</label>
+    <select id="exportFps">
+      <option value="12">12</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="24">24</option>
+    </select>
+  </div>
+  <div class="export-row">
+    <label>Duration</label>
+    <select id="exportDuration">
+      <option value="2">2s</option>
+      <option value="3">3s</option>
+      <option value="5">5s</option>
+      <option value="loop">Full loop</option>
+    </select>
+  </div>
+  <div class="export-actions">
+    <button id="exportStartBtn">Export</button>
+    <button class="secondary" id="exportCancelBtn">Cancel</button>
+  </div>
+  <div class="gif-progress-bar" id="exportProgressBar"><div class="gif-progress-fill" id="exportProgressFill"></div></div>
+  <div class="export-info" id="exportInfo"></div>
 </div>
 
 <script src="spine-webgl.js?v=14"></script>
@@ -563,6 +661,7 @@ async function loadCharacter(char, li) {
   playBtn.disabled = true;
   resetBtn.disabled = true;
   gifBtn.disabled = true;
+  exportBtn.disabled = true;
   
   if (animFrame) cancelAnimationFrame(animFrame);
   currentSkeleton = null;
@@ -709,6 +808,7 @@ async function loadCharacter(char, li) {
     playBtn.disabled = false;
     resetBtn.disabled = false;
     gifBtn.disabled = false;
+    exportBtn.disabled = false;
     loadingEl.style.display = 'none';
     
     infoBar.textContent = `${char.display} — ${skeletonData.bones.length} bones, ${skeletonData.slots.length} slots, ${animNames.length} animations — WebGL`;
@@ -724,75 +824,154 @@ async function loadCharacter(char, li) {
   }
 }
 
-// GIF recording - adaptive quality based on device memory
+// ============================================================
+// Export system — configurable GIF/WebM export with optimization
+// Phase 1: User-configurable params + adaptive workers
+// Phase 2: gifenc for fast mode, gif.js for HQ mode, global palette
+// Phase 3: WebM via MediaRecorder, pipelined capture→encode
+// ============================================================
+
+// Export state
 let gifFrames = [];
 let gifRecording = false;
 let gifFrameCount = 0;
+let exportRecording = false;
+let exportCancelled = false;
 
-gifBtn.onclick = () => {
-  if (gifRecording) return;
-  
-  // Adapt GIF quality based on device memory (navigator.deviceMemory)
-  const devMem = navigator.deviceMemory || 4; // GB, defaults to 4 if unknown
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  
-  let gifFps, duration, maxWidth, workers, quality;
-  if (isMobile && devMem < 4) {
-    // Low-end mobile: keep it safe
-    gifFps = 12; duration = 2; maxWidth = 384; workers = 1; quality = 15;
-  } else if (isMobile) {
-    // Mid/high-end mobile
-    gifFps = 15; duration = 3; maxWidth = 480; workers = 1; quality = 10;
-  } else {
-    // Desktop: full quality
-    gifFps = 20; duration = 3; maxWidth = 720; workers = 2; quality = 5;
+// Export DOM refs
+const exportBtn = document.getElementById('exportBtn');
+const exportPanel = document.getElementById('exportPanel');
+const exportFormat = document.getElementById('exportFormat');
+const exportResolution = document.getElementById('exportResolution');
+const exportFps = document.getElementById('exportFps');
+const exportDuration = document.getElementById('exportDuration');
+const exportStartBtn = document.getElementById('exportStartBtn');
+const exportCancelBtn = document.getElementById('exportCancelBtn');
+const exportProgressBar = document.getElementById('exportProgressBar');
+const exportProgressFill = document.getElementById('exportProgressFill');
+const exportInfo = document.getElementById('exportInfo');
+const gifStatus = document.getElementById('gifStatus');
+
+// Preset definitions
+const EXPORT_PRESETS = {
+  auto:    { fps: 0,  res: 0,    duration: 0,       format: null },       // auto-detect
+  low:     { fps: 12, res: 384,  duration: 2,        format: 'gif-fast' },
+  medium:  { fps: 15, res: 480,  duration: 3,        format: 'gif-fast' },
+  high:    { fps: 20, res: 720,  duration: 3,        format: 'gif-hq' },
+  ultra:   { fps: 24, res: 1080, duration: 'loop',   format: 'webm' },
+};
+let currentPreset = 'auto';
+
+// Apply a preset to the form controls
+function applyPreset(name) {
+  currentPreset = name;
+  document.querySelectorAll('.preset-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.preset === name);
+  });
+  const p = EXPORT_PRESETS[name];
+  if (!p) return;
+
+  // For 'auto', let the controls stay at their defaults (auto-detection at export time)
+  if (name !== 'auto') {
+    exportFormat.value = p.format || 'gif-fast';
+    exportResolution.value = String(p.res);
+    exportFps.value = String(p.fps);
+    exportDuration.value = String(p.duration);
   }
-  const maxFrames = gifFps * duration;
-  
-  gifRecording = true;
-  gifFrames = [];
-  gifFrameCount = 0;
-  gifBtn.disabled = true;
-  gifBtn.textContent = '⏳';
-  document.getElementById('gifStatus').textContent = `Capturing 0/${maxFrames}...`;
-  
-  let gifLastTime = performance.now();
-  const gifInterval = 1000 / gifFps;
-  let gifAccum = 0;
-  
-  const scale = Math.min(1, maxWidth / canvas.width);
-  const gifW = Math.round(canvas.width * scale);
-  const gifH = Math.round(canvas.height * scale);
-  
-  const gifLoop = () => {
-    if (!gifRecording) return;
-    const now = performance.now();
-    const dt = now - gifLastTime;
-    gifLastTime = now;
-    gifAccum += dt;
-    
-    if (gifAccum >= gifInterval) {
-      gifAccum = 0;
-      const tmpC = document.createElement('canvas');
-      tmpC.width = gifW;
-      tmpC.height = gifH;
-      tmpC.getContext('2d').drawImage(canvas, 0, 0, gifW, gifH);
-      gifFrames.push(tmpC);
-      gifFrameCount++;
-      document.getElementById('gifStatus').textContent = `Capturing ${gifFrameCount}/${maxFrames}...`;
-      
-      if (gifFrameCount >= maxFrames) {
-        gifRecording = false;
-        gifBtn.disabled = false;
-        gifBtn.textContent = 'GIF';
-        downloadGif(gifW, gifH, gifFps, workers, quality);
-      }
-    }
-    if (gifRecording) requestAnimationFrame(gifLoop);
-  };
-  gifLoop();
+}
+
+document.querySelectorAll('.preset-btn').forEach(btn => {
+  btn.onclick = () => applyPreset(btn.dataset.preset);
+});
+
+// Open/close export panel
+exportBtn.onclick = () => {
+  exportPanel.classList.toggle('open');
+};
+exportCancelBtn.onclick = () => {
+  exportPanel.classList.remove('open');
+  if (exportRecording) { exportCancelled = true; }
 };
 
+// Auto-detect best settings based on device
+function autoDetectSettings() {
+  const devMem = navigator.deviceMemory || 4;
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  let fps, res, duration, format;
+  if (isMobile && devMem < 4) {
+    fps = 12; res = 384; duration = 2; format = 'gif-fast';
+  } else if (isMobile) {
+    fps = 15; res = 480; duration = 3; format = 'gif-fast';
+  } else {
+    fps = 20; res = 720; duration = 3; format = 'gif-hq';
+  }
+  return { fps, res, duration, format };
+}
+
+// Resolve actual export parameters from UI + preset
+function resolveExportParams() {
+  let fps, res, duration, format;
+
+  if (currentPreset === 'auto') {
+    const auto = autoDetectSettings();
+    fps = auto.fps; res = auto.res; duration = auto.duration; format = auto.format;
+  } else {
+    fps = parseInt(exportFps.value);
+    res = parseInt(exportResolution.value);
+    format = exportFormat.value;
+    const durVal = exportDuration.value;
+    duration = (durVal === 'loop') ? 'loop' : parseInt(durVal);
+  }
+
+  // If resolution is 0 (auto), use canvas width
+  if (res === 0 || res === '0') {
+    const devMem = navigator.deviceMemory || 4;
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    res = isMobile ? (devMem < 4 ? 384 : 480) : 720;
+  }
+
+  return { fps, res, duration, format };
+}
+
+// Calculate the number of frames for a given duration
+function getDurationSeconds(duration, fps) {
+  if (duration === 'loop') {
+    // Get the current animation duration
+    if (currentState && currentState.tracks[0]) {
+      const anim = currentState.tracks[0].animation;
+      if (anim && anim.duration > 0) {
+        // Round to nearest frame
+        return Math.max(Math.ceil(anim.duration * fps) / fps, 1);
+      }
+    }
+    return 3; // fallback
+  }
+  return duration;
+}
+
+// Show/hide progress bar
+function showProgress(show) {
+  exportProgressBar.classList.toggle('show', show);
+  if (show) exportProgressFill.style.width = '0%';
+}
+function setProgress(pct) {
+  exportProgressFill.style.width = pct + '%';
+}
+
+// ============================================================
+// gifenc loader (lazy, cached)
+// ============================================================
+let _gifencModule = null;
+async function loadGifenc() {
+  if (_gifencModule) return _gifencModule;
+  const mod = await import('https://cdn.jsdelivr.net/npm/gifenc@1.0.3/dist/gifenc.esm.js');
+  _gifencModule = mod;
+  return mod;
+}
+
+// ============================================================
+// gif.js loader (lazy, cached) — for HQ mode with dithering
+// ============================================================
 let _gifWorkerBlobUrl = null;
 async function getGifWorkerBlobUrl() {
   if (_gifWorkerBlobUrl) return _gifWorkerBlobUrl;
@@ -807,49 +986,402 @@ async function getGifWorkerBlobUrl() {
   }
 }
 
-async function downloadGif(gifW, gifH, gifFps, workers, quality) {
-  document.getElementById('gifStatus').textContent = 'Encoding...';
-  try {
-    if (typeof GIF === 'undefined') {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js';
-      await new Promise((res, rej) => { script.onload = res; script.onerror = rej; document.head.appendChild(script); });
+async function loadGifJs() {
+  if (typeof GIF !== 'undefined') return;
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js';
+  await new Promise((res, rej) => { script.onload = res; script.onerror = rej; document.head.appendChild(script); });
+}
+
+// ============================================================
+// Optimized worker count
+// ============================================================
+function getOptimalWorkers() {
+  // gif.js supports parallel frame encoding; use all available cores (cap at 8)
+  return Math.min(8, navigator.hardwareConcurrency || 4);
+}
+
+// ============================================================
+// Export via gifenc (fast mode — no dithering, global palette)
+// ============================================================
+async function exportGifEnc(gifW, gifH, fps, durationSec) {
+  const { GIFEncoder, quantize, applyPalette } = await loadGifenc();
+  const maxFrames = Math.ceil(fps * durationSec);
+  const delay = Math.round(1000 / fps);
+
+  exportInfo.textContent = 'Loading gifenc...';
+  showProgress(true);
+
+  // Create the encoder stream
+  const gif = GIFEncoder();
+  let globalPalette = null;
+  let firstFrame = true;
+
+  // Capture frames
+  const gifInterval = 1000 / fps;
+  let gifLastTime = performance.now();
+  let gifAccum = 0;
+  gifFrames = [];
+  gifFrameCount = 0;
+  exportRecording = true;
+  exportCancelled = false;
+
+  const capturePromise = new Promise((resolve) => {
+    const gifLoop = () => {
+      if (!exportRecording) { resolve(); return; }
+      if (exportCancelled) { exportRecording = false; resolve(); return; }
+      const now = performance.now();
+      const dt = now - gifLastTime;
+      gifLastTime = now;
+      gifAccum += dt;
+
+      if (gifAccum >= gifInterval) {
+        gifAccum = 0;
+        const tmpC = document.createElement('canvas');
+        tmpC.width = gifW;
+        tmpC.height = gifH;
+        tmpC.getContext('2d').drawImage(canvas, 0, 0, gifW, gifH);
+        gifFrames.push(tmpC);
+        gifFrameCount++;
+        const pct = Math.round((gifFrameCount / maxFrames) * 50); // capture = 50% of progress
+        setProgress(pct);
+        gifStatus.textContent = `Capturing ${gifFrameCount}/${maxFrames}...`;
+
+        if (gifFrameCount >= maxFrames) {
+          exportRecording = false;
+          resolve();
+        }
+      }
+      if (exportRecording) requestAnimationFrame(gifLoop);
+    };
+    gifLoop();
+  });
+
+  await capturePromise;
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
+
+  // Encode with gifenc — pipeline: encode each frame as we go
+  exportInfo.textContent = 'Encoding with gifenc (fast mode)...';
+
+  for (let i = 0; i < gifFrames.length; i++) {
+    if (exportCancelled) break;
+
+    const frameCanvas = gifFrames[i];
+    const ctx = frameCanvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, gifW, gifH);
+    const rgba = imageData.data;
+
+    // For the first frame, compute a global palette to reuse for all frames
+    // This is a huge speedup vs per-frame quantization
+    let palette;
+    if (firstFrame || !globalPalette) {
+      palette = quantize(rgba, 256, { format: 'rgb565' });
+      globalPalette = palette;
+    } else {
+      // Optionally re-quantize every N frames for better color accuracy
+      // For fast mode, we reuse the global palette (big speedup)
+      palette = globalPalette;
     }
-    
-    const workerBlobUrl = await getGifWorkerBlobUrl();
-    
-    const gif = new GIF({
-      workers: workers,
-      quality: quality,
-      width: gifW,
-      height: gifH,
-      workerScript: workerBlobUrl
+
+    const index = applyPalette(rgba, palette, 'rgb565');
+
+    gif.writeFrame(index, gifW, gifH, {
+      palette: firstFrame ? palette : undefined, // first frame sets global palette
+      delay: delay,
+      repeat: 0, // loop forever
+      transparent: false,
     });
-    
-    for (const frameCanvas of gifFrames) {
-      gif.addFrame(frameCanvas, { delay: 1000 / gifFps, copy: true });
-    }
-    gifFrames = []; // free memory immediately
-    
+    firstFrame = false;
+
+    const pct = 50 + Math.round((i / gifFrames.length) * 50);
+    setProgress(pct);
+    gifStatus.textContent = `Encoding ${i + 1}/${gifFrames.length}...`;
+  }
+
+  gif.finish();
+  const bytes = gif.bytes();
+  gifFrames = [];
+
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
+
+  // Download
+  const blob = new Blob([bytes], { type: 'image/gif' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  setProgress(100);
+  gifStatus.textContent = 'Done! (fast mode)';
+  exportInfo.textContent = '';
+  showProgress(false);
+  setTimeout(() => { gifStatus.textContent = ''; }, 3000);
+}
+
+// ============================================================
+// Export via gif.js (HQ mode — dithering, multi-worker)
+// ============================================================
+async function exportGifJs(gifW, gifH, fps, durationSec) {
+  const maxFrames = Math.ceil(fps * durationSec);
+  const delay = Math.round(1000 / fps);
+  const workers = getOptimalWorkers();
+  const quality = 5; // high quality (lower = better in gif.js)
+
+  exportInfo.textContent = 'Loading gif.js...';
+  showProgress(true);
+
+  await loadGifJs();
+  const workerBlobUrl = await getGifWorkerBlobUrl();
+
+  // Capture frames
+  const gifInterval = 1000 / fps;
+  let gifLastTime = performance.now();
+  let gifAccum = 0;
+  gifFrames = [];
+  gifFrameCount = 0;
+  exportRecording = true;
+  exportCancelled = false;
+
+  const capturePromise = new Promise((resolve) => {
+    const gifLoop = () => {
+      if (!exportRecording) { resolve(); return; }
+      if (exportCancelled) { exportRecording = false; resolve(); return; }
+      const now = performance.now();
+      const dt = now - gifLastTime;
+      gifLastTime = now;
+      gifAccum += dt;
+
+      if (gifAccum >= gifInterval) {
+        gifAccum = 0;
+        const tmpC = document.createElement('canvas');
+        tmpC.width = gifW;
+        tmpC.height = gifH;
+        tmpC.getContext('2d').drawImage(canvas, 0, 0, gifW, gifH);
+        gifFrames.push(tmpC);
+        gifFrameCount++;
+        const pct = Math.round((gifFrameCount / maxFrames) * 60);
+        setProgress(pct);
+        gifStatus.textContent = `Capturing ${gifFrameCount}/${maxFrames}...`;
+
+        if (gifFrameCount >= maxFrames) {
+          exportRecording = false;
+          resolve();
+        }
+      }
+      if (exportRecording) requestAnimationFrame(gifLoop);
+    };
+    gifLoop();
+  });
+
+  await capturePromise;
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
+
+  // Encode with optimized workers
+  exportInfo.textContent = `Encoding with gif.js (${workers} workers, quality ${quality})...`;
+
+  const gif = new GIF({
+    workers: workers,
+    quality: quality,
+    width: gifW,
+    height: gifH,
+    workerScript: workerBlobUrl,
+  });
+
+  for (const frameCanvas of gifFrames) {
+    gif.addFrame(frameCanvas, { delay: delay, copy: true });
+  }
+  gifFrames = [];
+
+  gif.on('progress', (p) => {
+    setProgress(60 + Math.round(p * 40));
+    gifStatus.textContent = `Encoding ${Math.round(p * 100)}%...`;
+  });
+
+  return new Promise((resolve, reject) => {
     gif.on('finished', (blob) => {
+      if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; resolve(); return; }
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
       a.click();
       URL.revokeObjectURL(url);
-      document.getElementById('gifStatus').textContent = 'Done!';
-      setTimeout(() => { document.getElementById('gifStatus').textContent = ''; }, 3000);
+      setProgress(100);
+      gifStatus.textContent = 'Done! (HQ mode)';
+      exportInfo.textContent = '';
+      showProgress(false);
+      setTimeout(() => { gifStatus.textContent = ''; }, 3000);
+      resolve();
     });
-    
+    gif.on('abort', () => { reject(new Error('Aborted')); });
     gif.render();
-  } catch (e) {
-    document.getElementById('gifStatus').textContent = 'GIF error: ' + e.message;
-    gifBtn.disabled = false;
-    gifBtn.textContent = 'GIF';
-    gifFrames = [];
-  }
+  }).catch(e => {
+    gifStatus.textContent = 'GIF error: ' + e.message;
+    exportInfo.textContent = '';
+    showProgress(false);
+  });
 }
+
+// ============================================================
+// Export via WebM (MediaRecorder — near-instant, best quality)
+// ============================================================
+async function exportWebM(gifW, gifH, fps, durationSec) {
+  exportInfo.textContent = 'Recording WebM...';
+  showProgress(true);
+
+  // Create an offscreen canvas at the target resolution
+  const recordCanvas = document.createElement('canvas');
+  recordCanvas.width = gifW;
+  recordCanvas.height = gifH;
+  const recordCtx = recordCanvas.getContext('2d');
+
+  // Choose the best supported codec
+  const mimeTypes = [
+    'video/webm;codecs=vp9',
+    'video/webm;codecs=vp8',
+    'video/webm',
+  ];
+  let mimeType = null;
+  for (const mt of mimeTypes) {
+    if (MediaRecorder.isTypeSupported(mt)) { mimeType = mt; break; }
+  }
+  if (!mimeType) {
+    gifStatus.textContent = 'WebM not supported on this browser';
+    showProgress(false);
+    return;
+  }
+
+  const stream = recordCanvas.captureStream(fps);
+  const recorder = new MediaRecorder(stream, {
+    mimeType: mimeType,
+    videoBitsPerSecond: Math.min(8000000, gifW * gifH * fps * 0.1), // ~10 bits per pixel
+  });
+
+  const chunks = [];
+  recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+
+  const totalMs = durationSec * 1000;
+  let elapsed = 0;
+
+  exportRecording = true;
+  exportCancelled = false;
+
+  recorder.start();
+
+  // Render frames at target FPS
+  const frameInterval = 1000 / fps;
+  let lastFrameTime = performance.now();
+  let frameNum = 0;
+  const totalFrames = Math.ceil(fps * durationSec);
+
+  await new Promise((resolve) => {
+    const renderFrame = () => {
+      if (!exportRecording || exportCancelled) { resolve(); return; }
+      const now = performance.now();
+      const dt = now - lastFrameTime;
+      lastFrameTime = now;
+
+      // Draw the current canvas content to the recording canvas
+      // (mirror + alpha handling)
+      recordCtx.clearRect(0, 0, gifW, gifH);
+      recordCtx.drawImage(canvas, 0, 0, gifW, gifH);
+      frameNum++;
+
+      const pct = Math.round((frameNum / totalFrames) * 90);
+      setProgress(pct);
+      gifStatus.textContent = `Recording ${frameNum}/${totalFrames}...`;
+
+      if (frameNum >= totalFrames) { resolve(); return; }
+
+      // Schedule next frame
+      setTimeout(renderFrame, frameInterval);
+    };
+    renderFrame();
+  });
+
+  // Stop recorder and wait for final data
+  await new Promise((resolve) => {
+    recorder.onstop = resolve;
+    recorder.stop();
+  });
+
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
+
+  // Download
+  const blob = new Blob(chunks, { type: 'video/webm' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${currentChar ? currentChar.name : 'character'}.webm`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  setProgress(100);
+  gifStatus.textContent = 'Done! (WebM)';
+  exportInfo.textContent = '';
+  showProgress(false);
+  exportRecording = false;
+  setTimeout(() => { gifStatus.textContent = ''; }, 3000);
+}
+
+// ============================================================
+// Main export entry point
+// ============================================================
+exportStartBtn.onclick = async () => {
+  if (exportRecording || gifRecording) return;
+
+  const { fps, res, duration, format } = resolveExportParams();
+  const durationSec = getDurationSeconds(duration, fps);
+
+  // Calculate target dimensions
+  const scale = Math.min(1, res / canvas.width);
+  const gifW = Math.round(canvas.width * scale);
+  const gifH = Math.round(canvas.height * scale);
+
+  exportCancelled = false;
+  exportStartBtn.disabled = true;
+
+  try {
+    if (format === 'webm') {
+      await exportWebM(gifW, gifH, fps, durationSec);
+    } else if (format === 'gif-fast') {
+      await exportGifEnc(gifW, gifH, fps, durationSec);
+    } else if (format === 'gif-hq') {
+      await exportGifJs(gifW, gifH, fps, durationSec);
+    }
+  } catch (e) {
+    gifStatus.textContent = 'Export error: ' + e.message;
+    showProgress(false);
+  } finally {
+    exportStartBtn.disabled = false;
+    exportRecording = false;
+  }
+};
+
+// ============================================================
+// Legacy GIF button — quick export with auto settings (backwards compat)
+// ============================================================
+gifBtn.onclick = () => {
+  if (gifRecording || exportRecording) return;
+
+  const auto = autoDetectSettings();
+  const durationSec = auto.duration;
+  const scale = Math.min(1, auto.res / canvas.width);
+  const gifW = Math.round(canvas.width * scale);
+  const gifH = Math.round(canvas.height * scale);
+
+  // Use fast mode (gifenc) for the quick button on desktop, gif.js for mobile
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const format = isMobile ? 'gif-fast' : 'gif-hq';
+
+  if (format === 'gif-fast') {
+    exportGifEnc(gifW, gifH, auto.fps, durationSec);
+  } else {
+    exportGifJs(gifW, gifH, auto.fps, durationSec);
+  }
+};
 
 function renderLoop() {
   animFrame = requestAnimationFrame(renderLoop);
