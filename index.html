@@ -165,6 +165,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 <div class="controls-backdrop" id="controlsBackdrop"></div>
 <div class="controls-drawer" id="controlsDrawer">
   <div class="controls-content">
+    <select id="modelSelect" disabled style="display:none"><option>Model</option></select>
     <select id="skinSelect" disabled><option>Skin</option></select>
     <select id="animSelect" disabled><option>Animations</option></select>
     <button id="playBtn" disabled>⏸</button>
@@ -571,6 +572,9 @@ let currentAtlas = null, sceneRenderer = null, lastTime = 0;
 let playing = true, speedMul = 1.0;
 let canvas, gl, animFrame = null;
 let currentChar = null;
+let currentModels = null;  // models.json manifest for current character
+let currentAtlas = null;    // reused across model switches
+let currentGLTexture = null;
 let currentGLTexture = null;
 
 // Build character list
@@ -586,6 +590,7 @@ CHARACTERS.forEach(c => {
 // Controls
 const animSelect = document.getElementById('animSelect');
 const skinSelect = document.getElementById('skinSelect');
+const modelSelect = document.getElementById('modelSelect');
 const playBtn = document.getElementById('playBtn');
 const speedSlider = document.getElementById('speedSlider');
 const resetBtn = document.getElementById('resetBtn');
@@ -687,8 +692,36 @@ async function loadCharacter(char, li) {
       atlasText = lines.join('\n');
     }
     
-    // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=21');
+    // Fetch models.json manifest (if exists)
+    let modelsManifest = null;
+    try {
+      const modelsRes = await fetch(basePath + 'models.json?v=21');
+      if (modelsRes.ok) {
+        modelsManifest = await modelsRes.json();
+        currentModels = modelsManifest;
+      }
+    } catch (e) { /* no manifest */ }
+
+    // Populate model selector
+    modelSelect.innerHTML = '';
+    if (modelsManifest && modelsManifest.length > 1) {
+      modelSelect.style.display = '';
+      modelSelect.disabled = false;
+      modelsManifest.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.file;
+        opt.textContent = m.label + (m.is_main ? '' : ' (effect)');
+        modelSelect.appendChild(opt);
+      });
+    } else {
+      modelSelect.style.display = 'none';
+      modelSelect.disabled = true;
+    }
+
+    // Load JSON skeleton (main model by default)
+    const mainModel = (modelsManifest && modelsManifest.find(m => m.is_main)) || null;
+    const skelFile = mainModel ? mainModel.file : 'skeleton.json';
+    const jsonRes = await fetch(basePath + skelFile + '?v=21');
     const jsonText = await jsonRes.text();
     
     // Load texture image
@@ -818,6 +851,92 @@ async function loadCharacter(char, li) {
     
     infoBar.textContent = `${char.display} — ${skeletonData.bones.length} bones, ${skeletonData.slots.length} slots, ${animNames.length} animations — WebGL`;
     
+    // Model switch handler — reload skeleton without re-fetching atlas/texture
+    modelSelect.onchange = async () => {
+      if (!modelSelect.value) return;
+      const modelFile = modelSelect.value;
+      loadingEl.style.display = 'block';
+      loadingEl.textContent = `Loading model...`;
+      try {
+        const res = await fetch(basePath + modelFile + '?v=21');
+        const text = await res.text();
+        const json = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(currentAtlas));
+        skeletonData = json.readSkeletonData(JSON.parse(text));
+        currentSkeleton = new spine.Skeleton(skeletonData);
+
+        // Re-select skin
+        if (skeletonData.skins.length > 0) {
+          skinSelect.innerHTML = '';
+          skeletonData.skins.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.name;
+            opt.textContent = s.name;
+            skinSelect.appendChild(opt);
+          });
+          let bestSkin = skeletonData.skins[0].name, bestCount = 0;
+          for (const sn of skeletonData.skins.map(s => s.name)) {
+            const skin = skeletonData.findSkin(sn);
+            let count = 0;
+            if (skin) {
+              for (let i = 0; i < skeletonData.slots.length; i++) {
+                if (skin.getAttachment(i, skeletonData.slots[i].attachmentName) != null) count++;
+              }
+            }
+            if (count > bestCount) { bestCount = count; bestSkin = sn; }
+          }
+          currentSkeleton.setSkinByName(bestSkin);
+          currentSkeleton.setSlotsToSetupPose();
+          skinSelect.value = bestSkin;
+          skinSelect.disabled = false;
+        } else {
+          skinSelect.disabled = true;
+        }
+
+        // Re-setup animations
+        const stateData = new spine.AnimationStateData(skeletonData);
+        stateData.defaultMix = 0.15;
+        currentState = new spine.AnimationState(stateData);
+        animSelect.innerHTML = '';
+        const animNames = skeletonData.animations.map(a => a.name).sort();
+        if (animNames.length > 0) {
+          animNames.forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            animSelect.appendChild(opt);
+          });
+          const defaultAnim = animNames.includes('idle') ? 'idle' : animNames[0];
+          currentState.setAnimation(0, defaultAnim, true);
+          animSelect.value = defaultAnim;
+        } else {
+          animSelect.innerHTML = '<option>(no animations)</option>';
+          animSelect.disabled = true;
+        }
+        currentState.update(0.1);
+        currentState.apply(currentSkeleton);
+        currentSkeleton.updateWorldTransform();
+
+        resetManualView();
+        preSampleAnimation(animSelect.value);
+        resizeAndFit();
+        scheduleRefit();
+
+        animSelect.disabled = animNames.length === 0;
+        playBtn.disabled = animNames.length === 0;
+        resetBtn.disabled = animNames.length === 0;
+        gifBtn.disabled = animNames.length === 0;
+        exportBtn.disabled = animNames.length === 0;
+
+        const modelLabel = modelsManifest?.find(m => m.file === modelFile)?.label || modelFile;
+        infoBar.textContent = `${char.display} — ${modelLabel} — ${skeletonData.bones.length} bones, ${skeletonData.slots.length} slots, ${animNames.length} animations — WebGL`;
+        loadingEl.style.display = 'none';
+        lastTime = performance.now();
+      } catch (err) {
+        loadingEl.textContent = `Error: ${err.message}`;
+        loadingEl.style.display = 'none';
+      }
+    };
+
     // Start render loop
     lastTime = performance.now();
     renderLoop();

@@ -785,6 +785,7 @@ def find_character_files(zf, char_name):
 
     return {
         'skel': skel_path,
+        'all_skels': sorted(all_skels),
         'etc1': etc1_path,
         'atlas': atlas_path,
     }
@@ -866,27 +867,63 @@ def prepare_character(char_name, archive_path, output_dir='characters', force=Fa
     tex_w, tex_h = decode_etc1_texture(pkm_data, texture_path)
     print(f"    texture.png: {tex_w}x{tex_h}")
 
-    # 4. Convert .skel → JSON
+    # 4. Convert ALL .skel files → JSON (main + extras)
     print(f"\n  [4/5] Converting .skel → skeleton.json...")
-    skel_data = zf.read(paths['skel'])
-    skeleton = convert_skel_to_json(skel_data)
-    with open(skel_json_path, 'w') as f:
-        json.dump(skeleton, f, separators=(',', ':'))
+    all_skel_paths = paths.get('all_skels', [paths['skel']] if paths['skel'] else [])
+    models_manifest = []
+    main_skel_basename = paths['skel'].rsplit('/', 1)[-1].replace('.skel', '') if paths['skel'] else char_name
 
-    nb = len(skeleton.get('bones', []))
-    ns = len(skeleton.get('slots', []))
-    na = len(skeleton.get('animations', {}))
-    anims = list(skeleton.get('animations', {}).keys())
-    print(f"    {nb} bones, {ns} slots, {na} animations")
-    print(f"    anims: {anims}")
+    for skel_archive_path in all_skel_paths:
+        skel_basename = skel_archive_path.rsplit('/', 1)[-1].replace('.skel', '')
+        is_main = (skel_archive_path == paths['skel'])
 
-    # Validate: warn if this looks like an effect model, not the main character
-    if nb < 10:
-        print(f"    ⚠⚠ WARNING: only {nb} bones — this may be an effect/summon model, not the main character!")
-        print(f"    ⚠⚠ If animations are all skill effects (no idle/walk/attack), the wrong .skel was extracted.")
-        main_anims = [a for a in anims if a in ('idle', 'walk', 'attack', 'death', 'victory', 'entrance')]
-        if not main_anims:
-            print(f"    ⚠⚠ No standard animations (idle/walk/attack/death/victory/entrance) found — likely wrong model!")
+        if is_main:
+            out_json = skel_json_path
+            model_id = 'main'
+        else:
+            # Derive a clean model id from the skel filename
+            suffix = skel_basename
+            # Remove char_name prefix if present
+            if suffix.lower().startswith(char_name.lower()):
+                suffix = suffix[len(char_name):].lstrip('_-')
+            if not suffix:
+                suffix = skel_basename
+            out_json = os.path.join(char_dir, f'skeleton_{suffix}.json')
+            model_id = suffix
+
+        print(f"    Converting {skel_basename}.skel → {os.path.basename(out_json)}{' (main)' if is_main else ''}...")
+        skel_data = zf.read(skel_archive_path)
+        skeleton = convert_skel_to_json(skel_data)
+        with open(out_json, 'w') as f:
+            json.dump(skeleton, f, separators=(',', ':'))
+
+        nb = len(skeleton.get('bones', []))
+        ns = len(skeleton.get('slots', []))
+        na = len(skeleton.get('animations', {}))
+        anims = list(skeleton.get('animations', {}).keys())
+        print(f"      {nb} bones, {ns} slots, {na} animations: {anims[:5]}{'...' if len(anims) > 5 else ''}")
+
+        # Validate: warn if this looks like an effect model
+        if is_main and nb < 10:
+            print(f"      ⚠⚠ WARNING: main model has only {nb} bones — may be an effect model!")
+            main_anims = [a for a in anims if a in ('idle', 'walk', 'attack', 'death', 'victory', 'entrance')]
+            if not main_anims:
+                print(f"      ⚠⚠ No standard animations found — likely wrong model!")
+
+        models_manifest.append({
+            'id': model_id,
+            'file': os.path.basename(out_json),
+            'label': char_name if is_main else skel_basename.replace('_', ' ').title(),
+            'bones': nb,
+            'animations': anims,
+            'is_main': is_main,
+        })
+
+    # Write models.json manifest
+    models_path = os.path.join(char_dir, 'models.json')
+    with open(models_path, 'w') as f:
+        json.dump(models_manifest, f, indent=2)
+    print(f"    models.json: {len(models_manifest)} model(s)")
 
     # 5. Fix atlas
     print(f"\n  [5/5] Fixing atlas (.etc1 → texture.png)...")
@@ -896,10 +933,13 @@ def prepare_character(char_name, archive_path, output_dir='characters', force=Fa
         f.write(atlas_text)
     print(f"    atlas.atlas written")
 
+    main_model = next((m for m in models_manifest if m['is_main']), models_manifest[0] if models_manifest else None)
     print(f"\n  ✓ Done! → {char_dir}/")
     print(f"    texture.png  ({tex_w}x{tex_h})")
-    print(f"    skeleton.json ({nb} bones, {na} anims)")
+    print(f"    skeleton.json ({main_model['bones']} bones, {len(main_model['animations'])} anims)")
     print(f"    atlas.atlas")
+    if len(models_manifest) > 1:
+        print(f"    + {len(models_manifest)-1} extra model(s): {', '.join(m['file'] for m in models_manifest if not m['is_main'])}")
 
     return True
 
