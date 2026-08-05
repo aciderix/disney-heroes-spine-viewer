@@ -1,0 +1,31 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "mega_virus",
+    "bones": 73,
+    "animations": [
+      "attack",
+      "entrance",
+      "hit",
+      "idle",
+      "skill2",
+      "skill1_end",
+      "skill1_loop",
+      "skill1_start",
+      "victory"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "spike",
+    "file": "skeleton_spike.json",
+    "label": "Mega Virus Spike",
+    "bones": 4,
+    "animations": [
+      "attack",
+      "skill3"
+    ],
+    "is_main": false
+  }
+]

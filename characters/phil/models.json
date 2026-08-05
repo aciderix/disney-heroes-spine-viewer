@@ -1,0 +1,39 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "phil",
+    "bones": 103,
+    "animations": [
+      "attack_column",
+      "attack_helmet",
+      "attack_trophy",
+      "attack_vase",
+      "death",
+      "entrance",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3_loop_back",
+      "skill3_loop",
+      "skill3_end",
+      "skill3_start",
+      "victory",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "dummy",
+    "file": "skeleton_dummy.json",
+    "label": "Phil Dummy",
+    "bones": 7,
+    "animations": [
+      "death",
+      "skill2_end",
+      "skill2_start"
+    ],
+    "is_main": false
+  }
+]

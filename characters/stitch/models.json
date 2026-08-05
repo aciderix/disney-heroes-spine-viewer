@@ -1,0 +1,35 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "stitch",
+    "bones": 125,
+    "animations": [
+      "attack",
+      "death",
+      "death_loop",
+      "entrance",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3_all",
+      "skill3_end",
+      "skill3_loop",
+      "skill3_start",
+      "victory",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "gun",
+    "file": "skeleton_gun.json",
+    "label": "Stitch Gun",
+    "bones": 8,
+    "animations": [
+      "gun"
+    ],
+    "is_main": false
+  }
+]

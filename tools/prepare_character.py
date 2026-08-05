@@ -740,7 +740,19 @@ def find_character_files(zf, char_name):
                     skel_path = s
                     break
 
-        # 3. First word of char_name
+        # 3. Normalized match (ignore 'and', 'the', underscores)
+        # e.g. lock_shock_barrel matches lock_shock_and_barrel
+        if not skel_path:
+            def normalize(s):
+                return s.lower().replace('and', '').replace('the', '').replace('_', '').replace('-', '')
+            char_norm = normalize(char_name)
+            for s in all_skels:
+                fname = s.rsplit('/', 1)[-1].replace('.skel', '')
+                if normalize(fname) == char_norm:
+                    skel_path = s
+                    break
+
+        # 4. First word of char_name
         if not skel_path:
             first_word = char_name.split('_')[0]
             for s in all_skels:
@@ -749,13 +761,13 @@ def find_character_files(zf, char_name):
                     skel_path = s
                     break
 
-        # 4. Shortest non-effect .skel name
+        # 5. Shortest non-effect .skel name
         if not skel_path:
             non_effect = [s for s in all_skels if not _is_likely_effect_skel(s.rsplit('/', 1)[-1])]
             if non_effect:
                 skel_path = min(non_effect, key=lambda s: len(s.rsplit('/', 1)[-1]))
 
-        # 5. Fallback: first alphabetically
+        # 6. Fallback: first alphabetically
         if not skel_path:
             skel_path = sorted(all_skels)[0]
 

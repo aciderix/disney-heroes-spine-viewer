@@ -1,0 +1,46 @@
+[
+  {
+    "id": "jack_in_the_box",
+    "file": "skeleton_jack_in_the_box.json",
+    "label": "Jack In The Box",
+    "bones": 11,
+    "animations": [
+      "idle",
+      "skill3_box"
+    ],
+    "is_main": false
+  },
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "lock_shock_barrel",
+    "bones": 209,
+    "animations": [
+      "attack",
+      "death",
+      "entrance",
+      "hit",
+      "idle",
+      "skill2",
+      "skill3",
+      "skill1_end",
+      "skill1_end_loop",
+      "skill1_loop",
+      "skill1_start",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "sack",
+    "file": "skeleton_sack.json",
+    "label": "Sack",
+    "bones": 5,
+    "animations": [
+      "idle"
+    ],
+    "is_main": false
+  }
+]

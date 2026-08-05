@@ -1,0 +1,39 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "king_candy",
+    "bones": 88,
+    "animations": [
+      "attack",
+      "death",
+      "entrance",
+      "hit",
+      "idle",
+      "skill2",
+      "skill3",
+      "skill1_all",
+      "skill1_end",
+      "skill1_loop",
+      "skill1_start",
+      "victory_all",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "sour_bill",
+    "file": "skeleton_sour_bill.json",
+    "label": "Sour Bill",
+    "bones": 7,
+    "animations": [
+      "skill1_sour_bill_end",
+      "skill1_sour_bill_loop",
+      "skill1_sour_bill_start",
+      "skill_sour_bill_demo"
+    ],
+    "is_main": false
+  }
+]

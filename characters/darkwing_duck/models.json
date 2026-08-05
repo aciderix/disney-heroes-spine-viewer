@@ -1,0 +1,32 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "darkwing_duck",
+    "bones": 125,
+    "animations": [
+      "attack",
+      "death",
+      "entrance",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3",
+      "skill1_all",
+      "victory_all",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "harpoon",
+    "file": "skeleton_harpoon.json",
+    "label": "Harpoon",
+    "bones": 2,
+    "animations": [],
+    "is_main": false
+  }
+]

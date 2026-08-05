@@ -1,0 +1,13 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "dr_doofenshmirtz",
+    "bones": 7,
+    "animations": [
+      "skill3_retireinator",
+      "skill3_retireinator_demo"
+    ],
+    "is_main": true
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "dumbo_bubble",
+    "bones": 5,
+    "animations": [
+      "skill3_demo",
+      "skill3_end",
+      "skill3_loop",
+      "skill3_start"
+    ],
+    "is_main": true
+  }
+]

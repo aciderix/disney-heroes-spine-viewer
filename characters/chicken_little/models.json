@@ -1,0 +1,38 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "chicken_little",
+    "bones": 109,
+    "animations": [
+      "attack",
+      "death",
+      "entrance",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3_all",
+      "skill3_all2",
+      "skill3_end",
+      "skill3_loop",
+      "skill3_start",
+      "victory_all",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "panel",
+    "file": "skeleton_panel.json",
+    "label": "Chicken Little Panel",
+    "bones": 3,
+    "animations": [
+      "skill2_panel",
+      "skill2_panel_demo"
+    ],
+    "is_main": false
+  }
+]

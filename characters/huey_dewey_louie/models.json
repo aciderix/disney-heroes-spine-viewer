@@ -1,0 +1,32 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "huey_dewey_louie",
+    "bones": 215,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_end",
+      "entrance_loop",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3_begin",
+      "victory",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "bear_trap",
+    "file": "skeleton_bear_trap.json",
+    "label": "Huey Dewey Louie Bear Trap",
+    "bones": 4,
+    "animations": [
+      "bear_trap_skill2"
+    ],
+    "is_main": false
+  }
+]

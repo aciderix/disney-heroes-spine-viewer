@@ -1,0 +1,34 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "goofy",
+    "bones": 92,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_all",
+      "entrance_end",
+      "entrance_loop",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "disco_ball",
+    "file": "skeleton_disco_ball.json",
+    "label": "Goofy Disco Ball",
+    "bones": 2,
+    "animations": [
+      "goofy_disco_ball"
+    ],
+    "is_main": false
+  }
+]

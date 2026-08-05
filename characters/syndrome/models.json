@@ -1,0 +1,33 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "syndrome",
+    "bones": 97,
+    "animations": [
+      "attack",
+      "death",
+      "entrance",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "scanner",
+    "file": "skeleton_scanner.json",
+    "label": "Syndrome Scanner",
+    "bones": 6,
+    "animations": [
+      "skill2_scanner_blast",
+      "skill2_scanner_idle"
+    ],
+    "is_main": false
+  }
+]

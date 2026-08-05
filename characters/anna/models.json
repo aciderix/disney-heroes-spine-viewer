@@ -1,0 +1,35 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "anna",
+    "bones": 124,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_all",
+      "entrance_end",
+      "entrance_loop",
+      "hit",
+      "idle",
+      "skill2",
+      "skill3",
+      "skill1_end",
+      "skill1_loop",
+      "skill1_start",
+      "victory",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "giant",
+    "file": "skeleton_giant.json",
+    "label": "Anna Giant",
+    "bones": 10,
+    "animations": [
+      "skill1_giant"
+    ],
+    "is_main": false
+  }
+]

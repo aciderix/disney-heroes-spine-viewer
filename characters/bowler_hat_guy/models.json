@@ -1,0 +1,37 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "bowler_hat_guy",
+    "bones": 132,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_end",
+      "entrance_loop",
+      "hit",
+      "idle",
+      "skill1",
+      "skill3",
+      "skill2_all",
+      "skill2_end",
+      "skill2_loop",
+      "skill2_start",
+      "victory_all",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "mini_doris",
+    "file": "skeleton_mini_doris.json",
+    "label": "Mini Doris",
+    "bones": 3,
+    "animations": [
+      "skill2"
+    ],
+    "is_main": false
+  }
+]

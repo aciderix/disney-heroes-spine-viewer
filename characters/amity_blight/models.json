@@ -1,0 +1,46 @@
+[
+  {
+    "id": "abomination",
+    "file": "skeleton_abomination.json",
+    "label": "Abomination",
+    "bones": 31,
+    "animations": [
+      "skill1"
+    ],
+    "is_main": false
+  },
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "amity_blight",
+    "bones": 69,
+    "animations": [
+      "attack",
+      "death",
+      "entrance",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3",
+      "victory_all",
+      "victory_loop",
+      "victory_start",
+      "walk",
+      "walk_transition"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "eraser",
+    "file": "skeleton_eraser.json",
+    "label": "Eraser",
+    "bones": 6,
+    "animations": [
+      "attack",
+      "attack_demo",
+      "attack_start_end"
+    ],
+    "is_main": false
+  }
+]

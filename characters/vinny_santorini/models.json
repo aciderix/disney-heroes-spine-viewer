@@ -1,0 +1,42 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "vinny_santorini",
+    "bones": 92,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_end",
+      "entrance_loop",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3",
+      "victory",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "road_flare",
+    "file": "skeleton_road_flare.json",
+    "label": "Vinny Santorini Road Flare",
+    "bones": 1,
+    "animations": [
+      "skill3_road_flare"
+    ],
+    "is_main": false
+  },
+  {
+    "id": "tnt_clock",
+    "file": "skeleton_tnt_clock.json",
+    "label": "Vinny Santorini Tnt Clock",
+    "bones": 2,
+    "animations": [
+      "skill2_tnt_clock"
+    ],
+    "is_main": false
+  }
+]

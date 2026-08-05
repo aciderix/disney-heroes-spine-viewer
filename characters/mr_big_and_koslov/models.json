@@ -1,0 +1,34 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "mr_big_and_koslov",
+    "bones": 110,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_end",
+      "entrance_loop",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "limo",
+    "file": "skeleton_limo.json",
+    "label": "Mr Big And Koslov Limo",
+    "bones": 5,
+    "animations": [
+      "skill3_end",
+      "skill3_loop"
+    ],
+    "is_main": false
+  }
+]

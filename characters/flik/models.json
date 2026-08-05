@@ -1,0 +1,33 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "flik",
+    "bones": 94,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_end",
+      "entrance_loop",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "skeleton",
+    "file": "skeleton_skeleton.json",
+    "label": "Skeleton",
+    "bones": 4,
+    "animations": [
+      "animation"
+    ],
+    "is_main": false
+  }
+]

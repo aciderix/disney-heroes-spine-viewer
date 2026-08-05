@@ -1,0 +1,36 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "fairy_godmother",
+    "bones": 102,
+    "animations": [
+      "attack",
+      "death",
+      "entrance",
+      "hit",
+      "idle",
+      "skill1",
+      "skill2",
+      "skill3_end",
+      "skill3_loop",
+      "skill3_start",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "pumpkin",
+    "file": "skeleton_pumpkin.json",
+    "label": "Fairy Godmother Pumpkin",
+    "bones": 6,
+    "animations": [
+      "skill3_pumpkin_all",
+      "skill3_pumpkin_end",
+      "skill3_pumpkin_loop"
+    ],
+    "is_main": false
+  }
+]

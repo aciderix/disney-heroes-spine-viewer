@@ -1,0 +1,39 @@
+[
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "agent_p",
+    "bones": 147,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_end",
+      "entrance_loop",
+      "hit",
+      "idle",
+      "skill3",
+      "skill4",
+      "skill1_all",
+      "skill1_jump",
+      "skill1_return",
+      "skill2_all",
+      "skill2_end",
+      "skill2_loop",
+      "skill2_start",
+      "victory",
+      "victory_loop",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "gun_grapple",
+    "file": "skeleton_gun_grapple.json",
+    "label": "Agent P Gun Grapple",
+    "bones": 1,
+    "animations": [
+      "skill1_gun_grapple"
+    ],
+    "is_main": false
+  }
+]

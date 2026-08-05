@@ -1,0 +1,42 @@
+[
+  {
+    "id": "meeko",
+    "file": "skeleton_meeko.json",
+    "label": "Pocahontas Meeko",
+    "bones": 38,
+    "animations": [
+      "skill2_all",
+      "skill2_run",
+      "skill2_steal"
+    ],
+    "is_main": false
+  },
+  {
+    "id": "main",
+    "file": "skeleton.json",
+    "label": "pocahontas",
+    "bones": 100,
+    "animations": [
+      "attack",
+      "death",
+      "entrance_end",
+      "hit",
+      "idle",
+      "skill1",
+      "victory_loop",
+      "victory_start",
+      "walk"
+    ],
+    "is_main": true
+  },
+  {
+    "id": "flit",
+    "file": "skeleton_flit.json",
+    "label": "Pocahontas Flit",
+    "bones": 6,
+    "animations": [
+      "skill3"
+    ],
+    "is_main": false
+  }
+]
