@@ -128,7 +128,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
     <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1">
     <span id="speedVal" style="font-size:12px;width:30px">1.0×</span>
     <button id="resetBtn" disabled>🔄</button>
-    <button id="gifBtn" disabled>GIF</button><button id="gifSettingsBtn" disabled>⚙️</button>
+    <button id="gifBtn" disabled>GIF</button>
     <span class="gif-status" id="gifStatus"></span>
   </div>
 </div>
@@ -508,7 +508,6 @@ sidebarBackdrop.onclick = () => {
 
 // GIF button
 const gifBtn = document.getElementById('gifBtn');
-const gifSettingsBtn = document.getElementById('gifSettingsBtn');
 
 speedSlider.oninput = () => {
   speedMul = parseFloat(speedSlider.value);
@@ -574,7 +573,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=25');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=21');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -587,13 +586,13 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=25');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=21');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=25';
+    img.src = basePath + 'texture.png?v=21';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -725,7 +724,7 @@ async function loadCharacter(char, li) {
   }
 }
 
-// GIF recording with user-configurable settings
+// GIF recording - adaptive quality based on device memory
 let gifFrames = [];
 let gifRecording = false;
 let gifFrameCount = 0;
@@ -733,17 +732,27 @@ let gifFrameCount = 0;
 gifBtn.onclick = () => {
   if (gifRecording) return;
   
-  const maxW = parseInt(document.getElementById('gifResolution').value) || 960;
-  const gifFps = parseInt(document.getElementById('gifFps').value) || 30;
-  const duration = parseInt(document.getElementById('gifDuration').value) || 4;
-  const quality = parseInt(document.getElementById('gifQuality').value) || 10;
+  // Adapt GIF quality based on device memory (navigator.deviceMemory)
+  const devMem = navigator.deviceMemory || 4; // GB, defaults to 4 if unknown
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  
+  let gifFps, duration, maxWidth, workers, quality;
+  if (isMobile && devMem < 4) {
+    // Low-end mobile: keep it safe
+    gifFps = 12; duration = 2; maxWidth = 384; workers = 1; quality = 15;
+  } else if (isMobile) {
+    // Mid/high-end mobile
+    gifFps = 15; duration = 3; maxWidth = 480; workers = 1; quality = 10;
+  } else {
+    // Desktop: full quality
+    gifFps = 20; duration = 3; maxWidth = 720; workers = 2; quality = 5;
+  }
   const maxFrames = gifFps * duration;
   
   gifRecording = true;
   gifFrames = [];
   gifFrameCount = 0;
   gifBtn.disabled = true;
-  gifSettingsBtn.disabled = true;
   gifBtn.textContent = '⏳';
   document.getElementById('gifStatus').textContent = `Capturing 0/${maxFrames}...`;
   
@@ -751,7 +760,7 @@ gifBtn.onclick = () => {
   const gifInterval = 1000 / gifFps;
   let gifAccum = 0;
   
-  const scale = Math.min(1, maxW / canvas.width);
+  const scale = Math.min(1, maxWidth / canvas.width);
   const gifW = Math.round(canvas.width * scale);
   const gifH = Math.round(canvas.height * scale);
   
@@ -770,13 +779,13 @@ gifBtn.onclick = () => {
       tmpC.getContext('2d').drawImage(canvas, 0, 0, gifW, gifH);
       gifFrames.push(tmpC);
       gifFrameCount++;
-      const pct = Math.round((gifFrameCount / maxFrames) * 50);
-      document.getElementById('gifStatus').textContent = `Capturing ${gifFrameCount}/${maxFrames} (${pct}%)`;
+      document.getElementById('gifStatus').textContent = `Capturing ${gifFrameCount}/${maxFrames}...`;
       
       if (gifFrameCount >= maxFrames) {
         gifRecording = false;
+        gifBtn.disabled = false;
         gifBtn.textContent = 'GIF';
-        downloadGif(gifW, gifH, gifFps, quality, maxFrames);
+        downloadGif(gifW, gifH, gifFps, workers, quality);
       }
     }
     if (gifRecording) requestAnimationFrame(gifLoop);
@@ -798,9 +807,8 @@ async function getGifWorkerBlobUrl() {
   }
 }
 
-async function downloadGif(gifW, gifH, gifFps, quality, maxFrames) {
-  const statusEl = document.getElementById('gifStatus');
-  statusEl.textContent = 'Encoding 0%';
+async function downloadGif(gifW, gifH, gifFps, workers, quality) {
+  document.getElementById('gifStatus').textContent = 'Encoding...';
   try {
     if (typeof GIF === 'undefined') {
       const script = document.createElement('script');
@@ -811,7 +819,7 @@ async function downloadGif(gifW, gifH, gifFps, quality, maxFrames) {
     const workerBlobUrl = await getGifWorkerBlobUrl();
     
     const gif = new GIF({
-      workers: 2,
+      workers: workers,
       quality: quality,
       width: gifW,
       height: gifH,
@@ -821,13 +829,7 @@ async function downloadGif(gifW, gifH, gifFps, quality, maxFrames) {
     for (const frameCanvas of gifFrames) {
       gif.addFrame(frameCanvas, { delay: 1000 / gifFps, copy: true });
     }
-    gifFrames = [];
-    
-    // Progress callback - gif.js reports 0..1 during encoding
-    gif.on('progress', (p) => {
-      const pct = Math.round(50 + p * 50);
-      statusEl.textContent = `Encoding ${pct}%`;
-    });
+    gifFrames = []; // free memory immediately
     
     gif.on('finished', (blob) => {
       const url = URL.createObjectURL(blob);
@@ -836,34 +838,18 @@ async function downloadGif(gifW, gifH, gifFps, quality, maxFrames) {
       a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
       a.click();
       URL.revokeObjectURL(url);
-      statusEl.textContent = 'Done! ✓';
-      setTimeout(() => { statusEl.textContent = ''; }, 3000);
+      document.getElementById('gifStatus').textContent = 'Done!';
+      setTimeout(() => { document.getElementById('gifStatus').textContent = ''; }, 3000);
     });
     
     gif.render();
   } catch (e) {
-    statusEl.textContent = 'GIF error: ' + e.message;
-    gifFrames = [];
-  } finally {
+    document.getElementById('gifStatus').textContent = 'GIF error: ' + e.message;
     gifBtn.disabled = false;
-    gifSettingsBtn.disabled = false;
     gifBtn.textContent = 'GIF';
+    gifFrames = [];
   }
 }
-
-// Settings modal
-gifSettingsBtn.onclick = () => {
-  document.getElementById('gifSettingsModal').style.display = 'flex';
-};
-document.getElementById('closeGifSettings').onclick = () => {
-  document.getElementById('gifSettingsModal').style.display = 'none';
-};
-document.getElementById('applyGifSettings').onclick = () => {
-  document.getElementById('gifSettingsModal').style.display = 'none';
-};
-document.getElementById('gifSettingsModal').addEventListener('click', (e) => {
-  if (e.target.id === 'gifSettingsModal') e.target.style.display = 'none';
-});
 
 function renderLoop() {
   animFrame = requestAnimationFrame(renderLoop);
@@ -1180,62 +1166,5 @@ controlsBackdrop.onclick = () => {
   setTimeout(resizeAndFit, 320);
 };
 </script>
-
-<div id="gifSettingsModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;justify-content:center;align-items:center;">
-<div style="background:#1a1a2e;border:1px solid #333;border-radius:12px;padding:24px;width:320px;max-width:90vw;color:#fff;font-family:system-ui;">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-<strong style="font-size:16px;">GIF Export Settings</strong>
-<button id="closeGifSettings" style="background:none;border:none;color:#999;font-size:20px;cursor:pointer;">✕</button>
-</div>
-<div style="display:flex;flex-direction:column;gap:14px;">
-<div>
-<label style="font-size:12px;color:#999;">Resolution (max width)</label>
-<select id="gifResolution" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #333;border-radius:6px;padding:6px;margin-top:4px;">
-<option value="480">480p (fast)</option>
-<option value="640">640p</option>
-<option value="800">800p</option>
-<option value="960" selected>960p (recommended)</option>
-<option value="1280">1280p (slow)</option>
-</select>
-</div>
-<div>
-<label style="font-size:12px;color:#999;">Framerate (fps)</label>
-<select id="gifFps" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #333;border-radius:6px;padding:6px;margin-top:4px;">
-<option value="10">10 fps</option>
-<option value="15">15 fps</option>
-<option value="20">20 fps</option>
-<option value="30" selected>30 fps</option>
-</select>
-</div>
-<div>
-<label style="font-size:12px;color:#999;">Duration (seconds)</label>
-<select id="gifDuration" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #333;border-radius:6px;padding:6px;margin-top:4px;">
-<option value="2">2s</option>
-<option value="3">3s</option>
-<option value="4" selected>4s</option>
-<option value="5">5s</option>
-<option value="6">6s</option>
-</select>
-</div>
-<div>
-<label style="font-size:12px;color:#999;">Quality (1=best, 20=fastest)</label>
-<select id="gifQuality" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #333;border-radius:6px;padding:6px;margin-top:4px;">
-<option value="1">1 (best)</option>
-<option value="5">5 (high)</option>
-<option value="10" selected>10 (good)</option>
-<option value="15">15 (medium)</option>
-<option value="20">20 (fast)</option>
-</select>
-</div>
-<div style="display:flex;gap:8px;margin-top:4px;">
-<label style="font-size:12px;color:#999;display:flex;align-items:center;gap:6px;">
-<input type="checkbox" id="gifTransparent" style="accent-color:#e91e63;"> Transparent background
-</label>
-</div>
-</div>
-<button id="applyGifSettings" style="margin-top:18px;background:#e91e63;color:#fff;border:none;border-radius:8px;padding:10px;width:100%;cursor:pointer;font-size:14px;">Done</button>
-</div>
-</div>
-
 </body>
 </html>
