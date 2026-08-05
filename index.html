@@ -175,7 +175,6 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
     <button id="gifBtn" disabled>GIF</button>
     <button id="exportBtn" disabled>📥 Export</button>
     <span class="gif-status" id="gifStatus"></span>
-    <span id="debugExport" style="color:#0f0;font-size:11px;display:block"></span>
   </div>
 </div>
 
@@ -1069,170 +1068,132 @@ function getOptimalWorkers() {
 }
 
 // ============================================================
-// Off-screen frame rendering — advances animation without real-time wait
+// Export via gifenc (fast mode — no dithering, global palette)
 // ============================================================
-let _exportPaused = false;
-let _savedAnimName = null;
-
-function pauseRenderLoopForExport() {
-  if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
-  _exportPaused = true;
-  // Save current animation and reset to start
-  if (currentState && animSelect.value) {
-    _savedAnimName = animSelect.value;
-    currentState.setAnimation(0, _savedAnimName, false); // no loop during export
-    currentState.update(0.001); // tiny step to initialize
-    currentState.apply(currentSkeleton);
-    currentSkeleton.updateWorldTransform();
-  }
-}
-
-function resumeRenderLoopAfterExport() {
-  _exportPaused = false;
-  // Restore looping animation
-  if (currentState && _savedAnimName) {
-    currentState.setAnimation(0, _savedAnimName, true);
-    currentState.update(0.1);
-    currentState.apply(currentSkeleton);
-    currentSkeleton.updateWorldTransform();
-  }
-  lastTime = performance.now();
-  animFrame = requestAnimationFrame(renderLoop);
-}
-
-// Render a single frame at an exact animation timestamp and capture it
-function renderAndCaptureFrame(targetW, targetH, frameIdx, fps) {
-  // Advance animation to this frame's timestamp
-  if (currentState && currentSkeleton) {
-    const targetTime = frameIdx / fps;
-    // We need to step the state forward. Since we set loop=false and started
-    // from 0, we advance by 1/fps each call. But to be safe, we reset and
-    // jump to the exact time for the first frame.
-    if (frameIdx === 0) {
-      currentState.setAnimation(0, animSelect.value, false);
-      currentState.update(0.001);
-    } else {
-      currentState.update(1 / fps);
-    }
-    currentState.apply(currentSkeleton);
-    currentSkeleton.updateWorldTransform();
-  }
-
-  // Render the scene
-  const gl = sceneRenderer.context.gl;
-  gl.clearColor(0.102, 0.102, 0.180, 1);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  if (currentSkeleton) {
-    sceneRenderer.begin();
-    sceneRenderer.drawSkeleton(currentSkeleton, true);
-    sceneRenderer.end();
-  }
-
-  // Capture to a temp canvas at target resolution
-  const tmpC = document.createElement('canvas');
-  tmpC.width = targetW;
-  tmpC.height = targetH;
-  tmpC.getContext('2d').drawImage(canvas, 0, 0, targetW, targetH);
-  return tmpC;
-}
-
-// Get ImageData from a frame canvas
-function getFrameImageData(frameCanvas) {
-  const ctx = frameCanvas.getContext('2d');
-  return ctx.getImageData(0, 0, frameCanvas.width, frameCanvas.height);
-}
-
-// ============================================================
-// Export via gifenc (fast mode — off-screen rendering, no real-time wait)
-// ============================================================
-  // DEBUG: exportGifEnc entry
 async function exportGifEnc(gifW, gifH, fps, durationSec) {
   const { GIFEncoder, quantize, applyPalette } = await loadGifenc();
-  document.getElementById("debugExport").textContent = "GIFENC LOADED OK";
   const maxFrames = Math.ceil(fps * durationSec);
   const delay = Math.round(1000 / fps);
 
-  exportInfo.textContent = 'Encoding with gifenc (fast mode)...';
+  exportInfo.textContent = 'Loading gifenc...';
   showProgress(true);
 
+  // Create the encoder stream
   const gif = GIFEncoder();
   let globalPalette = null;
   let firstFrame = true;
+
+  // Capture frames
+  const gifInterval = 1000 / fps;
+  let gifLastTime = performance.now();
+  let gifAccum = 0;
+  gifFrames = [];
+  gifFrameCount = 0;
+  exportRecording = true;
   exportCancelled = false;
 
-  pauseRenderLoopForExport();
+  const capturePromise = new Promise((resolve) => {
+    const gifLoop = () => {
+      if (!exportRecording) { resolve(); return; }
+      if (exportCancelled) { exportRecording = false; resolve(); return; }
+      const now = performance.now();
+      const dt = now - gifLastTime;
+      gifLastTime = now;
+      gifAccum += dt;
 
-  try {
-    for (let i = 0; i < maxFrames; i++) {
-      if (exportCancelled) break;
+      if (gifAccum >= gifInterval) {
+        gifAccum = 0;
+        const tmpC = document.createElement('canvas');
+        tmpC.width = gifW;
+        tmpC.height = gifH;
+        tmpC.getContext('2d').drawImage(canvas, 0, 0, gifW, gifH);
+        gifFrames.push(tmpC);
+        gifFrameCount++;
+        const pct = Math.round((gifFrameCount / maxFrames) * 50); // capture = 50% of progress
+        setProgress(pct);
+        gifStatus.textContent = `Capturing ${gifFrameCount}/${maxFrames}...`;
 
-      // Render + capture frame (no real-time wait!)
-      const frameCanvas = renderAndCaptureFrame(gifW, gifH, i, fps);
-
-      // Encode immediately — no intermediate storage
-      const imageData = getFrameImageData(frameCanvas);
-      const rgba = imageData.data;
-
-      let palette;
-      if (firstFrame || !globalPalette) {
-        palette = quantize(rgba, 256, { format: 'rgb565' });
-        globalPalette = palette;
-      } else {
-        palette = globalPalette;
+        if (gifFrameCount >= maxFrames) {
+          exportRecording = false;
+          resolve();
+        }
       }
+      if (exportRecording) requestAnimationFrame(gifLoop);
+    };
+    gifLoop();
+  });
 
-      const index = applyPalette(rgba, palette, 'rgb565');
-      gif.writeFrame(index, gifW, gifH, {
-        palette: firstFrame ? palette : undefined,
-        delay: delay,
-        repeat: 0,
-        transparent: false,
-      });
-      firstFrame = false;
+  await capturePromise;
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
 
-      const pct = Math.round((i / maxFrames) * 90);
-      setProgress(pct);
-      gifStatus.textContent = `Rendering+encoding ${i + 1}/${maxFrames}...`;
+  // Encode with gifenc — pipeline: encode each frame as we go
+  exportInfo.textContent = 'Encoding with gifenc (fast mode)...';
 
-      // Yield to UI occasionally
-      if (i % 5 === 0) await new Promise(r => setTimeout(r, 0));
+  for (let i = 0; i < gifFrames.length; i++) {
+    if (exportCancelled) break;
+
+    const frameCanvas = gifFrames[i];
+    const ctx = frameCanvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, gifW, gifH);
+    const rgba = imageData.data;
+
+    // For the first frame, compute a global palette to reuse for all frames
+    // This is a huge speedup vs per-frame quantization
+    let palette;
+    if (firstFrame || !globalPalette) {
+      palette = quantize(rgba, 256, { format: 'rgb565' });
+      globalPalette = palette;
+    } else {
+      // Optionally re-quantize every N frames for better color accuracy
+      // For fast mode, we reuse the global palette (big speedup)
+      palette = globalPalette;
     }
 
-    gif.finish();
-    const bytes = gif.bytes();
+    const index = applyPalette(rgba, palette, 'rgb565');
 
-    if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
+    gif.writeFrame(index, gifW, gifH, {
+      palette: firstFrame ? palette : undefined, // first frame sets global palette
+      delay: delay,
+      repeat: 0, // loop forever
+      transparent: false,
+    });
+    firstFrame = false;
 
-    const blob = new Blob([bytes], { type: 'image/gif' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
-    a.click();
-    URL.revokeObjectURL(url);
-
-    setProgress(100);
-    gifStatus.textContent = `Done! (fast mode, ${(blob.size / 1024).toFixed(0)}KB)`;
-    exportInfo.textContent = '';
-    showProgress(false);
-    setTimeout(() => { gifStatus.textContent = ''; }, 3000);
-  } catch (e) {
-    gifStatus.textContent = 'GIF error: ' + e.message; document.getElementById('debugExport').textContent = 'GIFENC ERR: ' + e.message;
-    exportInfo.textContent = '';
-    showProgress(false);
-  } finally {
-    resumeRenderLoopAfterExport();
+    const pct = 50 + Math.round((i / gifFrames.length) * 50);
+    setProgress(pct);
+    gifStatus.textContent = `Encoding ${i + 1}/${gifFrames.length}...`;
   }
+
+  gif.finish();
+  const bytes = gif.bytes();
+  gifFrames = [];
+
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
+
+  // Download
+  const blob = new Blob([bytes], { type: 'image/gif' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  setProgress(100);
+  gifStatus.textContent = 'Done! (fast mode)';
+  exportInfo.textContent = '';
+  showProgress(false);
+  setTimeout(() => { gifStatus.textContent = ''; }, 3000);
 }
 
 // ============================================================
-// Export via gif.js (HQ mode — off-screen rendering + multi-worker encoding)
+// Export via gif.js (HQ mode — dithering, multi-worker)
 // ============================================================
 async function exportGifJs(gifW, gifH, fps, durationSec) {
   const maxFrames = Math.ceil(fps * durationSec);
   const delay = Math.round(1000 / fps);
   const workers = getOptimalWorkers();
-  const quality = 5;
+  const quality = 5; // high quality (lower = better in gif.js)
 
   exportInfo.textContent = 'Loading gif.js...';
   showProgress(true);
@@ -1240,90 +1201,105 @@ async function exportGifJs(gifW, gifH, fps, durationSec) {
   await loadGifJs();
   const workerBlobUrl = await getGifWorkerBlobUrl();
 
+  // Capture frames
+  const gifInterval = 1000 / fps;
+  let gifLastTime = performance.now();
+  let gifAccum = 0;
+  gifFrames = [];
+  gifFrameCount = 0;
+  exportRecording = true;
   exportCancelled = false;
 
-  // Phase 1: Render all frames off-screen (fast, no real-time wait)
-  gifStatus.textContent = `Rendering ${maxFrames} frames...`;
+  const capturePromise = new Promise((resolve) => {
+    const gifLoop = () => {
+      if (!exportRecording) { resolve(); return; }
+      if (exportCancelled) { exportRecording = false; resolve(); return; }
+      const now = performance.now();
+      const dt = now - gifLastTime;
+      gifLastTime = now;
+      gifAccum += dt;
+
+      if (gifAccum >= gifInterval) {
+        gifAccum = 0;
+        const tmpC = document.createElement('canvas');
+        tmpC.width = gifW;
+        tmpC.height = gifH;
+        tmpC.getContext('2d').drawImage(canvas, 0, 0, gifW, gifH);
+        gifFrames.push(tmpC);
+        gifFrameCount++;
+        const pct = Math.round((gifFrameCount / maxFrames) * 60);
+        setProgress(pct);
+        gifStatus.textContent = `Capturing ${gifFrameCount}/${maxFrames}...`;
+
+        if (gifFrameCount >= maxFrames) {
+          exportRecording = false;
+          resolve();
+        }
+      }
+      if (exportRecording) requestAnimationFrame(gifLoop);
+    };
+    gifLoop();
+  });
+
+  await capturePromise;
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
+
+  // Encode with optimized workers
+  exportInfo.textContent = `Encoding with gif.js (${workers} workers, quality ${quality})...`;
+
+  const gif = new GIF({
+    workers: workers,
+    quality: quality,
+    width: gifW,
+    height: gifH,
+    workerScript: workerBlobUrl,
+  });
+
+  for (const frameCanvas of gifFrames) {
+    gif.addFrame(frameCanvas, { delay: delay, copy: true });
+  }
   gifFrames = [];
-  pauseRenderLoopForExport();
 
-  try {
-    for (let i = 0; i < maxFrames; i++) {
-      if (exportCancelled) break;
-      const frameCanvas = renderAndCaptureFrame(gifW, gifH, i, fps);
-      gifFrames.push(frameCanvas);
-      const pct = Math.round((i / maxFrames) * 50);
-      setProgress(pct);
-      gifStatus.textContent = `Rendering ${i + 1}/${maxFrames}...`;
-      // Yield to UI occasionally
-      if (i % 5 === 0) await new Promise(r => setTimeout(r, 0));
-    }
+  gif.on('progress', (p) => {
+    setProgress(60 + Math.round(p * 40));
+    gifStatus.textContent = `Encoding ${Math.round(p * 100)}%...`;
+  });
 
-    if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; gifFrames = []; return; }
-
-    // Phase 2: Encode with gif.js workers
-    exportInfo.textContent = `Encoding with gif.js (${workers} workers, quality ${quality})...`;
-
-    const gif = new GIF({
-      workers: workers,
-      quality: quality,
-      width: gifW,
-      height: gifH,
-      workerScript: workerBlobUrl,
+  return new Promise((resolve, reject) => {
+    gif.on('finished', (blob) => {
+      if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; resolve(); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
+      a.click();
+      URL.revokeObjectURL(url);
+      setProgress(100);
+      gifStatus.textContent = 'Done! (HQ mode)';
+      exportInfo.textContent = '';
+      showProgress(false);
+      setTimeout(() => { gifStatus.textContent = ''; }, 3000);
+      resolve();
     });
-
-    for (const frameCanvas of gifFrames) {
-      gif.addFrame(frameCanvas, { delay: delay, copy: true });
-    }
-    gifFrames = [];
-
-    gif.on('progress', (p) => {
-      setProgress(50 + Math.round(p * 50));
-      gifStatus.textContent = `Encoding ${Math.round(p * 100)}%...`;
-    });
-
-    await new Promise((resolve, reject) => {
-      gif.on('finished', (blob) => {
-        if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; resolve(); return; }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${currentChar ? currentChar.name : 'character'}.gif`;
-        a.click();
-        URL.revokeObjectURL(url);
-        setProgress(100);
-        gifStatus.textContent = `Done! (HQ mode, ${(blob.size / 1024).toFixed(0)}KB)`;
-        exportInfo.textContent = '';
-        showProgress(false);
-        setTimeout(() => { gifStatus.textContent = ''; }, 3000);
-        resolve();
-      });
-      gif.on('abort', () => { reject(new Error('Aborted')); });
-      gif.render();
-    });
-  } catch (e) {
-    gifStatus.textContent = 'GIF error: ' + e.message; document.getElementById('debugExport').textContent = 'GIFENC ERR: ' + e.message;
+    gif.on('abort', () => { reject(new Error('Aborted')); });
+    gif.render();
+  }).catch(e => {
+    gifStatus.textContent = 'GIF error: ' + e.message;
     exportInfo.textContent = '';
     showProgress(false);
-  } finally {
-    resumeRenderLoopAfterExport();
-  }
+  });
 }
 
-
 // ============================================================
-// Export via WebM (off-screen rendering + MediaRecorder on 2D canvas)
+// Export via WebM (MediaRecorder — manual frame capture synced to render loop)
 // ============================================================
 async function exportWebM(gifW, gifH, fps, durationSec) {
-  const maxFrames = Math.ceil(fps * durationSec);
-
-  exportInfo.textContent = 'Preparing WebM export...';
+  exportInfo.textContent = 'Recording WebM...';
   showProgress(true);
 
   // Check support
-  if (typeof MediaRecorder === 'undefined') {
-    gifStatus.textContent = 'WebM not supported — use GIF format instead';
-    exportInfo.textContent = '';
+  if (!canvas.captureStream) {
+    gifStatus.textContent = 'captureStream not supported';
     showProgress(false);
     return;
   }
@@ -1340,40 +1316,24 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     catch (e) { /* skip */ }
   }
   if (!mimeType) {
-    gifStatus.textContent = 'WebM not supported — use GIF format instead';
-    exportInfo.textContent = '';
+    gifStatus.textContent = 'WebM not supported on this browser';
     showProgress(false);
     return;
   }
 
-  // Create a 2D canvas as the stream source (more reliable than WebGL canvas)
-  const streamCanvas = document.createElement('canvas');
-  streamCanvas.width = gifW;
-  streamCanvas.height = gifH;
-  const streamCtx = streamCanvas.getContext('2d');
-
-  // Fill with background color for first frame
-  streamCtx.fillStyle = '#1a1a2e';
-  streamCtx.fillRect(0, 0, gifW, gifH);
-
-  if (!streamCanvas.captureStream) {
-    gifStatus.textContent = 'captureStream not supported — use GIF format instead';
-    exportInfo.textContent = '';
-    showProgress(false);
-    return;
-  }
-
-  const stream = streamCanvas.captureStream(0);
+  // Use manual capture mode: captureStream(0) means we control when
+  // frames are grabbed via track.requestFrame(). This is more reliable
+  // than auto-capture for WebGL canvases.
+  const stream = canvas.captureStream(0);
   const track = stream.getVideoTracks()[0];
   if (!track) {
-    gifStatus.textContent = 'No video track — use GIF format instead';
-    exportInfo.textContent = '';
+    gifStatus.textContent = 'No video track from canvas';
     showProgress(false);
     return;
   }
 
-  // Bitrate scaled to resolution and fps
-  const bitrate = Math.max(2000000, Math.min(12000000, gifW * gifH * fps * 0.15));
+  // Bitrate: ensure minimum sane value
+  const bitrate = Math.max(2000000, Math.min(12000000, canvas.width * canvas.height * fps * 0.15));
 
   let recorder;
   try {
@@ -1383,7 +1343,6 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     });
   } catch (e) {
     gifStatus.textContent = 'MediaRecorder error: ' + e.message;
-    exportInfo.textContent = '';
     showProgress(false);
     return;
   }
@@ -1392,104 +1351,92 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   recorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
   recorder.onerror = (e) => {
     console.error('MediaRecorder error:', e);
+    gifStatus.textContent = 'Recorder error: ' + (e.error ? e.error.message : 'unknown');
+    showProgress(false);
   };
 
   exportRecording = true;
   exportCancelled = false;
 
-  // Phase 1: Render all frames off-screen (fast, no real-time wait)
-  gifStatus.textContent = `Rendering ${maxFrames} frames...`;
-  gifFrames = [];
-  pauseRenderLoopForExport();
+  // Start with timeslice to get periodic data (more robust than waiting for stop)
+  recorder.start(1000); // request data every 1000ms
 
-  try {
-    for (let i = 0; i < maxFrames; i++) {
-      if (exportCancelled) break;
-      const frameCanvas = renderAndCaptureFrame(gifW, gifH, i, fps);
-      gifFrames.push(frameCanvas);
-      const pct = Math.round((i / maxFrames) * 50);
-      setProgress(pct);
-      gifStatus.textContent = `Rendering ${i + 1}/${maxFrames}...`;
-      if (i % 5 === 0) await new Promise(r => setTimeout(r, 0));
-    }
+  // Wait a moment for the recorder to initialize
+  await new Promise(r => setTimeout(r, 100));
 
-    if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; gifFrames = []; return; }
+  // Manually request frames at target FPS, synced to the render loop
+  const totalFrames = Math.ceil(fps * durationSec);
+  let frameNum = 0;
+  const frameInterval = 1000 / fps;
+  let lastFrameTime = performance.now();
+  const startTime = performance.now();
 
-    // Phase 2: Feed frames to MediaRecorder via the 2D canvas
-    exportInfo.textContent = `Recording WebM (${mimeType.split(';')[0]})...`;
+  await new Promise((resolve) => {
+    const captureFrame = () => {
+      if (!exportRecording || exportCancelled) { resolve(); return; }
 
-    recorder.start(1000);
-    await new Promise(r => setTimeout(r, 100));
+      const now = performance.now();
+      const elapsed = now - startTime;
 
-    for (let i = 0; i < gifFrames.length; i++) {
-      if (exportCancelled) break;
-
-      // Draw the pre-rendered frame onto the stream canvas
-      streamCtx.drawImage(gifFrames[i], 0, 0, gifW, gifH);
-
-      // Request the frame from the canvas track
+      // Request a frame from the canvas track
       if (track.requestFrame) {
         try { track.requestFrame(); } catch (e) { /* ignore */ }
+      } else if (track.requestVideoFrameCallback) {
+        // Fallback: not needed, requestFrame is the standard
       }
 
-      const pct = 50 + Math.round((i / gifFrames.length) * 45);
+      frameNum = Math.floor(elapsed / 1000 * fps);
+      const pct = Math.min(90, Math.round((elapsed / 1000 / durationSec) * 90));
       setProgress(pct);
-      gifStatus.textContent = `Encoding ${i + 1}/${gifFrames.length}...`;
+      gifStatus.textContent = `Recording ${frameNum}/${totalFrames}...`;
 
-      // Small yield to let MediaRecorder process the frame
-      await new Promise(r => setTimeout(r, 0));
-    }
+      if (elapsed / 1000 >= durationSec) { resolve(); return; }
 
-    gifFrames = [];
+      // Schedule next frame at target FPS
+      const nextDelay = Math.max(0, frameInterval - (now - lastFrameTime));
+      lastFrameTime = now + nextDelay;
+      setTimeout(captureFrame, nextDelay);
+    };
+    captureFrame();
+  });
 
-    // Give the recorder a moment to capture the last frame
-    await new Promise(r => setTimeout(r, 200));
+  // Give the recorder a moment to capture the last frame
+  await new Promise(r => setTimeout(r, 200));
 
-    // Stop recorder and wait for final data
-    await new Promise((resolve) => {
-      recorder.onstop = resolve;
-      try { recorder.stop(); } catch (e) { resolve(); }
-    });
+  // Stop recorder and wait for final data
+  await new Promise((resolve) => {
+    recorder.onstop = resolve;
+    try { recorder.stop(); } catch (e) { resolve(); }
+  });
 
-    // Stop the track
-    try { track.stop(); } catch (e) { /* ignore */ }
+  // Stop the track
+  try { track.stop(); } catch (e) { /* ignore */ }
 
-    if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; exportRecording = false; return; }
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; exportRecording = false; return; }
 
-    if (chunks.length === 0) {
-      gifStatus.textContent = 'No data captured — try GIF format instead';
-      exportInfo.textContent = '';
-      showProgress(false);
-      exportRecording = false;
-      return;
-    }
-
-    // Download
-    const blob = new Blob(chunks, { type: 'video/webm' });
-    console.log('WebM blob size:', blob.size, 'bytes,', chunks.length, 'chunks');
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${currentChar ? currentChar.name : 'character'}.webm`;
-    a.click();
-    URL.revokeObjectURL(url);
-
-    setProgress(100);
-    gifStatus.textContent = `Done! (WebM, ${(blob.size / 1024).toFixed(0)}KB)`;
-    exportInfo.textContent = '';
+  if (chunks.length === 0) {
+    gifStatus.textContent = 'No data captured — try again';
     showProgress(false);
     exportRecording = false;
-    setTimeout(() => { gifStatus.textContent = ''; }, 4000);
-  } catch (e) {
-    gifStatus.textContent = 'WebM error: ' + e.message;
-    exportInfo.textContent = '';
-    showProgress(false);
-    try { if (recorder && recorder.state !== 'inactive') recorder.stop(); } catch (e2) {}
-    try { track.stop(); } catch (e2) {}
-  } finally {
-    resumeRenderLoopAfterExport();
-    gifFrames = [];
+    return;
   }
+
+  // Download
+  const blob = new Blob(chunks, { type: 'video/webm' });
+  console.log('WebM blob size:', blob.size, 'bytes,', chunks.length, 'chunks');
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${currentChar ? currentChar.name : 'character'}.webm`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  setProgress(100);
+  gifStatus.textContent = `Done! (WebM, ${(blob.size / 1024).toFixed(0)}KB)`;
+  exportInfo.textContent = '';
+  showProgress(false);
+  exportRecording = false;
+  setTimeout(() => { gifStatus.textContent = ''; }, 4000);
 }
 
 // ============================================================
@@ -1497,7 +1444,6 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
 // ============================================================
 exportStartBtn.onclick = async () => {
   if (exportRecording || gifRecording) return;
-  document.getElementById("debugExport").textContent = "CLICK: format=" + exportFormat.value;
 
   const { fps, res, duration, format } = resolveExportParams();
   const durationSec = getDurationSeconds(duration, fps);
@@ -1520,7 +1466,7 @@ exportStartBtn.onclick = async () => {
       await exportGifJs(gifW, gifH, fps, durationSec);
     }
   } catch (e) {
-    gifStatus.textContent = 'Export error: ' + e.message; document.getElementById('debugExport').textContent = 'ONCLICK ERR: ' + e.message;
+    gifStatus.textContent = 'Export error: ' + e.message;
     showProgress(false);
   } finally {
     exportStartBtn.disabled = false;
