@@ -1338,13 +1338,7 @@ exportStartBtn.onclick = async () => {
   const { fps, res, duration, format } = resolveExportParams();
   const durationSec = getDurationSeconds(duration, fps);
 
-  // Refit before export to ensure character is fully visible
-  resetManualView();
-  preSampleAnimation(animSelect.value);
-  resizeAndFit();
-  // Wait a frame for the refit to take effect
-  await new Promise(r => requestAnimationFrame(r));
-
+  // Export captures the current view as-is (respects manual zoom/pan)
   // Calculate target dimensions
   const scale = Math.min(1, res / canvas.width);
   const gifW = Math.round(canvas.width * scale);
@@ -1376,11 +1370,7 @@ exportStartBtn.onclick = async () => {
 gifBtn.onclick = () => {
   if (gifRecording || exportRecording) return;
 
-  // Refit before export
-  resetManualView();
-  preSampleAnimation(animSelect.value);
-  resizeAndFit();
-
+  // Export captures the current view as-is
   const auto = autoDetectSettings();
   const durationSec = auto.duration;
   const scale = Math.min(1, auto.res / canvas.width);
