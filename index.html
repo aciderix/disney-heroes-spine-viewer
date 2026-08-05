@@ -508,6 +508,7 @@ sidebarBackdrop.onclick = () => {
 
 // GIF button
 const gifBtn = document.getElementById('gifBtn');
+const gifSettingsBtn = document.getElementById('gifSettingsBtn');
 
 speedSlider.oninput = () => {
   speedMul = parseFloat(speedSlider.value);
@@ -573,7 +574,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=23');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=24');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -586,13 +587,13 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=23');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=24');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=23';
+    img.src = basePath + 'texture.png?v=24';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -851,7 +852,6 @@ async function downloadGif(gifW, gifH, gifFps, quality, maxFrames) {
 }
 
 // Settings modal
-const gifSettingsBtn = document.getElementById('gifSettingsBtn');
 gifSettingsBtn.onclick = () => {
   document.getElementById('gifSettingsModal').style.display = 'flex';
 };
