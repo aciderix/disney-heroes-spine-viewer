@@ -1,0 +1,41 @@
+
+texture.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+skill3_bubble
+  rotate: false
+  xy: 2, 6
+  size: 420, 420
+  orig: 420, 420
+  offset: 0, 0
+  index: -1
+skill3_bubble2
+  rotate: false
+  xy: 426, 216
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+skill3_bubble3
+  rotate: false
+  xy: 640, 216
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+skill3_bubble4
+  rotate: false
+  xy: 426, 2
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+skill3_bubble5
+  rotate: false
+  xy: 640, 2
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
