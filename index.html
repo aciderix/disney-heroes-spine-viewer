@@ -1347,7 +1347,7 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     offCtx.drawImage(canvas, 0, 0, gifW, gifH);
   };
 
-  recorder.start(1000); // timeslice: request data every 1000ms
+  recorder.start(); // no timeslice — all data delivered on stop (robust for short clips)
 
   // Wait for recorder to initialize
   await new Promise(r => setTimeout(r, 150));
@@ -1395,14 +1395,30 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     captureFrame();
   });
 
-  // Give the recorder a moment to capture and encode the last frame
-  await new Promise(r => setTimeout(r, 300));
+  // Give the recorder a moment to encode the last captured frame
+  await new Promise(r => setTimeout(r, 500));
 
-  // Stop recorder and wait for final data
+  // Force-flush any buffered data before stopping
+  try { recorder.requestData(); } catch (e) { /* ignore */ }
+  await new Promise(r => setTimeout(r, 200));
+
+  // Stop recorder and wait for final data + onstop event
+  // Use a timeout fallback in case onstop never fires
   await new Promise((resolve) => {
-    recorder.onstop = resolve;
-    try { recorder.stop(); } catch (e) { resolve(); }
+    let done = false;
+    const finish = () => { if (!done) { done = true; resolve(); } };
+    recorder.onstop = finish;
+    try {
+      recorder.stop();
+    } catch (e) {
+      finish();
+    }
+    // Fallback: resolve after 3s even if onstop doesn't fire
+    setTimeout(finish, 3000);
   });
+
+  // Wait a moment for any final ondataavailable event to be processed
+  await new Promise(r => setTimeout(r, 150));
 
   // Stop the track
   try { track.stop(); } catch (e) { /* ignore */ }
