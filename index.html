@@ -175,6 +175,7 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
     <button id="gifBtn" disabled>GIF</button>
     <button id="exportBtn" disabled>📥 Export</button>
     <span class="gif-status" id="gifStatus"></span>
+    <span id="debugExport" style="color:#0f0;font-size:11px;display:block"></span>
   </div>
 </div>
 
@@ -1144,8 +1145,10 @@ function getFrameImageData(frameCanvas) {
 // ============================================================
 // Export via gifenc (fast mode — off-screen rendering, no real-time wait)
 // ============================================================
+  // DEBUG: exportGifEnc entry
 async function exportGifEnc(gifW, gifH, fps, durationSec) {
   const { GIFEncoder, quantize, applyPalette } = await loadGifenc();
+  document.getElementById("debugExport").textContent = "GIFENC LOADED OK";
   const maxFrames = Math.ceil(fps * durationSec);
   const delay = Math.round(1000 / fps);
 
@@ -1214,7 +1217,7 @@ async function exportGifEnc(gifW, gifH, fps, durationSec) {
     showProgress(false);
     setTimeout(() => { gifStatus.textContent = ''; }, 3000);
   } catch (e) {
-    gifStatus.textContent = 'GIF error: ' + e.message;
+    gifStatus.textContent = 'GIF error: ' + e.message; document.getElementById('debugExport').textContent = 'GIFENC ERR: ' + e.message;
     exportInfo.textContent = '';
     showProgress(false);
   } finally {
@@ -1299,7 +1302,7 @@ async function exportGifJs(gifW, gifH, fps, durationSec) {
       gif.render();
     });
   } catch (e) {
-    gifStatus.textContent = 'GIF error: ' + e.message;
+    gifStatus.textContent = 'GIF error: ' + e.message; document.getElementById('debugExport').textContent = 'GIFENC ERR: ' + e.message;
     exportInfo.textContent = '';
     showProgress(false);
   } finally {
@@ -1494,6 +1497,7 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
 // ============================================================
 exportStartBtn.onclick = async () => {
   if (exportRecording || gifRecording) return;
+  document.getElementById("debugExport").textContent = "CLICK: format=" + exportFormat.value;
 
   const { fps, res, duration, format } = resolveExportParams();
   const durationSec = getDurationSeconds(duration, fps);
@@ -1516,7 +1520,7 @@ exportStartBtn.onclick = async () => {
       await exportGifJs(gifW, gifH, fps, durationSec);
     }
   } catch (e) {
-    gifStatus.textContent = 'Export error: ' + e.message;
+    gifStatus.textContent = 'Export error: ' + e.message; document.getElementById('debugExport').textContent = 'ONCLICK ERR: ' + e.message;
     showProgress(false);
   } finally {
     exportStartBtn.disabled = false;
