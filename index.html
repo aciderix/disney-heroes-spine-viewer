@@ -573,7 +573,7 @@ async function loadCharacter(char, li) {
   
   try {
     // Load atlas text
-    const atlasRes = await fetch(basePath + 'atlas.atlas?v=21');
+    const atlasRes = await fetch(basePath + 'atlas.atlas?v=22');
     let atlasText = await atlasRes.text();
     // Fix atlas: remove broken 'texture.png' first line, then replace .etc1 page names
     {
@@ -586,13 +586,13 @@ async function loadCharacter(char, li) {
     }
     
     // Load JSON skeleton
-    const jsonRes = await fetch(basePath + 'skeleton.json?v=21');
+    const jsonRes = await fetch(basePath + 'skeleton.json?v=22');
     const jsonText = await jsonRes.text();
     
     // Load texture image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = basePath + 'texture.png?v=21';
+    img.src = basePath + 'texture.png?v=22';
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -745,7 +745,7 @@ gifBtn.onclick = () => {
     gifFps = 15; duration = 3; maxWidth = 480; workers = 1; quality = 10;
   } else {
     // Desktop: full quality
-    gifFps = 20; duration = 3; maxWidth = 720; workers = 2; quality = 5;
+    gifFps = 30; duration = 4; maxWidth = 960; workers = 2; quality = 1;
   }
   const maxFrames = gifFps * duration;
   
