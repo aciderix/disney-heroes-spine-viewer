@@ -1,0 +1,405 @@
+
+texture.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm-b
+  rotate: false
+  xy: 1350, 212
+  size: 89, 160
+  orig: 89, 160
+  offset: 0, 0
+  index: -1
+arm-f
+  rotate: false
+  xy: 1256, 212
+  size: 90, 160
+  orig: 90, 160
+  offset: 0, 0
+  index: -1
+arm_skill3-b
+  rotate: false
+  xy: 1443, 242
+  size: 90, 148
+  orig: 90, 148
+  offset: 0, 0
+  index: -1
+arm_skill3-f
+  rotate: false
+  xy: 604, 7
+  size: 85, 145
+  orig: 85, 145
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 326, 305
+  size: 137, 330
+  orig: 137, 330
+  offset: 0, 0
+  index: -1
+coat-f
+  rotate: false
+  xy: 467, 284
+  size: 91, 351
+  orig: 91, 351
+  offset: 0, 0
+  index: -1
+coat_01-b
+  rotate: false
+  xy: 214, 117
+  size: 108, 410
+  orig: 108, 410
+  offset: 0, 0
+  index: -1
+coat_02-b
+  rotate: false
+  xy: 2, 102
+  size: 208, 425
+  orig: 208, 425
+  offset: 0, 0
+  index: -1
+collar-f
+  rotate: false
+  xy: 781, 10
+  size: 68, 145
+  orig: 68, 145
+  offset: 0, 0
+  index: -1
+collar_01-b
+  rotate: false
+  xy: 1432, 394
+  size: 155, 126
+  orig: 155, 126
+  offset: 0, 0
+  index: -1
+collar_02-b
+  rotate: false
+  xy: 525, 28
+  size: 75, 105
+  orig: 75, 105
+  offset: 0, 0
+  index: -1
+cuff-b
+  rotate: false
+  xy: 1038, 618
+  size: 95, 26
+  orig: 95, 26
+  offset: 0, 0
+  index: -1
+cuff_skill3-b
+  rotate: false
+  xy: 1577, 675
+  size: 45, 94
+  orig: 45, 94
+  offset: 0, 0
+  index: -1
+cuff_skill3-f
+  rotate: false
+  xy: 1577, 773
+  size: 44, 101
+  orig: 44, 101
+  offset: 0, 0
+  index: -1
+eyeballs
+  rotate: false
+  xy: 467, 137
+  size: 102, 143
+  orig: 102, 143
+  offset: 0, 0
+  index: -1
+forearm-b
+  rotate: false
+  xy: 573, 156
+  size: 96, 160
+  orig: 96, 160
+  offset: 0, 0
+  index: -1
+forearm-f
+  rotate: false
+  xy: 1537, 237
+  size: 73, 153
+  orig: 73, 153
+  offset: 0, 0
+  index: -1
+forearm_skill3-b
+  rotate: false
+  xy: 673, 159
+  size: 150, 74
+  orig: 150, 74
+  offset: 0, 0
+  index: -1
+forearm_skill3-f
+  rotate: false
+  xy: 912, 148
+  size: 92, 79
+  orig: 92, 79
+  offset: 0, 0
+  index: -1
+hand-b
+  rotate: false
+  xy: 823, 248
+  size: 86, 106
+  orig: 86, 106
+  offset: 0, 0
+  index: -1
+hand-f
+  rotate: false
+  xy: 827, 161
+  size: 81, 83
+  orig: 81, 83
+  offset: 0, 0
+  index: -1
+hand_attack
+  rotate: false
+  xy: 673, 237
+  size: 146, 117
+  orig: 146, 117
+  offset: 0, 0
+  index: -1
+hand_closed
+  rotate: false
+  xy: 2, 2
+  size: 90, 96
+  orig: 90, 96
+  offset: 0, 0
+  index: -1
+hand_closed_2-f
+  rotate: false
+  xy: 586, 716
+  size: 81, 98
+  orig: 81, 98
+  offset: 0, 0
+  index: -1
+hand_defeat-b
+  rotate: false
+  xy: 96, 3
+  size: 114, 95
+  orig: 114, 95
+  offset: 0, 0
+  index: -1
+hand_defeat-f
+  rotate: false
+  xy: 427, 2
+  size: 94, 131
+  orig: 94, 131
+  offset: 0, 0
+  index: -1
+hand_open-f
+  rotate: false
+  xy: 693, 21
+  size: 84, 134
+  orig: 84, 134
+  offset: 0, 0
+  index: -1
+hand_skill2
+  rotate: false
+  xy: 913, 231
+  size: 105, 127
+  orig: 105, 127
+  offset: 0, 0
+  index: -1
+hand_skill3-b
+  rotate: false
+  xy: 1022, 251
+  size: 124, 106
+  orig: 124, 106
+  offset: 0, 0
+  index: -1
+hand_skill3-f
+  rotate: false
+  xy: 326, 176
+  size: 137, 125
+  orig: 137, 125
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 1150, 239
+  size: 102, 143
+  orig: 102, 143
+  offset: 0, 0
+  index: -1
+leg-b
+  rotate: false
+  xy: 1354, 432
+  size: 74, 196
+  orig: 74, 196
+  offset: 0, 0
+  index: -1
+leg-f
+  rotate: false
+  xy: 1257, 632
+  size: 133, 190
+  orig: 133, 190
+  offset: 0, 0
+  index: -1
+microbot_punch1
+  rotate: false
+  xy: 1432, 524
+  size: 161, 147
+  orig: 161, 147
+  offset: 0, 0
+  index: -1
+microbot_punch2
+  rotate: false
+  xy: 1394, 675
+  size: 179, 199
+  orig: 179, 199
+  offset: 0, 0
+  index: -1
+microbot_punch3
+  rotate: false
+  xy: 586, 644
+  size: 40, 68
+  orig: 40, 68
+  offset: 0, 0
+  index: -1
+microbot_punch4
+  rotate: false
+  xy: 879, 604
+  size: 155, 228
+  orig: 155, 228
+  offset: 0, 0
+  index: -1
+microbot_punch_base
+  rotate: false
+  xy: 1088, 826
+  size: 280, 60
+  orig: 280, 60
+  offset: 0, 0
+  index: -1
+microbot_sphere1
+  rotate: false
+  xy: 1372, 878
+  size: 251, 144
+  orig: 251, 144
+  offset: 0, 0
+  index: -1
+microbot_sphere2
+  rotate: false
+  xy: 671, 572
+  size: 204, 260
+  orig: 204, 260
+  offset: 0, 0
+  index: -1
+microbot_sphere3
+  rotate: false
+  xy: 1105, 890
+  size: 263, 132
+  orig: 263, 132
+  offset: 0, 0
+  index: -1
+microbot_sphere4
+  rotate: false
+  xy: 1627, 783
+  size: 224, 239
+  orig: 224, 239
+  offset: 0, 0
+  index: -1
+microbot_sphere5
+  rotate: false
+  xy: 671, 358
+  size: 218, 210
+  orig: 218, 210
+  offset: 0, 0
+  index: -1
+microbot_sphere_base
+  rotate: false
+  xy: 657, 911
+  size: 444, 111
+  orig: 444, 111
+  offset: 0, 0
+  index: -1
+microbot_spike1
+  rotate: false
+  xy: 1038, 648
+  size: 215, 174
+  orig: 215, 174
+  offset: 0, 0
+  index: -1
+microbot_spike2
+  rotate: false
+  xy: 285, 639
+  size: 297, 175
+  orig: 297, 175
+  offset: 0, 0
+  index: -1
+microbot_spike3
+  rotate: false
+  xy: 1855, 796
+  size: 177, 226
+  orig: 177, 226
+  offset: 0, 0
+  index: -1
+microbot_spike_base
+  rotate: false
+  xy: 657, 836
+  size: 427, 71
+  orig: 427, 71
+  offset: 0, 0
+  index: -1
+microbot_wall1
+  rotate: false
+  xy: 562, 320
+  size: 105, 315
+  orig: 105, 315
+  offset: 0, 0
+  index: -1
+microbot_wall2
+  rotate: false
+  xy: 893, 362
+  size: 140, 238
+  orig: 140, 238
+  offset: 0, 0
+  index: -1
+microbot_wall3
+  rotate: false
+  xy: 2, 531
+  size: 279, 491
+  orig: 279, 491
+  offset: 0, 0
+  index: -1
+microbot_wall_base
+  rotate: false
+  xy: 285, 818
+  size: 368, 204
+  orig: 368, 204
+  offset: 0, 0
+  index: -1
+microbot_wall_base-b
+  rotate: false
+  xy: 214, 2
+  size: 209, 111
+  orig: 209, 111
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 1626, 687
+  size: 89, 92
+  orig: 89, 92
+  offset: 0, 0
+  index: -1
+shin-b
+  rotate: false
+  xy: 1037, 361
+  size: 107, 239
+  orig: 107, 239
+  offset: 0, 0
+  index: -1
+shin-f
+  rotate: false
+  xy: 1256, 376
+  size: 94, 252
+  orig: 94, 252
+  offset: 0, 0
+  index: -1
+shin_walk-f
+  rotate: false
+  xy: 1148, 386
+  size: 104, 258
+  orig: 104, 258
+  offset: 0, 0
+  index: -1
