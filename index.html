@@ -1228,11 +1228,18 @@ async function exportGifJs(gifW, gifH, fps, durationSec) {
 }
 
 // ============================================================
-// Export via WebM (MediaRecorder — near-instant, best quality)
+// Export via WebM (MediaRecorder — manual frame capture synced to render loop)
 // ============================================================
 async function exportWebM(gifW, gifH, fps, durationSec) {
   exportInfo.textContent = 'Recording WebM...';
   showProgress(true);
+
+  // Check support
+  if (!canvas.captureStream) {
+    gifStatus.textContent = 'captureStream not supported';
+    showProgress(false);
+    return;
+  }
 
   // Choose the best supported codec
   const mimeTypes = [
@@ -1242,7 +1249,8 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   ];
   let mimeType = null;
   for (const mt of mimeTypes) {
-    if (MediaRecorder.isTypeSupported(mt)) { mimeType = mt; break; }
+    try { if (MediaRecorder.isTypeSupported(mt)) { mimeType = mt; break; } }
+    catch (e) { /* skip */ }
   }
   if (!mimeType) {
     gifStatus.textContent = 'WebM not supported on this browser';
@@ -1250,55 +1258,109 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     return;
   }
 
-  // Capture directly from the main WebGL canvas — the render loop
-  // is already running and drawing frames at ~60fps.
-  // captureStream(fps) tells the browser to auto-sample at the target rate.
-  const stream = canvas.captureStream(fps);
-  const recorder = new MediaRecorder(stream, {
-    mimeType: mimeType,
-    videoBitsPerSecond: Math.min(12000000, canvas.width * canvas.height * fps * 0.15),
-  });
+  // Use manual capture mode: captureStream(0) means we control when
+  // frames are grabbed via track.requestFrame(). This is more reliable
+  // than auto-capture for WebGL canvases.
+  const stream = canvas.captureStream(0);
+  const track = stream.getVideoTracks()[0];
+  if (!track) {
+    gifStatus.textContent = 'No video track from canvas';
+    showProgress(false);
+    return;
+  }
+
+  // Bitrate: ensure minimum sane value
+  const bitrate = Math.max(2000000, Math.min(12000000, canvas.width * canvas.height * fps * 0.15));
+
+  let recorder;
+  try {
+    recorder = new MediaRecorder(stream, {
+      mimeType: mimeType,
+      videoBitsPerSecond: bitrate,
+    });
+  } catch (e) {
+    gifStatus.textContent = 'MediaRecorder error: ' + e.message;
+    showProgress(false);
+    return;
+  }
 
   const chunks = [];
-  recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+  recorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+  recorder.onerror = (e) => {
+    console.error('MediaRecorder error:', e);
+    gifStatus.textContent = 'Recorder error: ' + (e.error ? e.error.message : 'unknown');
+    showProgress(false);
+  };
 
   exportRecording = true;
   exportCancelled = false;
 
-  recorder.start();
+  // Start with timeslice to get periodic data (more robust than waiting for stop)
+  recorder.start(1000); // request data every 1000ms
 
-  // Record for the specified duration
+  // Wait a moment for the recorder to initialize
+  await new Promise(r => setTimeout(r, 100));
+
+  // Manually request frames at target FPS, synced to the render loop
   const totalFrames = Math.ceil(fps * durationSec);
   let frameNum = 0;
+  const frameInterval = 1000 / fps;
+  let lastFrameTime = performance.now();
   const startTime = performance.now();
 
   await new Promise((resolve) => {
-    const checkFrame = () => {
+    const captureFrame = () => {
       if (!exportRecording || exportCancelled) { resolve(); return; }
 
-      const elapsed = (performance.now() - startTime) / 1000;
-      frameNum = Math.floor(elapsed * fps);
-      const pct = Math.min(90, Math.round((elapsed / durationSec) * 90));
+      const now = performance.now();
+      const elapsed = now - startTime;
+
+      // Request a frame from the canvas track
+      if (track.requestFrame) {
+        try { track.requestFrame(); } catch (e) { /* ignore */ }
+      } else if (track.requestVideoFrameCallback) {
+        // Fallback: not needed, requestFrame is the standard
+      }
+
+      frameNum = Math.floor(elapsed / 1000 * fps);
+      const pct = Math.min(90, Math.round((elapsed / 1000 / durationSec) * 90));
       setProgress(pct);
       gifStatus.textContent = `Recording ${frameNum}/${totalFrames}...`;
 
-      if (elapsed >= durationSec) { resolve(); return; }
+      if (elapsed / 1000 >= durationSec) { resolve(); return; }
 
-      requestAnimationFrame(checkFrame);
+      // Schedule next frame at target FPS
+      const nextDelay = Math.max(0, frameInterval - (now - lastFrameTime));
+      lastFrameTime = now + nextDelay;
+      setTimeout(captureFrame, nextDelay);
     };
-    checkFrame();
+    captureFrame();
   });
+
+  // Give the recorder a moment to capture the last frame
+  await new Promise(r => setTimeout(r, 200));
 
   // Stop recorder and wait for final data
   await new Promise((resolve) => {
     recorder.onstop = resolve;
-    recorder.stop();
+    try { recorder.stop(); } catch (e) { resolve(); }
   });
 
-  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; return; }
+  // Stop the track
+  try { track.stop(); } catch (e) { /* ignore */ }
+
+  if (exportCancelled) { showProgress(false); gifStatus.textContent = 'Cancelled'; exportRecording = false; return; }
+
+  if (chunks.length === 0) {
+    gifStatus.textContent = 'No data captured — try again';
+    showProgress(false);
+    exportRecording = false;
+    return;
+  }
 
   // Download
   const blob = new Blob(chunks, { type: 'video/webm' });
+  console.log('WebM blob size:', blob.size, 'bytes,', chunks.length, 'chunks');
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -1307,11 +1369,11 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   URL.revokeObjectURL(url);
 
   setProgress(100);
-  gifStatus.textContent = 'Done! (WebM)';
+  gifStatus.textContent = `Done! (WebM, ${(blob.size / 1024).toFixed(0)}KB)`;
   exportInfo.textContent = '';
   showProgress(false);
   exportRecording = false;
-  setTimeout(() => { gifStatus.textContent = ''; }, 3000);
+  setTimeout(() => { gifStatus.textContent = ''; }, 4000);
 }
 
 // ============================================================
