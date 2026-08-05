@@ -213,6 +213,8 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
       <option value="15">15</option>
       <option value="20">20</option>
       <option value="24">24</option>
+      <option value="30">30</option>
+      <option value="60">60</option>
     </select>
   </div>
   <div class="export-row">
@@ -901,6 +903,33 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
   };
 });
 
+// Filter FPS options based on format (GIF max 30, WebM max 60)
+function updateFpsOptions() {
+  const format = exportFormat.value;
+  const maxFps = (format === 'webm') ? 60 : 30;
+  const currentFps = parseInt(exportFps.value);
+  
+  Array.from(exportFps.options).forEach(opt => {
+    const val = parseInt(opt.value);
+    opt.style.display = val <= maxFps ? '' : 'none';
+  });
+  
+  // If current FPS exceeds the max for this format, clamp it
+  if (currentFps > maxFps) {
+    exportFps.value = String(maxFps);
+  }
+}
+
+exportFormat.onchange = () => {
+  updateFpsOptions();
+  // Also deselect preset
+  currentPreset = null;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+};
+
+// Initial filter
+updateFpsOptions();
+
 // Open/close export panel
 exportBtn.onclick = () => {
   exportPanel.classList.toggle('open');
@@ -947,14 +976,40 @@ function resolveExportParams() {
 // Calculate the number of frames for a given duration
 function getDurationSeconds(duration, fps) {
   if (duration === 'loop') {
-    // Get the current animation duration
-    if (currentState && currentState.tracks[0]) {
+    // Try multiple sources to find the animation duration
+    let animDuration = 0;
+
+    // Source 1: Current animation state track
+    if (currentState && currentState.tracks && currentState.tracks[0]) {
       const anim = currentState.tracks[0].animation;
       if (anim && anim.duration > 0) {
-        // Round to nearest frame
-        return Math.max(Math.ceil(anim.duration * fps) / fps, 1);
+        animDuration = anim.duration;
       }
     }
+
+    // Source 2: skeletonData + animSelect dropdown
+    if (animDuration === 0 && skeletonData && animSelect && animSelect.value) {
+      const animName = animSelect.value;
+      const found = skeletonData.animations.find(a => a.name === animName);
+      if (found && found.duration > 0) {
+        animDuration = found.duration;
+      }
+    }
+
+    // Source 3: Longest animation in skeletonData
+    if (animDuration === 0 && skeletonData && skeletonData.animations.length > 0) {
+      animDuration = Math.max(...skeletonData.animations.map(a => a.duration));
+    }
+
+    if (animDuration > 0) {
+      // Round up to nearest frame boundary so the loop ends cleanly
+      const frames = Math.ceil(animDuration * fps);
+      const result = frames / fps;
+      console.log(`[export] loop duration: ${animDuration.toFixed(3)}s -> ${result.toFixed(3)}s (${frames} frames @ ${fps}fps)`);
+      return Math.max(result, 1);
+    }
+
+    console.warn('[export] could not detect animation duration, falling back to 3s');
     return 3; // fallback
   }
   return duration;
