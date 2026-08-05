@@ -682,19 +682,90 @@ def decode_etc1_texture(pkm_data, output_png_path):
 
 # ─── Archive helpers ──────────────────────────────────────────────────────────
 
+# Common suffixes/prefixes for effect, summon, and skill models — NOT the main character
+_EFFECT_PATTERNS = (
+    '_grapple', '_arm', '_van', '_giant', '_bubble', '_chest', '_kraken',
+    '_hand', '_panel', '_pumpkin', '_disco', '_net', '_snake', '_shield',
+    '_scanner', '_speaker', '_balloon', '_hair', '_tail', '_vine', '_hook',
+    '_frog', '_cat', '_dug', '_sheep', '_bell', '_bird', '_squirrel',
+    '_chicken', '_monkey', '_rabbit', '_deer', '_dove', '_racoon',
+    '_dummy', '_spike', '_clone', '_tractor', '_water', '_rock', '_thorn',
+    '_arrow', '_falcon', '_teddy', '_morph', '_microbots', '_portal',
+    '_pillar', '_toy_robot', '_thumper', '_sour_bill', '_murder_duck',
+    '_spiral_hill', '_black_pearl', '_book', '_pluto', '_seagull',
+    '_manta_ray', '_fireflies', '_louis', '_dragon', '_joanna', '_net',
+    '_bushwacker', '_limo', '_whale', '_fang_cat', '_monster',
+    '_road_flare', '_tnt_clock', '_clock', '_wood_chopper', '_string',
+    '_parachute', '_bear_trap', '_sandstorm',
+)
+
+def _is_likely_effect_skel(skel_filename):
+    """Heuristic: does this .skel filename look like an effect/summon model?"""
+    name = skel_filename.replace('.skel', '').lower()
+    return any(name.endswith(p) for p in _EFFECT_PATTERNS)
+
+
 def find_character_files(zf, char_name):
-    """Find .skel, .atlas, .etc1 files for a character in the archive."""
+    """Find .skel, .atlas, .etc1 files for a character in the archive.
+
+    When multiple .skel files exist, uses a priority order to pick the
+    main character model (not an effect/summon/skill model):
+      1. Exact match: <char_name>.skel
+      2. Case-insensitive match
+      3. First word of char_name (e.g. "bunsen" for "bunsen_and_beaker")
+      4. Shortest non-effect .skel name
+      5. Fallback: first .skel alphabetically
+    """
     prefix = f"ETC1/world/units/{char_name}/spine/"
     files = [f for f in zf.namelist() if f.startswith(prefix)]
 
     if not files:
         return None
 
-    # .skel — prefer <char_name>.skel, fallback to any .skel
-    skel_path = f"{prefix}{char_name}.skel"
-    if skel_path not in files:
-        skels = [f for f in files if f.endswith('.skel')]
-        skel_path = skels[0] if skels else None
+    all_skels = [f for f in files if f.endswith('.skel')]
+    skel_path = None
+
+    if all_skels:
+        # 1. Exact match
+        exact = f"{prefix}{char_name}.skel"
+        if exact in all_skels:
+            skel_path = exact
+
+        # 2. Case-insensitive match
+        if not skel_path:
+            char_lower = char_name.lower()
+            for s in all_skels:
+                fname = s.rsplit('/', 1)[-1]
+                if fname.lower().replace('.skel', '') == char_lower:
+                    skel_path = s
+                    break
+
+        # 3. First word of char_name
+        if not skel_path:
+            first_word = char_name.split('_')[0]
+            for s in all_skels:
+                fname = s.rsplit('/', 1)[-1].replace('.skel', '')
+                if fname.lower() == first_word.lower():
+                    skel_path = s
+                    break
+
+        # 4. Shortest non-effect .skel name
+        if not skel_path:
+            non_effect = [s for s in all_skels if not _is_likely_effect_skel(s.rsplit('/', 1)[-1])]
+            if non_effect:
+                skel_path = min(non_effect, key=lambda s: len(s.rsplit('/', 1)[-1]))
+
+        # 5. Fallback: first alphabetically
+        if not skel_path:
+            skel_path = sorted(all_skels)[0]
+
+        # Warn if multiple .skel files and we had to guess
+        if len(all_skels) > 1:
+            picked = skel_path.rsplit('/', 1)[-1]
+            others = [s.rsplit('/', 1)[-1] for s in all_skels if s != skel_path]
+            print(f"    ⚠ Multiple .skel files found: picked {picked} (others: {', '.join(others)})")
+            if _is_likely_effect_skel(picked):
+                print(f"    ⚠⚠ WARNING: picked .skel looks like an effect model, not the main character!")
 
     # .etc1 — prefer unit-DEFAULT-untrimmed, exclude smallcombat
     etc1s = [f for f in files if f.endswith('.etc1') and 'unit-DEFAULT' in f and 'smallcombat' not in f]
@@ -808,6 +879,14 @@ def prepare_character(char_name, archive_path, output_dir='characters', force=Fa
     anims = list(skeleton.get('animations', {}).keys())
     print(f"    {nb} bones, {ns} slots, {na} animations")
     print(f"    anims: {anims}")
+
+    # Validate: warn if this looks like an effect model, not the main character
+    if nb < 10:
+        print(f"    ⚠⚠ WARNING: only {nb} bones — this may be an effect/summon model, not the main character!")
+        print(f"    ⚠⚠ If animations are all skill effects (no idle/walk/attack), the wrong .skel was extracted.")
+        main_anims = [a for a in anims if a in ('idle', 'walk', 'attack', 'death', 'victory', 'entrance')]
+        if not main_anims:
+            print(f"    ⚠⚠ No standard animations (idle/walk/attack/death/victory/entrance) found — likely wrong model!")
 
     # 5. Fix atlas
     print(f"\n  [5/5] Fixing atlas (.etc1 → texture.png)...")
