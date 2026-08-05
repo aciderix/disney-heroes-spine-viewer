@@ -642,7 +642,7 @@ resetBtn.onclick = () => {
 
 // Initialize WebGL renderer
 function initRenderer() {
-  const glConfig = { alpha: true, premultipliedAlpha: false };
+  const glConfig = { alpha: true, premultipliedAlpha: false, preserveDrawingBuffer: true };
   sceneRenderer = new spine.webgl.SceneRenderer(canvas, canvas.getContext('webgl', glConfig) || canvas.getContext('experimental-webgl', glConfig), false);
 }
 initRenderer();
@@ -1234,12 +1234,6 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
   exportInfo.textContent = 'Recording WebM...';
   showProgress(true);
 
-  // Create an offscreen canvas at the target resolution
-  const recordCanvas = document.createElement('canvas');
-  recordCanvas.width = gifW;
-  recordCanvas.height = gifH;
-  const recordCtx = recordCanvas.getContext('2d');
-
   // Choose the best supported codec
   const mimeTypes = [
     'video/webm;codecs=vp9',
@@ -1256,52 +1250,43 @@ async function exportWebM(gifW, gifH, fps, durationSec) {
     return;
   }
 
-  const stream = recordCanvas.captureStream(fps);
+  // Capture directly from the main WebGL canvas — the render loop
+  // is already running and drawing frames at ~60fps.
+  // captureStream(fps) tells the browser to auto-sample at the target rate.
+  const stream = canvas.captureStream(fps);
   const recorder = new MediaRecorder(stream, {
     mimeType: mimeType,
-    videoBitsPerSecond: Math.min(8000000, gifW * gifH * fps * 0.1), // ~10 bits per pixel
+    videoBitsPerSecond: Math.min(12000000, canvas.width * canvas.height * fps * 0.15),
   });
 
   const chunks = [];
   recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
-
-  const totalMs = durationSec * 1000;
-  let elapsed = 0;
 
   exportRecording = true;
   exportCancelled = false;
 
   recorder.start();
 
-  // Render frames at target FPS
-  const frameInterval = 1000 / fps;
-  let lastFrameTime = performance.now();
-  let frameNum = 0;
+  // Record for the specified duration
   const totalFrames = Math.ceil(fps * durationSec);
+  let frameNum = 0;
+  const startTime = performance.now();
 
   await new Promise((resolve) => {
-    const renderFrame = () => {
+    const checkFrame = () => {
       if (!exportRecording || exportCancelled) { resolve(); return; }
-      const now = performance.now();
-      const dt = now - lastFrameTime;
-      lastFrameTime = now;
 
-      // Draw the current canvas content to the recording canvas
-      // (mirror + alpha handling)
-      recordCtx.clearRect(0, 0, gifW, gifH);
-      recordCtx.drawImage(canvas, 0, 0, gifW, gifH);
-      frameNum++;
-
-      const pct = Math.round((frameNum / totalFrames) * 90);
+      const elapsed = (performance.now() - startTime) / 1000;
+      frameNum = Math.floor(elapsed * fps);
+      const pct = Math.min(90, Math.round((elapsed / durationSec) * 90));
       setProgress(pct);
       gifStatus.textContent = `Recording ${frameNum}/${totalFrames}...`;
 
-      if (frameNum >= totalFrames) { resolve(); return; }
+      if (elapsed >= durationSec) { resolve(); return; }
 
-      // Schedule next frame
-      setTimeout(renderFrame, frameInterval);
+      requestAnimationFrame(checkFrame);
     };
-    renderFrame();
+    checkFrame();
   });
 
   // Stop recorder and wait for final data
