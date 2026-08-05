@@ -573,8 +573,7 @@ let playing = true, speedMul = 1.0;
 let canvas, gl, animFrame = null;
 let currentChar = null;
 let currentModels = null;  // models.json manifest for current character
-let currentAtlas = null;    // reused across model switches
-let currentGLTexture = null;
+// currentAtlas declared above (line 571), reused across model switches
 let currentGLTexture = null;
 
 // Build character list
